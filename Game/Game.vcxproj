@@ -161,6 +161,7 @@
     <ClInclude Include="src\Entities\CameraController.h" />
     <ClInclude Include="src\Core\GameApp.h" />
     <ClInclude Include="src\Entities\NPC\EnemySpecificEntities.h" />
+    <ClInclude Include="src\Entities\PlayerController.h" />
     <ClInclude Include="src\precomp.h" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +169,8 @@
     <ClCompile Include="src\Entities\NPC\EnemyController.cpp" />
     <ClCompile Include="src\Entities\CameraController.cpp" />
     <ClCompile Include="src\Core\GameApp.cpp" />
+    <ClCompile Include="src\Entities\CameraController.cpp" />
+    <ClCompile Include="src\Entities\PlayerController.cpp" />
     <ClCompile Include="src\precomp.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,8 @@
 
 namespace Game
 {
-	class CameraController;
+    	class CameraController;
+    	class PlayerController;
 	class EnemyController;
 	class DummyController;
 
@@ -16,8 +17,9 @@ namespace Game
         void GameSpecificUpdate(float dt) override;
         bool GameSpecificShutdown() override;
 
-		std::unique_ptr<CameraController> m_CameraController{};
-		std::unique_ptr<EnemyController> m_EnemyController{};
+	std::unique_ptr<CameraController> m_CameraController{};
+	std::unique_ptr<EnemyController> m_EnemyController{};
+        std::unique_ptr<PlayerController> m_PlayerController{};
 
 		std::unique_ptr<DummyController> m_DummyController{};
 
