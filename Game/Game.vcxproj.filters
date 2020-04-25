@@ -18,6 +18,12 @@
     <ClInclude Include="src\Core\GameApp.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Entities\PlayerController.h">
+      <Filter>src\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entities\CameraController.h">
+      <Filter>src\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -25,6 +31,12 @@
     </ClCompile>
     <ClCompile Include="src\Core\GameApp.cpp">
       <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entities\PlayerController.cpp">
+      <Filter>src\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entities\CameraController.cpp">
+      <Filter>src\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
