@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -93,7 +93,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)src\;$(SolutionDir)Engine\;$(SolutionDir)Engine\Extern\;$(SolutionDir)Engine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
@@ -155,10 +155,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\Dummy\DummyController.h" />
+    <ClInclude Include="src\Entities\Dummy\DummySpecificEntities.h" />
+    <ClInclude Include="src\Entities\NPC\EnemyController.h" />
+    <ClInclude Include="src\Entities\CameraController.h" />
     <ClInclude Include="src\Core\GameApp.h" />
+    <ClInclude Include="src\Entities\NPC\EnemySpecificEntities.h" />
     <ClInclude Include="src\precomp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\Dummy\DummyController.cpp" />
+    <ClCompile Include="src\Entities\NPC\EnemyController.cpp" />
+    <ClCompile Include="src\Entities\CameraController.cpp" />
     <ClCompile Include="src\Core\GameApp.cpp" />
     <ClCompile Include="src\precomp.cpp" />
   </ItemGroup>
