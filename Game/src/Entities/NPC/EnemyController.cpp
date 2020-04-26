@@ -10,8 +10,8 @@ namespace Game
 {
 	bool EnemyController::Init(Engine::EntityManager* entityManager, Engine::Texture* texture)
 	{
-		ASSERT(entityManager != nullptr, "Must pass valid pointer to entitymanager to BallController::Init()");
-		ASSERT(texture != nullptr, "Must pass valid pointer to texture to BallController::Init()");
+		ASSERT(entityManager != nullptr, "Must pass valid pointer to entitymanager to EnemyController::Init()");
+		ASSERT(texture != nullptr, "Must pass valid pointer to texture to EnemyController::Init()");
 		
 		auto enemy = std::make_unique<Engine::Entity>();
 
