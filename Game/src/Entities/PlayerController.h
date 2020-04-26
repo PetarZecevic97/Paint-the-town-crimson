@@ -14,4 +14,6 @@ namespace Game
         bool Init(Engine::EntityManager* entityManager_, Engine::Texture* texture_);
         void Update(float dt, Engine::EntityManager* entityManager_);
     };
+
+    bool CreateFireball(Engine::EntityManager* entityManager_);
 }

@@ -81,6 +81,11 @@ namespace Engine
 
     };
 
+    struct FireballComponent : public Component
+    {
+
+    };
+
     struct HealthComponent : public Component
     {
         int m_CurrentHealth;
