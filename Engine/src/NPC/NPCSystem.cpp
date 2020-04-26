@@ -14,6 +14,7 @@ namespace Engine
 
 	void NPCSystem::Update(float dt, EntityManager* entityManager)
 	{
+		const double pi = 3.1415926535897932;
 		auto npcs = entityManager->GetAllEntitiesWithComponents<NPCComponent,TransformComponent, MoverComponent>();
 
 		for (auto& npc : npcs)
@@ -21,17 +22,23 @@ namespace Engine
 			auto transform = npc->GetComponent<TransformComponent>();
 			auto mover = npc->GetComponent<MoverComponent>();
 
-			auto players = entityManager->GetAllEntitiesWithComponents<PlayerComponent>();
-			
+			auto players = entityManager->GetAllEntitiesWithComponents<PlayerComponent>();		
 			ASSERT(players.size() <= 1, "Number of players are greater than one!");
 
-			//int x = 1;
-			//Move
-			//vec2 playerPosition = players[0]->GetComponent<TransformComponent>()->m_Position;
-			//float tg = std::tan(playerPosition.y/playerPosition.x);
-			//transform->m_Position += mover->m_TranslationSpeed * dt*tg;
-			//transform->m_Rotation += mover->m_RotationSpeed * dt*tg;
+			if (players.size() == 1)
+			{
+				auto pmover = players[0]->GetComponent<TransformComponent>();
 
+				double angle = std::atan((pmover->m_Position.y - transform->m_Position.y)
+														       /
+										 (pmover->m_Position.x - transform->m_Position.x));
+
+				if (pmover->m_Position.x < transform->m_Position.x)
+				{
+					angle = angle + pi;
+				}
+				mover->m_TranslationSpeed = { std::cos(angle) * 100, std::sin(angle) * 100 };
+			}
 		}
 	}
 }
