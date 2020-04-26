@@ -42,9 +42,6 @@
     <ClCompile Include="src\Entities\CameraController.cpp">
       <Filter>src\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="src\Entities\CameraController.cpp">
-      <Filter>src\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="src\Entities\NPC\EnemyController.cpp" />
     <ClCompile Include="src\Entities\Dummy\DummyController.cpp" />
   </ItemGroup>

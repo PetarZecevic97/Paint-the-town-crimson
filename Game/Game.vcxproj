@@ -167,7 +167,6 @@
   <ItemGroup>
     <ClCompile Include="src\Entities\Dummy\DummyController.cpp" />
     <ClCompile Include="src\Entities\NPC\EnemyController.cpp" />
-    <ClCompile Include="src\Entities\CameraController.cpp" />
     <ClCompile Include="src\Core\GameApp.cpp" />
     <ClCompile Include="src\Entities\CameraController.cpp" />
     <ClCompile Include="src\Entities\PlayerController.cpp" />

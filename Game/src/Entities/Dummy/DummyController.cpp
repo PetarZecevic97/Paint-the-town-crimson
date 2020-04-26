@@ -26,6 +26,10 @@ namespace Game
 
 	void DummyController::Update(float dt, Engine::EntityManager* entityManager)
 	{
-
+		auto dummies = entityManager->GetAllEntitiesWithComponents<DummyComponent>();
+		for (auto& dummy : dummies)
+		{
+			//Do something if needed
+		}
 	}
 }

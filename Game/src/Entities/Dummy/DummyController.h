@@ -8,6 +8,9 @@ namespace Engine
 
 namespace Game
 {
+	//Just dummy class,you can use one of these if you need some testing or whatever you need
+	//Try not to push it, unless you want to add some improve to it :)
+
 	class DummyController
 	{
 	public:

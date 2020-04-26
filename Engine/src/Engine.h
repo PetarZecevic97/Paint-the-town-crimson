@@ -11,6 +11,8 @@
 #include "Input/InputAction.h"
 #include "Input/InputManager.h"
 
+#include "NPC/NPCSystem.h"
+
 #include "Physics/PhysicsSystem.h"
 
 #include "Render/Renderer.h"

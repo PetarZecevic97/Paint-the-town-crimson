@@ -8,15 +8,6 @@
 
 namespace Game
 {
-	static float GetRandomSpeed()
-	{
-		std::random_device rd;
-		std::uniform_int_distribution<int> spd(100, 250);
-		std::discrete_distribution<> direction({ 50, 0, 50 });
-
-		return spd(rd) * (direction(rd) - 1.f);
-	}
-
 	bool EnemyController::Init(Engine::EntityManager* entityManager, Engine::Texture* texture)
 	{
 		ASSERT(entityManager != nullptr, "Must pass valid pointer to entitymanager to BallController::Init()");
@@ -25,6 +16,7 @@ namespace Game
 		auto enemy = std::make_unique<Engine::Entity>();
 
 		enemy->AddComponent<EnemyComponent>();
+		enemy->AddComponent<Engine::NPCComponent>();
 		enemy->AddComponent<Engine::TransformComponent>(0.f, 0.f, 50.f, 50.f);
 		enemy->AddComponent<Engine::CollisionComponent>(30.f, 30.f);
 		enemy->AddComponent<Engine::MoverComponent>(100.f, 100.f);
