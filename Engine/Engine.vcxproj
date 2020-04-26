@@ -70,7 +70,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>precomp.h</PrecompiledHeaderFile>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
@@ -105,6 +105,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\NPC\NPCSystem.cpp" />
     <ClCompile Include="precomp.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -424,6 +425,7 @@
     <ClInclude Include="extern\spdlog\spdlog.h" />
     <ClInclude Include="extern\spdlog\tweakme.h" />
     <ClInclude Include="extern\spdlog\version.h" />
+    <ClInclude Include="src\NPC\NPCSystem.h" />
     <ClInclude Include="precomp.h" />
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\ECS\Component.h" />

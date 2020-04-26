@@ -21,9 +21,13 @@
     <ClInclude Include="src\Entities\PlayerController.h">
       <Filter>src\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\Entities\NPC\EnemySpecificEntities.h" />
+    <ClInclude Include="src\Entities\NPC\EnemyController.h" />
+    <ClInclude Include="src\Entities\Dummy\DummySpecificEntities.h" />
     <ClInclude Include="src\Entities\CameraController.h">
       <Filter>src\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\Entities\Dummy\DummyController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -38,6 +42,8 @@
     <ClCompile Include="src\Entities\CameraController.cpp">
       <Filter>src\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entities\NPC\EnemyController.cpp" />
+    <ClCompile Include="src\Entities\Dummy\DummyController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

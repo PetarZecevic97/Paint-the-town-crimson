@@ -1,7 +1,10 @@
 #include "precomp.h"
+
 #include "Application.h"
+
 #include "ECS/EntityManager.h"
 #include "Input/InputManager.h"
+#include "NPC/NPCSystem.h"
 #include "Render/RenderSystem.h"
 #include "Render/Renderer.h"
 #include "Render/Texture.h"
@@ -9,6 +12,7 @@
 #include "Render/WindowData.h"
 #include "Render/TextureManager.h"
 #include "Physics/PhysicsSystem.h"
+
 
 #include <SDL.h>
 
@@ -57,6 +61,13 @@ namespace Engine {
             LOG_CRITICAL("Failed to initialize PhysicsSystem");
             return false;
         }
+
+		m_NPCSystem = std::make_unique<NPCSystem>();
+		if (!m_NPCSystem->Init())
+		{
+			LOG_CRITICAL("Failed to initialize NPCSystem");
+			return false;
+		}
 
         if (GameSpecificInit() != true)
         {
@@ -118,6 +129,7 @@ namespace Engine {
         m_PhysicsSystem->Update(dt, m_EntityManager.get());
         m_EntityManager->Update(dt);
         m_RenderSystem->Update(dt, m_EntityManager.get());
+		m_NPCSystem->Update(dt, m_EntityManager.get());
 
         GameSpecificUpdate(dt);
     }

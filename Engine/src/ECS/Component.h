@@ -105,4 +105,9 @@ namespace Engine
     {
         std::vector<InputAction> inputActions;
     };
+
+	struct NPCComponent : public Component
+	{
+
+	};
 }
