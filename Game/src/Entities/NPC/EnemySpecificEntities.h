@@ -11,6 +11,14 @@ namespace Game
 		Fire
 	};
 
+	enum class EnemySize
+	{
+		Invalid,
+		Small,
+		Medium,
+		Large
+	};
+
 	struct EnemyComponent : public Engine::Component
 	{
 		EnemyType m_Type;

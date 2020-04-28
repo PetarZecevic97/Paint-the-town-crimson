@@ -24,8 +24,20 @@ namespace Engine
 
 			auto players = entityManager->GetAllEntitiesWithComponents<PlayerComponent>();		
 			ASSERT(players.size() <= 1, "Number of players are greater than one!");
+			
+			bool shouldMove = true;
+			for (auto& collisionEntitie : npc->GetComponent<CollisionComponent>()->m_CollidedWith)
+			{
+				if (collisionEntitie->HasComponent<NPCComponent>())
+				{
+					collisionEntitie->GetComponent<CollisionComponent>()->m_CollidedWith.erase(npc);
+					mover->m_TranslationSpeed = { 0, 0 };
+					shouldMove = false;
+					break;
+				}
+			}
 
-			if (players.size() == 1)
+			if (players.size() == 1 && shouldMove)
 			{
 				auto pmover = players[0]->GetComponent<TransformComponent>();
 

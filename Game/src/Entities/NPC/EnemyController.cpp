@@ -18,7 +18,7 @@ namespace Game
 		enemy->AddComponent<EnemyComponent>();
 		enemy->AddComponent<Engine::NPCComponent>();
 		enemy->AddComponent<Engine::TransformComponent>(-300.f, -300.f, 50.f, 50.f);
-		enemy->AddComponent<Engine::CollisionComponent>(30.f, 30.f);
+		enemy->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 		enemy->AddComponent<Engine::MoverComponent>();
 		enemy->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
@@ -29,7 +29,7 @@ namespace Game
 			enemy->AddComponent<EnemyComponent>();
 			enemy->AddComponent<Engine::NPCComponent>();
 			enemy->AddComponent<Engine::TransformComponent>(300.f, 300.f, 50.f, 50.f);
-			enemy->AddComponent<Engine::CollisionComponent>(30.f, 30.f);
+			enemy->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 			enemy->AddComponent<Engine::MoverComponent>();
 			enemy->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 

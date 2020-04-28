@@ -8,6 +8,7 @@ namespace Game
     	class PlayerController;
 	class EnemyController;
 	class DummyController;
+    class EnemiesFactory;
 
     class GameApp final : public Engine::Application
     {
@@ -25,6 +26,7 @@ namespace Game
 
 		std::unique_ptr<DummyController> m_DummyController{};
 
+        std::unique_ptr<EnemiesFactory> m_Factory{};
     };
 
 }

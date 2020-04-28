@@ -155,6 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\NPC\EnemiesFactory.h" />
+    <ClInclude Include="HealtManager.h" />
+    <ClInclude Include="src\Entities\Components\GameSpecificComponents.h" />
     <ClInclude Include="src\Entities\Dummy\DummyController.h" />
     <ClInclude Include="src\Entities\Dummy\DummySpecificEntities.h" />
     <ClInclude Include="src\Entities\NPC\EnemyController.h" />
@@ -165,6 +168,8 @@
     <ClInclude Include="src\precomp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\NPC\EnemiesFactory.cpp" />
+    <ClCompile Include="HealtManager.cpp" />
     <ClCompile Include="src\Entities\Dummy\DummyController.cpp" />
     <ClCompile Include="src\Entities\NPC\EnemyController.cpp" />
     <ClCompile Include="src\Core\GameApp.cpp" />

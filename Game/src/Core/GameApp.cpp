@@ -9,6 +9,7 @@
 #include <Core/EntryPoint.h>
 #include "Entities/CameraController.h"
 #include "Entities/NPC/EnemyController.h"
+#include "Entities/NPC/EnemiesFactory.h"
 #include "Entities/Dummy/DummyController.h"
 
 void Game::GameApp::GameSpecificWindowData()
@@ -40,6 +41,10 @@ bool Game::GameApp::GameSpecificInit()
 	m_DummyController = std::make_unique<DummyController>();
 	m_DummyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"));
 
+    m_Factory = std::make_unique<EnemiesFactory>();
+    m_Factory->Init();
+
+
     return true;
 }
 
@@ -47,6 +52,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
     m_EnemyController->Update(dt, m_EntityManager.get());
+    m_Factory->Update(dt, m_EntityManager.get(), EnemyType::Invalid, m_TextureManager->GetTexture("enemy"));
 }
 
 bool Game::GameApp::GameSpecificShutdown()
@@ -61,3 +67,16 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "dummy", "Data/dummy.jpg");
 	m_TextureManager->CreateTexture(renderer, "wizard", "Data/wizard.png");
 }
+
+/*
+        
+        EnemyFactory::SpawnEnemy<EnemyController>(m_texture, m_entitManager, m_Armor,)
+
+        ->
+        template<typename T>
+        static void SpawnEnemy(__VARGS__)
+        {
+            m_Spawner->SpawnEnemy(__VARGS__);
+        }
+
+*/

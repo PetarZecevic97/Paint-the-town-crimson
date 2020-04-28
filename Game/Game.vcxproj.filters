@@ -28,6 +28,9 @@
       <Filter>src\Entities</Filter>
     </ClInclude>
     <ClInclude Include="src\Entities\Dummy\DummyController.h" />
+    <ClInclude Include="HealtManager.h" />
+    <ClInclude Include="src\Entities\Components\GameSpecificComponents.h" />
+    <ClInclude Include="src\Entities\NPC\EnemiesFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -44,6 +47,8 @@
     </ClCompile>
     <ClCompile Include="src\Entities\NPC\EnemyController.cpp" />
     <ClCompile Include="src\Entities\Dummy\DummyController.cpp" />
+    <ClCompile Include="HealtManager.cpp" />
+    <ClCompile Include="src\Entities\NPC\EnemiesFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
