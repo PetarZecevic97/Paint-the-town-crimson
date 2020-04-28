@@ -62,12 +62,19 @@ namespace Game
         
         auto player = std::make_unique<Engine::Entity>();
 
-        player->AddComponent<Engine::TransformComponent>(0.f, 0.f, 75.f, 75.f);
-        player->AddComponent<Engine::CollisionComponent>(75.f, 75.f);
+        player->AddComponent<Engine::TransformComponent>(0.f, 0.f, 150.f, 150.f);
+        player->AddComponent<Engine::CollisionComponent>(150.f, 150.f);
         player->AddComponent<Engine::PlayerComponent>();
         player->AddComponent<Engine::InputComponent>();
         player->AddComponent<Engine::MoverComponent>();
         player->AddComponent<Engine::SpriteComponent>().m_Image = texture_;
+		
+		//Slicing up a spritesheet and taking what is ours
+		auto *comp = player->GetComponent<Engine::SpriteComponent>();
+		SDL_Rect new_rect{ 50, 50, 50, 50 };
+		comp->m_src = new_rect;
+		//if we want to animate an entity
+		comp->m_Animation = true;
 
         auto inputComp = player->GetComponent<Engine::InputComponent>();
 
@@ -114,6 +121,38 @@ namespace Game
 
             move->m_TranslationSpeed.y = speed * ((moveUpInput ? -1.0f : 0.0f) + (moveDownInput ? 1.0f : 0.0f));
             move->m_TranslationSpeed.x = speed * ((moveLeftInput ? -1.0f : 0.0f) + (moveRightInput ? 1.0f : 0.0f));
+
+			//Idle Animation 
+
+			auto* comp = entity->GetComponent<Engine::SpriteComponent>();
+			//TODO make an animation for every direction not just idle
+			if (!(moveUpInput || moveDownInput || moveLeftInput || moveRightInput)) {
+				int ticks = (SDL_GetTicks() / 200) % 5;
+
+				SDL_Rect new_rect{ 50 * ticks, 50, 50, 50 };
+				comp->m_src = new_rect;
+			}else if (moveRightInput) {
+				int ticks = (SDL_GetTicks() / 200) % 6;
+
+				SDL_Rect new_rect{ 50 * ticks, 100, 50, 50 };
+				comp->m_src = new_rect;
+			}else if (moveLeftInput) {
+				int ticks = (SDL_GetTicks() / 200) % 6;
+
+				SDL_Rect new_rect{ 300 - 50 * ticks, 150, 50, 50 };
+				comp->m_src = new_rect;
+			}else if (moveDownInput) {
+				int ticks = (SDL_GetTicks() / 200) % 4;
+
+				SDL_Rect new_rect{ 50 * ticks, 200, 50, 50 };
+				comp->m_src = new_rect;
+			}else if (moveUpInput) {
+				int ticks = (SDL_GetTicks() / 200) % 4;
+
+				SDL_Rect new_rect{ 50 * ticks, 250, 50, 50 };
+				comp->m_src = new_rect;
+			}
+
 
 
         

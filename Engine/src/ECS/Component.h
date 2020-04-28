@@ -1,5 +1,6 @@
 #pragma once
 #include "Input/InputAction.h"
+#include <SDL.h>
 
 
 using ComponentTypeID = std::size_t;
@@ -72,6 +73,9 @@ namespace Engine
     struct SpriteComponent : public Component
     {
         Texture* m_Image{};
+		//We need these two if we want to animate a bitch
+		SDL_Rect m_src;
+		bool m_Animation{ false };
         bool m_FlipHorizontal{ false };
         bool m_FlipVertical{ false };
     };
