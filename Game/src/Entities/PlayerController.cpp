@@ -21,6 +21,13 @@ namespace Game
         //mage firing mages yaaay
         fireball->AddComponent<Engine::SpriteComponent>().m_Image = player->GetComponent<Engine::SpriteComponent>()->m_Image;
 
+        //Slicing up a spritesheet and taking what is ours
+        auto* comp = fireball->GetComponent<Engine::SpriteComponent>();
+        SDL_Rect new_rect{ 50, 0, 11, 11 };
+        comp->m_src = new_rect;
+        //if we want to animate an entity
+        comp->m_Animation = true;
+
         auto input = player->GetComponent<Engine::InputComponent>();
 
         bool shootUpInput = Engine::InputManager::IsActionActive(input, "PlayerShootUp");
@@ -54,6 +61,25 @@ namespace Game
         return !(entityManager_->GetAllEntitiesWithComponent<Engine::FireballComponent>().empty());
     }
 
+    void UpdateFireballs(Engine::EntityManager* entityManager_) {
+
+        auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::FireballComponent>();
+
+        for (auto& entity : entitiesToMove)
+        {
+
+            auto* sprite = entity->GetComponent<Engine::SpriteComponent>();
+
+            int ticks = (SDL_GetTicks() / 200) % 4;
+
+            SDL_Rect new_rect{ 50 + (12 * ticks), 0, 11, 11 };
+            sprite->m_src = new_rect;
+            
+
+        }
+
+    }
+
     bool PlayerController::Init(Engine::EntityManager* entityManager_, Engine::Texture* texture_)
     {
         ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to PlayerController::Init()");
@@ -62,8 +88,8 @@ namespace Game
         
         auto player = std::make_unique<Engine::Entity>();
 
-        player->AddComponent<Engine::TransformComponent>(0.f, 0.f, 150.f, 150.f);
-        player->AddComponent<Engine::CollisionComponent>(150.f, 150.f);
+        player->AddComponent<Engine::TransformComponent>(0.f, 0.f, 100.f, 100.f);
+        player->AddComponent<Engine::CollisionComponent>(100.f, 100.f);
         player->AddComponent<Engine::PlayerComponent>();
         player->AddComponent<Engine::InputComponent>();
         player->AddComponent<Engine::MoverComponent>();
@@ -114,8 +140,9 @@ namespace Game
             bool shootLeftInput = Engine::InputManager::IsActionActive(input, "PlayerShootLeft");
             bool shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
 
-
-            if (shootUpInput || shootDownInput || shootLeftInput || shootRightInput) {
+            int ticks = SDL_GetTicks() - m_last_fired_time;
+            if (ticks > m_fireball_cooldown && (shootUpInput || shootDownInput || shootLeftInput || shootRightInput)) {
+                m_last_fired_time += ticks;
                 Game::CreateFireball(entityManager_);
             }
 
@@ -124,8 +151,7 @@ namespace Game
 
 			//Idle Animation 
 
-			auto* comp = entity->GetComponent<Engine::SpriteComponent>();
-			//TODO make an animation for every direction not just idle
+            auto* comp = entity->GetComponent<Engine::SpriteComponent>();
 			if (!(moveUpInput || moveDownInput || moveLeftInput || moveRightInput)) {
 				int ticks = (SDL_GetTicks() / 200) % 5;
 
@@ -157,5 +183,7 @@ namespace Game
 
         
         }
+
+        UpdateFireballs(entityManager_);
     }
 }

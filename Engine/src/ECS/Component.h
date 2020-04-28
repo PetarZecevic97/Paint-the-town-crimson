@@ -90,6 +90,11 @@ namespace Engine
 
     };
 
+    struct BorderComponent : public Component
+    {
+
+    };
+
     struct HealthComponent : public Component
     {
         int m_CurrentHealth;
