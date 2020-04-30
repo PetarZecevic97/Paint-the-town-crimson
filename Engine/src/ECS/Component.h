@@ -30,6 +30,13 @@ namespace Engine
         }
     };
 
+	struct IdComponent : public Component
+	{
+		long int m_id;
+		IdComponent(long int id) : m_id(id) {}
+
+	};
+
     struct TransformComponent : public Component
     {
         vec2 m_Position{};
