@@ -12,8 +12,6 @@ namespace Game
         // Left
         auto border = std::make_unique<Engine::Entity>();
 
-        std::cout << window_width << " " << window_height << std::endl;
-
         border->AddComponent<Engine::BorderComponent>();
         border->AddComponent<Engine::TransformComponent>(-window_width * 1.0 / 2, 0.f, 1.f, window_height * 1.0);
         border->AddComponent<Engine::CollisionComponent>(1.f, window_height*1.0);
@@ -50,8 +48,6 @@ namespace Game
         border->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
         entityManager_->AddEntity(std::move(border));
-
-        std::cout << "DODJOH" << std::endl;
 
         return true;
     }

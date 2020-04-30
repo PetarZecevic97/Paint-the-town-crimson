@@ -20,6 +20,8 @@ namespace Game
         fireball->AddComponent<Engine::MoverComponent>();
         //mage firing mages yaaay
         fireball->AddComponent<Engine::SpriteComponent>().m_Image = player->GetComponent<Engine::SpriteComponent>()->m_Image;
+        fireball->AddComponent<Engine::IdComponent>(entityManager_->m_id);
+        entityManager_->m_id++;
 
         //Slicing up a spritesheet and taking what is ours
         auto* comp = fireball->GetComponent<Engine::SpriteComponent>();
@@ -65,15 +67,27 @@ namespace Game
 
         auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::FireballComponent>();
 
-        for (auto& entity : entitiesToMove)
+        for (auto& fireball : entitiesToMove)
         {
 
-            auto* sprite = entity->GetComponent<Engine::SpriteComponent>();
+            auto* sprite = fireball->GetComponent<Engine::SpriteComponent>();
 
             int ticks = (SDL_GetTicks() / 200) % 4;
 
             SDL_Rect new_rect{ 50 + (12 * ticks), 0, 11, 11 };
             sprite->m_src = new_rect;
+
+            auto collider = fireball->GetComponent<Engine::CollisionComponent>();
+
+            for (const auto& entity : collider->m_CollidedWith)
+            {
+                if (entity->HasComponent<Engine::BorderComponent>())
+                {
+                    entityManager_->RemoveEntity(fireball->GetComponent<Engine::IdComponent>()->m_id);
+                    break;
+                }
+            }
+
             
 
         }
@@ -124,10 +138,11 @@ namespace Game
     {
         auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::PlayerComponent, Engine::MoverComponent, Engine::InputComponent>();
 
-        for (auto& entity : entitiesToMove)
+        for (auto& player : entitiesToMove)
         {
-            auto move = entity->GetComponent<Engine::MoverComponent>();
-            auto input = entity->GetComponent<Engine::InputComponent>();
+            auto move = player->GetComponent<Engine::MoverComponent>();
+            auto transform = player->GetComponent<Engine::TransformComponent>();
+            auto input = player->GetComponent<Engine::InputComponent>();
             auto speed = 200.f; // entity->GetComponent<Engine::PlayerComponent>()->m_PanSpeed;
 
             bool moveUpInput = Engine::InputManager::IsActionActive(input, "PlayerMoveUp");
@@ -145,13 +160,13 @@ namespace Game
                 m_last_fired_time += ticks;
                 Game::CreateFireball(entityManager_);
             }
-
+            
             move->m_TranslationSpeed.y = speed * ((moveUpInput ? -1.0f : 0.0f) + (moveDownInput ? 1.0f : 0.0f));
             move->m_TranslationSpeed.x = speed * ((moveLeftInput ? -1.0f : 0.0f) + (moveRightInput ? 1.0f : 0.0f));
 
 			//Idle Animation 
 
-            auto* comp = entity->GetComponent<Engine::SpriteComponent>();
+            auto* comp = player->GetComponent<Engine::SpriteComponent>();
 			if (!(moveUpInput || moveDownInput || moveLeftInput || moveRightInput)) {
 				int ticks = (SDL_GetTicks() / 200) % 5;
 
@@ -180,7 +195,16 @@ namespace Game
 			}
 
 
+            auto collider = player->GetComponent<Engine::CollisionComponent>();
 
+            for (const auto& entity : collider->m_CollidedWith)
+            {
+                if (entity->HasComponent<Engine::BorderComponent>())
+                {
+                    move->m_TranslationSpeed.y = speed * ((moveUpInput ? 20.0f : 0.0f) + (moveDownInput ? -20.0f : 0.0f));
+                    move->m_TranslationSpeed.x = speed * ((moveLeftInput ? 20.0f : 0.0f) + (moveRightInput ? -20.0f : 0.0f));
+                }
+            }
         
         }
 
