@@ -105,4 +105,9 @@ namespace Engine
 	{
 
 	};
+
+    struct WallComponent : public Component
+    {
+
+    };
 }

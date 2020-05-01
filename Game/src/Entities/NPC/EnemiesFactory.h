@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX_ENEMIES (10)
+#define MAX_ENEMIES 10
 #include <vector>
 #include "Entities/NPC/EnemySpecificEntities.h"
 

@@ -23,7 +23,7 @@ namespace Game
 		enemy->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
 		entityManager->AddEntity(std::move(enemy));
-		{
+		/*{
 			auto enemy = std::make_unique<Engine::Entity>();
 
 			enemy->AddComponent<EnemyComponent>();
@@ -34,7 +34,7 @@ namespace Game
 			enemy->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
 			entityManager->AddEntity(std::move(enemy));
-		}
+		}*/
 		return true;
 	}
 

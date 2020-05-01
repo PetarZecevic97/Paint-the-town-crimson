@@ -26,6 +26,9 @@ namespace Game
 
 		std::unique_ptr<DummyController> m_DummyController{};
 
+        std::unique_ptr<DummyController> m_DummyController1{};
+        std::unique_ptr<DummyController> m_DummyController2{};
+
         std::unique_ptr<EnemiesFactory> m_Factory{};
     };
 

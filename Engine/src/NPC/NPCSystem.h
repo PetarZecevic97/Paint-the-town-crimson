@@ -3,6 +3,7 @@
 namespace Engine
 {
 	class EntityManager;
+	class Entity;
 
 	class NPCSystem
 	{
@@ -10,5 +11,6 @@ namespace Engine
 		bool Init();
 		void Update(float dt, EntityManager* entityManager);
 	private:
+		bool CheckRayCasting(Entity* npc, double angle, std::vector<Entity*>& possibleCooliders);
 	};
 }

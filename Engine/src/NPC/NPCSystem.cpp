@@ -5,6 +5,9 @@
 #include "ECS/EntityManager.h"
 #include "ECS/Component.h"
 
+#define STEP  10 // STEP * SPEED =>  0.1*100
+#define MAX_PATHFINDING_ITERATIONS 10 //Num of iterations for ray casting
+
 namespace Engine
 {
 	bool NPCSystem::Init()
@@ -14,43 +17,83 @@ namespace Engine
 
 	void NPCSystem::Update(float dt, EntityManager* entityManager)
 	{
-		const double pi = 3.1415926535897932;
-		auto npcs = entityManager->GetAllEntitiesWithComponents<NPCComponent,TransformComponent, MoverComponent>();
+		constexpr float pi = 3.1415926535897932;
+		constexpr float twoPI = pi * 2.f;
+
+		//??? Optimization with GetAllEntitiesWithComponentFromVector() ???
+
+		auto npcs = entityManager->GetAllEntitiesWithComponents<NPCComponent, TransformComponent, MoverComponent>();
+		auto send = entityManager->GetAllEntitiesWithComponent<Engine::WallComponent>();
+		auto players = entityManager->GetAllEntitiesWithComponents<PlayerComponent>();
+
+		ASSERT(players.size() <= 1, "Number of players are greater than one!");
+
+		auto pmover = players[0]->GetComponent<TransformComponent>();
 
 		for (auto& npc : npcs)
 		{
 			auto transform = npc->GetComponent<TransformComponent>();
 			auto mover = npc->GetComponent<MoverComponent>();
 
-			auto players = entityManager->GetAllEntitiesWithComponents<PlayerComponent>();		
-			ASSERT(players.size() <= 1, "Number of players are greater than one!");
-			
-			bool shouldMove = true;
-			for (auto& collisionEntitie : npc->GetComponent<CollisionComponent>()->m_CollidedWith)
+			float angle = std::atan((pmover->m_Position.y - transform->m_Position.y)
+				/
+				(pmover->m_Position.x - transform->m_Position.x));
+
+			if (pmover->m_Position.x < transform->m_Position.x)
 			{
-				if (collisionEntitie->HasComponent<NPCComponent>())
+				angle = angle + pi;
+			}
+
+			float addition = 0;
+			while (CheckRayCasting(npc, angle, send))
+			{
+				if (addition >= twoPI)
 				{
-					collisionEntitie->GetComponent<CollisionComponent>()->m_CollidedWith.erase(npc);
-					mover->m_TranslationSpeed = { 0, 0 };
-					shouldMove = false;
 					break;
 				}
+				addition += pi / 4;
+				angle += pi / 4;
+
+			}
+			mover->m_TranslationSpeed.x = (addition < twoPI) ? (std::cosf(angle) * 100.f) : (-mover->m_TranslationSpeed.x * 2.f);
+			mover->m_TranslationSpeed.y = (addition < twoPI) ? (std::sinf(angle) * 100.f)  : (-mover->m_TranslationSpeed.y * 2.f);
+		}
+	}
+
+	bool NPCSystem::CheckRayCasting(Entity* npc, double angle, std::vector<Entity*>& possibleCooliders)
+	{
+		const float deltaX = static_cast<float>(std::cos(angle) * STEP);
+		const float deltaY = static_cast<float>(std::sin(angle) * STEP);
+		for (auto& collider : possibleCooliders)
+		{
+			if (collider == npc)
+			{
+				LOG_WARNING("Checking RAY Casting for same object!");
+				continue;
 			}
 
-			if (players.size() == 1 && shouldMove)
+			auto npcTransform = npc->GetComponent<TransformComponent>()->m_Position;
+			auto npcCollision = npc->GetComponent<CollisionComponent>();
+
+			auto colliderTransform = collider->GetComponent<TransformComponent>();
+			auto colliderCollision = collider->GetComponent<CollisionComponent>();
+
+			for(unsigned i = 0;i<MAX_PATHFINDING_ITERATIONS;i++)
 			{
-				auto pmover = players[0]->GetComponent<TransformComponent>();
+				bool collisionX = npcTransform.x + npcCollision->m_Size.x / 2.f >= colliderTransform->m_Position.x - colliderCollision->m_Size.x / 2.f &&
+					colliderTransform->m_Position.x + colliderCollision->m_Size.x / 2.f >= npcTransform.x - npcCollision->m_Size.x / 2.f;
 
-				double angle = std::atan((pmover->m_Position.y - transform->m_Position.y)
-														       /
-										 (pmover->m_Position.x - transform->m_Position.x));
+				bool collisionY = npcTransform.y + npcCollision->m_Size.y / 2.f >= colliderTransform->m_Position.y - colliderCollision->m_Size.y / 2.f &&
+					colliderTransform->m_Position.y + colliderCollision->m_Size.y / 2.f >= npcTransform.y - npcCollision->m_Size.y / 2.f;
 
-				if (pmover->m_Position.x < transform->m_Position.x)
+				if (collisionX && collisionY)
 				{
-					angle = angle + pi;
+					return true;
 				}
-				mover->m_TranslationSpeed = { std::cos(angle) * 100, std::sin(angle) * 100 };
+				npcTransform.x += deltaX;
+				npcTransform.y += deltaY;
 			}
 		}
+		return false;
 	}
 }

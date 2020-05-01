@@ -15,6 +15,7 @@ namespace Game
 	{
 	public:
 		bool Init(Engine::EntityManager* entityManager, Engine::Texture* texture);
+		bool Init(Engine::EntityManager* entityManager, Engine::Texture* texture, float position);
 		void Update(float dt, Engine::EntityManager* entityManager);
 	};
 
