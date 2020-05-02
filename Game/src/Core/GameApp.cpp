@@ -10,6 +10,7 @@
 #include <Core/EntryPoint.h>
 #include "Entities/CameraController.h"
 #include "Entities/NPC/EnemyController.h"
+#include "Entities/NPC/EnemiesFactory.h"
 #include "Entities/Dummy/DummyController.h"
 
 void Game::GameApp::GameSpecificWindowData()
@@ -35,12 +36,12 @@ bool Game::GameApp::GameSpecificInit()
     //m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("wizard"));
 	m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("mage"));
 
-
-	m_EnemyController = std::make_unique<EnemyController>();
-	m_EnemyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("enemy"));
-
 	//m_DummyController = std::make_unique<DummyController>();
-	//m_DummyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"));
+	//m_DummyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),200.f, 200.f);
+
+    m_Factory = std::make_unique<EnemiesFactory>();
+    m_Factory->Init(1280.0f, 720.0f);
+
 
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
@@ -52,6 +53,7 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
+    m_Factory->Update(dt, m_EntityManager.get(), EnemyType::Invalid, m_TextureManager->GetTexture("enemy"));
 }
 
 bool Game::GameApp::GameSpecificShutdown()
@@ -66,6 +68,8 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "dummy", "Data/dummy.jpg");
 	//wizard is an old and haggard texture, with mage_3 everyone is gonna be like: Wizard WHO?
 	m_TextureManager->CreateTexture(renderer, "wizard", "Data/wizard.png");
+
 	m_TextureManager->CreateTexture(renderer, "mage", "Data/mage_3.png");
 	m_TextureManager->CreateTexture(renderer, "blank", "Data/blank.png");
 }
+
