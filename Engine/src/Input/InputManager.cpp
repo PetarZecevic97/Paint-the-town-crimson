@@ -84,16 +84,17 @@ namespace Engine
         m_InputActionStates.clear();
         m_InputActions.clear();
 
-        m_InputActions["Player1MoveUp"] = VK_UP;
-        m_InputActions["Player1MoveLeft"] = VK_LEFT;
-        m_InputActions["Player1MoveDown"] = VK_DOWN;
-        m_InputActions["Player1MoveRight"] = VK_RIGHT;
+        //changed some inputs
+        m_InputActions["PlayerShootUp"] = VK_UP;
+        m_InputActions["PlayerShootLeft"] = VK_LEFT;
+        m_InputActions["PlayerShootDown"] = VK_DOWN;
+        m_InputActions["PlayerShootRight"] = VK_RIGHT;
         m_InputActions["PauseGame"] = VK_ESCAPE;
         m_InputActions["RestartGame"] = 'R';
-        m_InputActions["Player2MoveUp"] = 'W';
-        m_InputActions["Player2MoveLeft"] = 'A';
-        m_InputActions["Player2MoveDown"] = 'S';
-        m_InputActions["Player2MoveRight"] = 'D';
+        m_InputActions["PlayerMoveUp"] = 'W';
+        m_InputActions["PlayerMoveLeft"] = 'A';
+        m_InputActions["PlayerMoveDown"] = 'S';
+        m_InputActions["PlayerMoveRight"] = 'D';
         m_InputActions["PanCameraUp"] = 'Y';
         m_InputActions["PanCameraLeft"] = 'Y';
         m_InputActions["PanCameraDown"] = 'Y';

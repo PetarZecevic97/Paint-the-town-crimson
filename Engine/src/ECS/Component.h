@@ -1,5 +1,6 @@
 #pragma once
 #include "Input/InputAction.h"
+#include <SDL.h>
 
 
 using ComponentTypeID = std::size_t;
@@ -28,6 +29,13 @@ namespace Engine
             return typeID;
         }
     };
+
+	struct IdComponent : public Component
+	{
+		long int m_id;
+		IdComponent(long int id) : m_id(id) {}
+
+	};
 
     struct TransformComponent : public Component
     {
@@ -72,11 +80,24 @@ namespace Engine
     struct SpriteComponent : public Component
     {
         Texture* m_Image{};
+		//We need these two if we want to animate a bitch
+		SDL_Rect m_src;
+		bool m_Animation{ false };
         bool m_FlipHorizontal{ false };
         bool m_FlipVertical{ false };
     };
 
     struct PlayerComponent : public Component
+    {
+
+    };
+
+    struct FireballComponent : public Component
+    {
+
+    };
+
+    struct BorderComponent : public Component
     {
 
     };
