@@ -4,6 +4,7 @@
 
 #include "Entities/PlayerController.h"
 #include "Entities/CameraController.h"
+#include "Entities/BorderController.h"
 
 #include <Engine.h>
 #include <Core/EntryPoint.h>
@@ -15,15 +16,15 @@ void Game::GameApp::GameSpecificWindowData()
 {
     Engine::WindowData gameSpecificWindowData;
     gameSpecificWindowData.m_Title = "Magemaggedon";
-    gameSpecificWindowData.m_Width = 1280;
-    gameSpecificWindowData.m_Height = 720;
+    gameSpecificWindowData.m_Width = m_window_width;
+    gameSpecificWindowData.m_Height = m_window_height;
     // gameSpecificWindowData.m_Vsync = true;
     SetWindowData(gameSpecificWindowData);
 }
 
 bool Game::GameApp::GameSpecificInit()
 {
-    m_RenderSystem->SetBackgroundColor(0, 0, 0, 1);
+    m_RenderSystem->SetBackgroundColor(148, 0, 211, 1);
 
 	LoadTextures();
 
@@ -31,7 +32,8 @@ bool Game::GameApp::GameSpecificInit()
 	m_CameraController->Init(m_EntityManager.get());
 
     m_PlayerController = std::make_unique<PlayerController>();
-    m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("wizard"));
+    //m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("wizard"));
+	m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("mage"));
 
 
 	m_EnemyController = std::make_unique<EnemyController>();
@@ -39,6 +41,10 @@ bool Game::GameApp::GameSpecificInit()
 
 	//m_DummyController = std::make_unique<DummyController>();
 	//m_DummyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"));
+
+	m_BorderController = std::make_unique<BorderController>();
+	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
+
 
     return true;
 }
@@ -58,5 +64,8 @@ void Game::GameApp::LoadTextures()
 	auto renderer = m_RenderSystem->GetRenderer();
 	m_TextureManager->CreateTexture(renderer, "enemy", "Data/enemy.jpg");
 	m_TextureManager->CreateTexture(renderer, "dummy", "Data/dummy.jpg");
+	//wizard is an old and haggard texture, with mage_3 everyone is gonna be like: Wizard WHO?
 	m_TextureManager->CreateTexture(renderer, "wizard", "Data/wizard.png");
+	m_TextureManager->CreateTexture(renderer, "mage", "Data/mage_3.png");
+	m_TextureManager->CreateTexture(renderer, "blank", "Data/blank.png");
 }

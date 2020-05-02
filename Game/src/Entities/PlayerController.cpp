@@ -20,6 +20,15 @@ namespace Game
         fireball->AddComponent<Engine::MoverComponent>();
         //mage firing mages yaaay
         fireball->AddComponent<Engine::SpriteComponent>().m_Image = player->GetComponent<Engine::SpriteComponent>()->m_Image;
+        fireball->AddComponent<Engine::IdComponent>(entityManager_->m_id);
+        entityManager_->m_id++;
+
+        //Slicing up a spritesheet and taking what is ours
+        auto* comp = fireball->GetComponent<Engine::SpriteComponent>();
+        SDL_Rect new_rect{ 50, 0, 11, 11 };
+        comp->m_src = new_rect;
+        //if we want to animate an entity
+        comp->m_Animation = true;
 
         auto input = player->GetComponent<Engine::InputComponent>();
 
@@ -54,6 +63,37 @@ namespace Game
         return !(entityManager_->GetAllEntitiesWithComponent<Engine::FireballComponent>().empty());
     }
 
+    void UpdateFireballs(Engine::EntityManager* entityManager_) {
+
+        auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::FireballComponent>();
+
+        for (auto& fireball : entitiesToMove)
+        {
+
+            auto* sprite = fireball->GetComponent<Engine::SpriteComponent>();
+
+            int ticks = (SDL_GetTicks() / 200) % 4;
+
+            SDL_Rect new_rect{ 50 + (12 * ticks), 0, 11, 11 };
+            sprite->m_src = new_rect;
+
+            auto collider = fireball->GetComponent<Engine::CollisionComponent>();
+
+            for (const auto& entity : collider->m_CollidedWith)
+            {
+                if (entity->HasComponent<Engine::BorderComponent>())
+                {
+                    entityManager_->RemoveEntity(fireball->GetComponent<Engine::IdComponent>()->m_id);
+                    break;
+                }
+            }
+
+            
+
+        }
+
+    }
+
     bool PlayerController::Init(Engine::EntityManager* entityManager_, Engine::Texture* texture_)
     {
         ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to PlayerController::Init()");
@@ -62,12 +102,19 @@ namespace Game
         
         auto player = std::make_unique<Engine::Entity>();
 
-        player->AddComponent<Engine::TransformComponent>(0.f, 0.f, 75.f, 75.f);
-        player->AddComponent<Engine::CollisionComponent>(75.f, 75.f);
+        player->AddComponent<Engine::TransformComponent>(0.f, 0.f, 100.f, 100.f);
+        player->AddComponent<Engine::CollisionComponent>(100.f, 100.f);
         player->AddComponent<Engine::PlayerComponent>();
         player->AddComponent<Engine::InputComponent>();
         player->AddComponent<Engine::MoverComponent>();
         player->AddComponent<Engine::SpriteComponent>().m_Image = texture_;
+		
+		//Slicing up a spritesheet and taking what is ours
+		auto *comp = player->GetComponent<Engine::SpriteComponent>();
+		SDL_Rect new_rect{ 50, 50, 50, 50 };
+		comp->m_src = new_rect;
+		//if we want to animate an entity
+		comp->m_Animation = true;
 
         auto inputComp = player->GetComponent<Engine::InputComponent>();
 
@@ -91,10 +138,11 @@ namespace Game
     {
         auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::PlayerComponent, Engine::MoverComponent, Engine::InputComponent>();
 
-        for (auto& entity : entitiesToMove)
+        for (auto& player : entitiesToMove)
         {
-            auto move = entity->GetComponent<Engine::MoverComponent>();
-            auto input = entity->GetComponent<Engine::InputComponent>();
+            auto move = player->GetComponent<Engine::MoverComponent>();
+            auto transform = player->GetComponent<Engine::TransformComponent>();
+            auto input = player->GetComponent<Engine::InputComponent>();
             auto speed = 200.f; // entity->GetComponent<Engine::PlayerComponent>()->m_PanSpeed;
 
             bool moveUpInput = Engine::InputManager::IsActionActive(input, "PlayerMoveUp");
@@ -107,16 +155,59 @@ namespace Game
             bool shootLeftInput = Engine::InputManager::IsActionActive(input, "PlayerShootLeft");
             bool shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
 
-
-            if (shootUpInput || shootDownInput || shootLeftInput || shootRightInput) {
+            int ticks = SDL_GetTicks() - m_last_fired_time;
+            if (ticks > m_fireball_cooldown && (shootUpInput || shootDownInput || shootLeftInput || shootRightInput)) {
+                m_last_fired_time += ticks;
                 Game::CreateFireball(entityManager_);
             }
-
+            
             move->m_TranslationSpeed.y = speed * ((moveUpInput ? -1.0f : 0.0f) + (moveDownInput ? 1.0f : 0.0f));
             move->m_TranslationSpeed.x = speed * ((moveLeftInput ? -1.0f : 0.0f) + (moveRightInput ? 1.0f : 0.0f));
 
+			//Idle Animation 
 
+            auto* comp = player->GetComponent<Engine::SpriteComponent>();
+			if (!(moveUpInput || moveDownInput || moveLeftInput || moveRightInput)) {
+				int ticks = (SDL_GetTicks() / 200) % 5;
+
+				SDL_Rect new_rect{ 50 * ticks, 50, 50, 50 };
+				comp->m_src = new_rect;
+			}else if (moveRightInput) {
+				int ticks = (SDL_GetTicks() / 200) % 6;
+
+				SDL_Rect new_rect{ 50 * ticks, 100, 50, 50 };
+				comp->m_src = new_rect;
+			}else if (moveLeftInput) {
+				int ticks = (SDL_GetTicks() / 200) % 6;
+
+				SDL_Rect new_rect{ 300 - 50 * ticks, 150, 50, 50 };
+				comp->m_src = new_rect;
+			}else if (moveDownInput) {
+				int ticks = (SDL_GetTicks() / 200) % 4;
+
+				SDL_Rect new_rect{ 50 * ticks, 200, 50, 50 };
+				comp->m_src = new_rect;
+			}else if (moveUpInput) {
+				int ticks = (SDL_GetTicks() / 200) % 4;
+
+				SDL_Rect new_rect{ 50 * ticks, 250, 50, 50 };
+				comp->m_src = new_rect;
+			}
+
+
+            auto collider = player->GetComponent<Engine::CollisionComponent>();
+
+            for (const auto& entity : collider->m_CollidedWith)
+            {
+                if (entity->HasComponent<Engine::BorderComponent>())
+                {
+                    move->m_TranslationSpeed.y = speed * ((moveUpInput ? 20.0f : 0.0f) + (moveDownInput ? -20.0f : 0.0f));
+                    move->m_TranslationSpeed.x = speed * ((moveLeftInput ? 20.0f : 0.0f) + (moveRightInput ? -20.0f : 0.0f));
+                }
+            }
         
         }
+
+        UpdateFireballs(entityManager_);
     }
 }

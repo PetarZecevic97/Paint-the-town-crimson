@@ -94,15 +94,28 @@ namespace Engine
             vec2 screenPosition = GetScreenPosition(transform->m_Position, camera);
             SDL_Rect dst{ (int)(screenPosition.x - size.x / 2), (int)(screenPosition.y - size.y / 2), (int)size.x, (int)size.y };
             SDL_RendererFlip flip = static_cast<SDL_RendererFlip>((sprite->m_FlipHorizontal ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE) | (sprite->m_FlipVertical ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE));
-
-            SDL_RenderCopyEx(
-                m_NativeRenderer,
-                sprite->m_Image->m_Texture,
-                NULL,
-                &dst,
-                transform->m_Rotation,
-                NULL,
-                flip);
+			
+			//We need the src field to cut the image from the spritesheet(but some entities dont need spritesheets)
+			if (sprite->m_Animation) {
+				SDL_RenderCopyEx(
+					m_NativeRenderer,
+					sprite->m_Image->m_Texture,
+					&sprite->m_src,
+					&dst,
+					transform->m_Rotation,
+					NULL,
+					flip);
+			}
+			else {
+				SDL_RenderCopyEx(
+					m_NativeRenderer,
+					sprite->m_Image->m_Texture,
+					NULL,
+					&dst,
+					transform->m_Rotation,
+					NULL,
+					flip);
+			}
 
 #ifdef _DEBUG
             // DebugDraw
