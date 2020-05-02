@@ -45,10 +45,10 @@ bool Game::GameApp::GameSpecificInit()
     m_DummyController1->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),250.f, 200.f);
 
     m_DummyController2 = std::make_unique<DummyController>();
-    m_DummyController2->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),200.f, 250.f);
+    m_DummyController2->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),-250.f, 250.f);
 
     m_Factory = std::make_unique<EnemiesFactory>();
-    m_Factory->Init();
+    m_Factory->Init(1280.0f, 720.0f);
 
 
     return true;

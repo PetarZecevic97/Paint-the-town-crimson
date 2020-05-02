@@ -12,7 +12,7 @@ namespace Game
 	{
 		ASSERT(entityManager != nullptr, "Must pass valid pointer to entitymanager to EnemyController::Init()");
 		ASSERT(texture != nullptr, "Must pass valid pointer to texture to EnemyController::Init()");
-		
+		/*
 		auto enemy = std::make_unique<Engine::Entity>();
 
 		enemy->AddComponent<EnemyComponent>();
@@ -23,6 +23,7 @@ namespace Game
 		enemy->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
 		entityManager->AddEntity(std::move(enemy));
+		*/
 		/*{
 			auto enemy = std::make_unique<Engine::Entity>();
 
