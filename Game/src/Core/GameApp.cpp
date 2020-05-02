@@ -34,18 +34,8 @@ bool Game::GameApp::GameSpecificInit()
     m_PlayerController = std::make_unique<PlayerController>();
     m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("wizard"));
 
-
-	m_EnemyController = std::make_unique<EnemyController>();
-	m_EnemyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("enemy"));
-
-	m_DummyController = std::make_unique<DummyController>();
-	m_DummyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),200.f, 200.f);
-
-    m_DummyController1 = std::make_unique<DummyController>();
-    m_DummyController1->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),250.f, 200.f);
-
-    m_DummyController2 = std::make_unique<DummyController>();
-    m_DummyController2->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),-250.f, 250.f);
+	//m_DummyController = std::make_unique<DummyController>();
+	//m_DummyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),200.f, 200.f);
 
     m_Factory = std::make_unique<EnemiesFactory>();
     m_Factory->Init(1280.0f, 720.0f);
@@ -57,7 +47,6 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
-    m_EnemyController->Update(dt, m_EntityManager.get());
     m_Factory->Update(dt, m_EntityManager.get(), EnemyType::Invalid, m_TextureManager->GetTexture("enemy"));
 }
 

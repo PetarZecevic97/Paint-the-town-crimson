@@ -22,12 +22,8 @@ namespace Game
 
 		std::unique_ptr<CameraController> m_CameraController{};
 		std::unique_ptr<PlayerController> m_PlayerController{};
-		std::unique_ptr<EnemyController> m_EnemyController{};
 
-		std::unique_ptr<DummyController> m_DummyController{};
-
-        std::unique_ptr<DummyController> m_DummyController1{};
-        std::unique_ptr<DummyController> m_DummyController2{};
+		//std::unique_ptr<DummyController> m_DummyController{};
 
         std::unique_ptr<EnemiesFactory> m_Factory{};
     };

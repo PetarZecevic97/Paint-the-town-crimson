@@ -21,12 +21,6 @@ namespace Engine
     }
     void EntityManager::AddEntity(std::unique_ptr<Entity>&& e)
     {
-        if(m_Entities.size() <= m_CurrentElement)
-        {
-            m_Entities.resize(MAX_NEW_ELEMENTS);
-        }
-        ASSERT(m_Entities.size() > m_CurrentElement, "Entity array is full! Resizze failed!");
-        m_Entities[m_CurrentElement] = std::move(e);
-        m_CurrentElement++;
+        m_Entities.push_back(std::move(e));
     }
 }
