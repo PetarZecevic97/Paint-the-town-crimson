@@ -12,5 +12,6 @@ namespace Engine
 		void Update(float dt, EntityManager* entityManager);
 	private:
 		bool CheckRayCasting(Entity* npc, double angle, std::vector<Entity*>& possibleCooliders);
+		void DodgeWalls(Entity* npc);
 	};
 }

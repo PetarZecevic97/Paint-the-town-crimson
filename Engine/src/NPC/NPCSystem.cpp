@@ -44,6 +44,8 @@ namespace Engine
 				angle = angle + pi;
 			}
 
+			DodgeWalls(npc);
+
 			float addition = 0;
 			while (CheckRayCasting(npc, angle, send))
 			{
@@ -55,8 +57,21 @@ namespace Engine
 				angle += pi / 4;
 
 			}
-			mover->m_TranslationSpeed.x = (addition < twoPI) ? (std::cosf(angle) * 100.f) : (-mover->m_TranslationSpeed.x * 2.f);
-			mover->m_TranslationSpeed.y = (addition < twoPI) ? (std::sinf(angle) * 100.f)  : (-mover->m_TranslationSpeed.y * 2.f);
+			mover->m_TranslationSpeed.x = (addition < twoPI) ? (std::cosf(angle) * 100.f) : (-mover->m_TranslationSpeed.x);
+			mover->m_TranslationSpeed.y = (addition < twoPI) ? (std::sinf(angle) * 100.f)  : (-mover->m_TranslationSpeed.y);
+		}
+	}
+
+	void NPCSystem::DodgeWalls(Entity* npc)
+	{
+		auto coll = npc->GetComponent<CollisionComponent>()->m_CollidedWith;
+		for (auto& coller : coll)
+		{
+			if (coller->HasComponent<WallComponent>())
+			{
+				npc->GetComponent<MoverComponent>()->m_TranslationSpeed.x = -npc->GetComponent<MoverComponent>()->m_TranslationSpeed.x;
+				npc->GetComponent<MoverComponent>()->m_TranslationSpeed.y = -npc->GetComponent<MoverComponent>()->m_TranslationSpeed.y;
+			}
 		}
 	}
 
