@@ -10,7 +10,10 @@ namespace Game
 	class EnemyController
 	{
 	public:
-		bool Init(Engine::EntityManager* entityManager, Engine::Texture* textureManager);
-		void Update(float dt, Engine::EntityManager* entityManager);
+		virtual bool Init(Engine::EntityManager* entityManager, Engine::Texture* textureManager); //create spawn points
+		virtual void Update(float dt, Engine::EntityManager* entityManager) = 0;
+		virtual bool ShotDown() = 0;
+	protected:
+		//Add spawn points
 	};
 }

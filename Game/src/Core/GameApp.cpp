@@ -40,8 +40,7 @@ bool Game::GameApp::GameSpecificInit()
 	//m_DummyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),200.f, 200.f);
 
     m_Factory = std::make_unique<EnemiesFactory>();
-    m_Factory->Init(1280.0f, 720.0f);
-
+	m_Factory->Init();
 
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
@@ -53,7 +52,7 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
-    m_Factory->Update(dt, m_EntityManager.get(), EnemyType::Invalid, m_TextureManager->GetTexture("enemy"));
+	m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
 }
 
 bool Game::GameApp::GameSpecificShutdown()

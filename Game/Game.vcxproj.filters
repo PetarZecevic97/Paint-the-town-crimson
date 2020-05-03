@@ -30,10 +30,10 @@
     <ClInclude Include="src\Entities\Dummy\DummyController.h" />
     <ClInclude Include="src\Entities\Components\GameSpecificComponents.h" />
     <ClInclude Include="src\Entities\NPC\EnemiesFactory.h" />
-
     <ClInclude Include="src\Entities\BorderController.h">
       <Filter>src\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\Entities\NPC\WaterNPCController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -54,6 +54,7 @@
     <ClCompile Include="src\Entities\BorderController.cpp">
       <Filter>src\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entities\NPC\WaterNPCController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
