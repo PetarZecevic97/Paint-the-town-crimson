@@ -7,10 +7,11 @@ namespace Engine
     {
     public:
         unsigned int GetId() const { return m_Id; }
+        
 
     protected:
-        inline static unsigned int m_CurrentId = 0;
         unsigned int m_Id;
+        inline static unsigned int m_CurrentId = 0;
         std::vector<std::unique_ptr<Component>> m_Components;
 
     public:

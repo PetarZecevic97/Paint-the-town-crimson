@@ -17,6 +17,10 @@ namespace Game
         int m_last_fired_time{ -m_fireball_cooldown };
     };
 
+    bool CreateItem(Engine::EntityManager* entityManager_, int item_type, Engine::Texture* texture, Engine::Entity* npc);
+    void UpdateItems(Engine::EntityManager* entityManager_);
+
     bool CreateFireball(Engine::EntityManager* entityManager_);
     void UpdateFireballs(Engine::EntityManager* entityManager_);
+
 }

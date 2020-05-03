@@ -54,6 +54,8 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
     m_Factory->Update(dt, m_EntityManager.get(), EnemyType::Invalid, m_TextureManager->GetTexture("enemy"));
+	Game::UpdateItems(m_EntityManager.get());
+	
 }
 
 bool Game::GameApp::GameSpecificShutdown()

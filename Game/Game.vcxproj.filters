@@ -30,7 +30,6 @@
     <ClInclude Include="src\Entities\Dummy\DummyController.h" />
     <ClInclude Include="src\Entities\Components\GameSpecificComponents.h" />
     <ClInclude Include="src\Entities\NPC\EnemiesFactory.h" />
-
     <ClInclude Include="src\Entities\BorderController.h">
       <Filter>src\Entities</Filter>
     </ClInclude>

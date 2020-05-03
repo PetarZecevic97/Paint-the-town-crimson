@@ -4,6 +4,69 @@
 namespace Game
 {
 
+    bool CreateItem(Engine::EntityManager* entityManager_, int item_type, Engine::Texture* texture, Engine::Entity* npc) {
+        ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to ProjectileController::Init()");
+
+        auto item = std::make_unique<Engine::Entity>();
+        auto npc_trans = npc->GetComponent<Engine::TransformComponent>();
+        float x = npc_trans->m_Position[0];
+        float y = npc_trans->m_Position[1];
+
+        item->AddComponent<Engine::TransformComponent>(x, y, 22.f, 22.f);
+        item->AddComponent<Engine::CollisionComponent>(22.f, 22.f);
+        item->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
+        item->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+
+        SDL_Rect new_rect;
+        switch (item_type) {
+        case 0:
+            new_rect = { 0, 0, 18, 12 };
+            break;
+        default:
+            new_rect = { 0, 0, 18, 12 };
+            break;
+        }
+        //Slicing up a spritesheet and taking what is ours
+        auto* comp = item->GetComponent<Engine::SpriteComponent>();
+        comp->m_src = new_rect;
+        //if we want to animate an entity
+        comp->m_Animation = true;
+
+        entityManager_->AddEntity(std::move(item));
+
+
+        return !(entityManager_->GetAllEntitiesWithComponent<Engine::ItemComponent>().empty());
+    }
+
+    void UpdateItems(Engine::EntityManager* entityManager_) {
+
+        auto items = entityManager_->GetAllEntitiesWithComponents<Engine::ItemComponent>();
+
+        for (auto& item : items)
+        {
+
+
+            if (SDL_GetTicks() > item->GetComponent<Engine::ItemComponent>()->m_timeCreated + 8000) {
+                entityManager_->RemoveEntity(item->GetId());
+                continue;
+            }
+
+            auto collider = item->GetComponent<Engine::CollisionComponent>();
+
+
+            for (const auto& entity : collider->m_CollidedWith)
+            {
+                if (entity->HasComponent<Engine::PlayerComponent>())
+                {
+                    entityManager_->RemoveEntity(item->GetId());
+                    break;
+                }
+            }
+
+        }
+
+    }
+
     bool CreateFireball(Engine::EntityManager* entityManager_) {
         ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to ProjectileController::Init()");
 
@@ -20,8 +83,6 @@ namespace Game
         fireball->AddComponent<Engine::MoverComponent>();
         //mage firing mages yaaay
         fireball->AddComponent<Engine::SpriteComponent>().m_Image = player->GetComponent<Engine::SpriteComponent>()->m_Image;
-        fireball->AddComponent<Engine::IdComponent>(entityManager_->m_id);
-        entityManager_->m_id++;
 
         //Slicing up a spritesheet and taking what is ours
         auto* comp = fireball->GetComponent<Engine::SpriteComponent>();
@@ -79,11 +140,21 @@ namespace Game
 
             auto collider = fireball->GetComponent<Engine::CollisionComponent>();
 
-            for (const auto& entity : collider->m_CollidedWith)
+            for (auto* entity : collider->m_CollidedWith)
             {
+                if (entity->HasComponent<Engine::NPCComponent>())
+                {
+                   CreateItem(entityManager_, 0, fireball->GetComponent<Engine::SpriteComponent>()->m_Image, entity);
+                   entityManager_->RemoveEntity(fireball->GetId());
+                   entityManager_->RemoveEntity(entity->GetId());
+                   
+                   break;
+
+                }
+
                 if (entity->HasComponent<Engine::BorderComponent>())
                 {
-                    entityManager_->RemoveEntity(fireball->GetComponent<Engine::IdComponent>()->m_id);
+                    entityManager_->RemoveEntity(fireball->GetId());
                     break;
                 }
             }

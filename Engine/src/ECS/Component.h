@@ -30,13 +30,6 @@ namespace Engine
         }
     };
 
-	struct IdComponent : public Component
-	{
-		long int m_id;
-		IdComponent(long int id) : m_id(id) {}
-
-	};
-
     struct TransformComponent : public Component
     {
         vec2 m_Position{};
@@ -100,6 +93,13 @@ namespace Engine
     struct BorderComponent : public Component
     {
 
+    };
+
+    struct ItemComponent : public Component
+    {
+        int m_timeCreated;
+
+        ItemComponent(int time) : m_timeCreated(time) {}
     };
 
     struct HealthComponent : public Component
