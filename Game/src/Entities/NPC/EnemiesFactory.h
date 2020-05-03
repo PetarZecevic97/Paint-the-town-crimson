@@ -5,8 +5,8 @@
 #include "Entities/NPC/EnemySpecificEntities.h"
 #include "Entities/NPC/Controllers/FireNPCController.h"
 #include "Entities/NPC/Controllers/WaterNPCController.h"
-#include "WindNPCController.h"
-#include "EarthNPCController.h"
+#include "Entities/NPC/Controllers/WindNPCController.h"
+#include "Entities/NPC/Controllers/EarthNPCController.h"
 
 #define MAX_ENEMIES 10
 

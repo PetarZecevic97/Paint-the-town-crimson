@@ -35,8 +35,8 @@
     </ClInclude>
     <ClInclude Include="src\Entities\NPC\Controllers\FireNPCController.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\WaterNPCController.h" />
-    <ClInclude Include="WindNPCController.h" />
-    <ClInclude Include="EarthNPCController.h" />
+    <ClInclude Include="src\Entities\NPC\Controllers\WindNPCController.h" />
+    <ClInclude Include="src\Entities\NPC\Controllers\EarthNPCController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -59,8 +59,8 @@
     </ClCompile>
     <ClCompile Include="src\Entities\NPC\Controllers\FireNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\WaterNPCController.cpp" />
-    <ClCompile Include="WindNPCController.cpp" />
-    <ClCompile Include="EarthNPCController.cpp" />
+    <ClCompile Include="src\Entities\NPC\Controllers\WindNPCController.cpp" />
+    <ClCompile Include="src\Entities\NPC\Controllers\EarthNPCController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

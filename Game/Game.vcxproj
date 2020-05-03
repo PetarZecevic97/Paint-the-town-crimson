@@ -155,7 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EarthNPCController.h" />
+    <ClInclude Include="src\Entities\NPC\Controllers\EarthNPCController.h" />
     <ClInclude Include="src\Entities\NPC\EnemiesFactory.h" />
     <ClInclude Include="src\Entities\Components\GameSpecificComponents.h" />
     <ClInclude Include="src\Entities\BorderController.h" />
@@ -169,10 +169,10 @@
     <ClInclude Include="src\Entities\PlayerController.h" />
     <ClInclude Include="src\precomp.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\WaterNPCController.h" />
-    <ClInclude Include="WindNPCController.h" />
+    <ClInclude Include="src\Entities\NPC\Controllers\WindNPCController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EarthNPCController.cpp" />
+    <ClCompile Include="src\Entities\NPC\Controllers\EarthNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\EnemiesFactory.cpp" />
     <ClCompile Include="src\Entities\BorderController.cpp" />
     <ClCompile Include="src\Entities\Dummy\DummyController.cpp" />
@@ -183,7 +183,7 @@
     <ClCompile Include="src\Entities\PlayerController.cpp" />
     <ClCompile Include="src\precomp.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\WaterNPCController.cpp" />
-    <ClCompile Include="WindNPCController.cpp" />
+    <ClCompile Include="src\Entities\NPC\Controllers\WindNPCController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
