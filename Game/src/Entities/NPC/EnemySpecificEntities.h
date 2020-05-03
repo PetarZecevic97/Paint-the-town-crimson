@@ -30,4 +30,9 @@ namespace Game
 	{
 
 	};
+
+	struct FireNPCComponent : public Engine::Component
+	{
+
+	};
 }

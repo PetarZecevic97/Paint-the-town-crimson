@@ -1,7 +1,6 @@
 #include "precomp.h"
 
 #include "EnemiesFactory.h"
-#include "WaterNPCController.h"
 
 namespace Game
 {
@@ -9,6 +8,7 @@ namespace Game
 	{
 
 		m_WaterNPCController = std::make_unique<WaterNPCController>();
+		m_FireNPCController = std::make_unique<FireNPCController>();
 
 		m_Width = 1280;
 		m_Height = 720;
@@ -37,27 +37,17 @@ namespace Game
 			case 0:
 				m_WaterNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
 				break;
+			case 1:
+				m_FireNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
+				break;
 			default:
 				m_WaterNPCController->Init(entityManager, texture->GetTexture("enemy"),m_SpawnPositions[randomPosition]);
 			}
 			m_CurrentElement++;
-
-			//if (auto enemy = m_Enemies[m_CurrentElement] )
-			//{
-
-			//	//enemy->AddComponent<EnemyComponent>(type);
-			//	//enemy->AddComponent<Engine::NPCComponent>();
-			//	//enemy->AddComponent<Engine::TransformComponent>(m_SpawnPositions[randomPosition].x, m_SpawnPositions[randomPosition].y, 50.f, 50.f);
-			//	//enemy->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
-			//	//enemy->AddComponent<Engine::MoverComponent>();
-			//	//enemy->AddComponent<Engine::SpriteComponent>().m_Image = texture;
-			//	//entityManager->AddEntity(std::move(enemy));
-			//}
-			//m_Enemies[m_CurrentElement] = nullptr;
-
 		}
 
 		m_WaterNPCController->Update(dt,entityManager);
+		m_FireNPCController->Update(dt, entityManager);
 		
 	}
 

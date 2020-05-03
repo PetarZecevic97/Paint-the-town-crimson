@@ -1,9 +1,12 @@
 #pragma once
 
-#define MAX_ENEMIES 10
 #include <vector>
+
 #include "Entities/NPC/EnemySpecificEntities.h"
-#include "WaterNPCController.h"
+#include "Entities/NPC/Controllers/FireNPCController.h"
+#include "Entities/NPC/Controllers/WaterNPCController.h"
+
+#define MAX_ENEMIES 10
 
 namespace Engine
 {
@@ -16,6 +19,7 @@ namespace Game
 {
 	class EnemyController;
 	class WaterNPCController;
+	class FireNPCController;
 
 	class EnemiesFactory
 	{
@@ -25,8 +29,8 @@ namespace Game
 		void Reset();
 		bool ShutDown();
 	private:
-		//std::vector<EnemyController*> m_Enemies{};
 		std::unique_ptr<WaterNPCController> m_WaterNPCController;
+		std::unique_ptr<FireNPCController> m_FireNPCController;
 		int m_CurrentElement = 0;
 		float m_Delta = 0.f;
 		float m_Width, m_Height;
