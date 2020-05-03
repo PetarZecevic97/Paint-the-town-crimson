@@ -23,7 +23,7 @@ namespace Engine
 		//??? Optimization with GetAllEntitiesWithComponentFromVector() ???
 
 		auto npcs = entityManager->GetAllEntitiesWithComponents<NPCComponent, TransformComponent, MoverComponent>();
-		auto send = entityManager->GetAllEntitiesWithComponent<Engine::WallComponent>();
+		auto send = entityManager->GetAllEntitiesWithComponent<WallComponent>();
 		auto players = entityManager->GetAllEntitiesWithComponents<PlayerComponent>();
 
 		ASSERT(players.size() <= 1, "Number of players are greater than one!");

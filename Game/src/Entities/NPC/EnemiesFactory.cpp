@@ -9,6 +9,8 @@ namespace Game
 
 		m_WaterNPCController = std::make_unique<WaterNPCController>();
 		m_FireNPCController = std::make_unique<FireNPCController>();
+		m_WindNPCController = std::make_unique<WindNPCController>();
+		m_EarthNPCController = std::make_unique<EarthNPCController>();
 
 		m_Width = 1280;
 		m_Height = 720;
@@ -40,14 +42,22 @@ namespace Game
 			case 1:
 				m_FireNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
 				break;
+			case 2:
+				m_WindNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
+				break;
+			case 3:
+				m_EarthNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
+				break;
 			default:
-				m_WaterNPCController->Init(entityManager, texture->GetTexture("enemy"),m_SpawnPositions[randomPosition]);
+				ASSERT(randomPosition>3 || randomPosition<0, "Out of range: [0,3]");
 			}
 			m_CurrentElement++;
 		}
 
 		m_WaterNPCController->Update(dt,entityManager);
 		m_FireNPCController->Update(dt, entityManager);
+		m_WindNPCController->Update(dt, entityManager);
+		m_EarthNPCController->Update(dt, entityManager);
 		
 	}
 

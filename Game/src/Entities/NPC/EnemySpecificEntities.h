@@ -26,12 +26,22 @@ namespace Game
 		EnemyComponent(EnemyType enemyType) : m_Type(enemyType) {}
 	};
 
-	struct WaterNPCComponenet : public Engine::Component
+	struct WaterNPCComponent : public Engine::Component
 	{
 
 	};
 
 	struct FireNPCComponent : public Engine::Component
+	{
+
+	};
+
+	struct WindNPCComponent : public Engine::Component
+	{
+
+	};
+
+	struct EarthNPCComponent : public Engine::Component
 	{
 
 	};

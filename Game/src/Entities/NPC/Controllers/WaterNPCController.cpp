@@ -14,7 +14,7 @@ namespace Game
 		auto enemy = std::make_unique<Engine::Entity>();
 		enemy->AddComponent<Engine::NPCComponent>();
 		enemy->AddComponent<EnemyComponent>(EnemyType::Water);
-		enemy->AddComponent<WaterNPCComponenet>();
+		enemy->AddComponent<WaterNPCComponent>();
 
 		//enemy->AddComponent<Engine::TransformComponent>(m_SpawnPositions[randomPosition].x, m_SpawnPositions[randomPosition].y, 50.f, 50.f);
 		enemy->AddComponent<Engine::TransformComponent>(spawnPosition.x, spawnPosition.y, 50.f, 50.f);
@@ -28,7 +28,7 @@ namespace Game
 
 	void WaterNPCController::Update(float dt, Engine::EntityManager* entityManager)
 	{
-		auto ewaterNPC = entityManager->GetAllEntitiesWithComponent<WaterNPCComponenet>();
+		auto ewaterNPC = entityManager->GetAllEntitiesWithComponent<WaterNPCComponent>();
 
 		for (auto& enemy : ewaterNPC)
 		{
