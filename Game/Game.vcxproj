@@ -166,6 +166,7 @@
     <ClInclude Include="src\Entities\NPC\EnemySpecificEntities.h" />
     <ClInclude Include="src\Entities\PlayerController.h" />
     <ClInclude Include="src\precomp.h" />
+    <ClInclude Include="src\Entities\NPC\WaterNPCController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Entities\NPC\EnemiesFactory.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="src\Entities\CameraController.cpp" />
     <ClCompile Include="src\Entities\PlayerController.cpp" />
     <ClCompile Include="src\precomp.cpp" />
+    <ClCompile Include="src\Entities\NPC\WaterNPCController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">

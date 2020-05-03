@@ -25,4 +25,9 @@ namespace Game
 		EnemyComponent() : m_Type(EnemyType::Invalid) {}
 		EnemyComponent(EnemyType enemyType) : m_Type(enemyType) {}
 	};
+
+	struct WaterNPCComponenet : public Engine::Component
+	{
+
+	};
 }
