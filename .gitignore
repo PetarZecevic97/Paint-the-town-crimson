@@ -354,3 +354,8 @@ MigrationBackup/
 
 # End of https://www.gitignore.io/api/visualstudio
 Engine/extern/glm/out/
+Engine/Engine.vcxproj
+*.config
+Engine/packages.config
+Engine/packages.config
+Engine/packages.config
