@@ -42,6 +42,8 @@ bool Game::GameApp::GameSpecificInit()
     m_Factory = std::make_unique<EnemiesFactory>();
 	m_Factory->Init();
 
+	// 
+
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
 
@@ -67,6 +69,7 @@ void Game::GameApp::LoadTextures()
 	auto renderer = m_RenderSystem->GetRenderer();
 	m_TextureManager->CreateTexture(renderer, "enemy", "Data/enemy.jpg");
 	m_TextureManager->CreateTexture(renderer, "dummy", "Data/dummy.jpg");
+	m_TextureManager->CreateTexture(renderer, "obstacle", "Data/obstacle.png");
 	//wizard is an old and haggard texture, with mage_3 everyone is gonna be like: Wizard WHO?
 	m_TextureManager->CreateTexture(renderer, "wizard", "Data/wizard.png");
 

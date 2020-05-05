@@ -1,17 +1,19 @@
 #pragma once
 
+
 namespace Engine
 {
-    class EntityManager;
+
 }
 
 namespace Game
 {
-
-    class CameraController
-    {
-    public:
-        bool Init(Engine::EntityManager* entityManager_);
-    };
+	class EarthNPCController
+	{
+	public:
+		bool Init(Engine::EntityManager* entityManager, Engine::Texture* textureManager, vec2 spawnPosition);
+		void Update(float dt, Engine::EntityManager* entityManager);
+		bool ShutDown();
+	private:
+	};
 }
-
