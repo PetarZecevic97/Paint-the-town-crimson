@@ -75,5 +75,9 @@ void Game::GameApp::LoadTextures()
 
 	m_TextureManager->CreateTexture(renderer, "mage", "Data/mage_3.png");
 	m_TextureManager->CreateTexture(renderer, "blank", "Data/blank.png");
+	m_TextureManager->CreateTexture(renderer, "water", "Data/WaterElemental.png");
+	m_TextureManager->CreateTexture(renderer, "fire", "Data/FireElemental.png");
+	m_TextureManager->CreateTexture(renderer, "earth", "Data/earth_elemental.png");
+	
 }
 
