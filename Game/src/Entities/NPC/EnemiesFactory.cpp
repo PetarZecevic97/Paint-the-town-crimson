@@ -79,16 +79,16 @@ namespace Game
 		switch (enemyType)
 		{
 		case 0:
-			m_WaterNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
+			m_WaterNPCController->Init(entityManager, texture->GetTexture("water"), m_SpawnPositions[randomPosition]);
 			break;
 		case 1:
-			m_FireNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
+			m_FireNPCController->Init(entityManager, texture->GetTexture("fire"), m_SpawnPositions[randomPosition]);
 			break;
 		case 2:
-			m_WindNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
+			m_WindNPCController->Init(entityManager, texture->GetTexture("wind"), m_SpawnPositions[randomPosition]);
 			break;
 		case 3:
-			m_EarthNPCController->Init(entityManager, texture->GetTexture("enemy"), m_SpawnPositions[randomPosition]);
+			m_EarthNPCController->Init(entityManager, texture->GetTexture("earth"), m_SpawnPositions[randomPosition]);
 			break;
 		default:
 			ASSERT(randomPosition > 3 || randomPosition < 0, "Out of range: [0,3]");

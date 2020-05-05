@@ -30,6 +30,16 @@ namespace Engine
         }
     };
 
+    struct ObstacleComponent : public Component 
+    {
+        vec2 m_Position{};
+        
+        ObstacleComponent() = default;
+        ObstacleComponent(vec2 pos_) : m_Position(pos_) { };
+        ObstacleComponent(float posx_, float posy_) : m_Position(posx_, posy_) { }
+
+    };
+
     struct TransformComponent : public Component
     {
         vec2 m_Position{};

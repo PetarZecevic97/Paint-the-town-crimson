@@ -161,6 +161,7 @@
     <ClInclude Include="src\Entities\BorderController.h" />
     <ClInclude Include="src\Entities\Dummy\DummyController.h" />
     <ClInclude Include="src\Entities\Dummy\DummySpecificEntities.h" />
+    <ClInclude Include="src\Entities\NPC\EnemyAnimation.h" />
     <ClInclude Include="src\Entities\NPC\EnemyController.h" />
     <ClInclude Include="src\Entities\CameraController.h" />
     <ClInclude Include="src\Core\GameApp.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="src\Entities\NPC\EnemiesFactory.cpp" />
     <ClCompile Include="src\Entities\BorderController.cpp" />
     <ClCompile Include="src\Entities\Dummy\DummyController.cpp" />
+    <ClCompile Include="src\Entities\NPC\EnemyAnimation.cpp" />
     <ClCompile Include="src\Entities\NPC\EnemyController.cpp" />
     <ClCompile Include="src\Core\GameApp.cpp" />
     <ClCompile Include="src\Entities\CameraController.cpp" />

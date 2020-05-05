@@ -1,17 +1,16 @@
 #pragma once
 
+
 namespace Engine
 {
-    class EntityManager;
+	class EntityManager;
 }
 
 namespace Game
 {
-
-    class CameraController
-    {
-    public:
-        bool Init(Engine::EntityManager* entityManager_);
-    };
+	class CameraController
+	{
+	public:
+		bool Init(Engine::EntityManager* entityManager_);
+	};
 }
-

@@ -37,6 +37,9 @@
     <ClInclude Include="src\Entities\NPC\Controllers\WaterNPCController.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\WindNPCController.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\EarthNPCController.h" />
+    <ClInclude Include="src\Entities\NPC\EnemyAnimation.h">
+      <Filter>src\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -61,6 +64,9 @@
     <ClCompile Include="src\Entities\NPC\Controllers\WaterNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\WindNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\EarthNPCController.cpp" />
+    <ClCompile Include="src\Entities\NPC\EnemyAnimation.cpp">
+      <Filter>src\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
