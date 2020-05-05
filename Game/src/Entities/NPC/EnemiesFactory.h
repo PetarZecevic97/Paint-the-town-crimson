@@ -47,7 +47,7 @@ namespace Game
 		float m_Width, m_Height;
 		std::vector<vec2> m_SpawnPositions{};
 		float m_SpawnTimer = 2.f;
-		const int m_Levels[3] = { 2, 3, 2 };
+		const int m_Levels[3] = { 1, 3, 100 };
 		int m_CurrentLevel = 0;
 		int m_SpawnFrequency = 5;
 		bool m_Pause = false;
