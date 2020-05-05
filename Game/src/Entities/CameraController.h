@@ -3,17 +3,14 @@
 
 namespace Engine
 {
-
+	class EntityManager;
 }
 
 namespace Game
 {
-	class EarthNPCController
+	class CameraController
 	{
 	public:
-		bool Init(Engine::EntityManager* entityManager, Engine::Texture* textureManager, vec2 spawnPosition);
-		void Update(float dt, Engine::EntityManager* entityManager);
-		bool ShutDown();
-	private:
+		bool Init(Engine::EntityManager* entityManager_);
 	};
 }

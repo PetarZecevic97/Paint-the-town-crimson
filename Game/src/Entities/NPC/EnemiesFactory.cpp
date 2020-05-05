@@ -43,7 +43,7 @@ namespace Game
 				m_FireNPCController->Init(entityManager, texture->GetTexture("fire"), m_SpawnPositions[randomPosition]);
 				break;
 			case 2:
-				m_WindNPCController->Init(entityManager, texture->GetTexture("fire"), m_SpawnPositions[randomPosition]);
+				m_WindNPCController->Init(entityManager, texture->GetTexture("wind"), m_SpawnPositions[randomPosition]);
 				break;
 			case 3:
 				m_EarthNPCController->Init(entityManager, texture->GetTexture("earth"), m_SpawnPositions[randomPosition]);

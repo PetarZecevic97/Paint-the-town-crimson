@@ -78,6 +78,7 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "water", "Data/WaterElemental.png");
 	m_TextureManager->CreateTexture(renderer, "fire", "Data/FireElemental.png");
 	m_TextureManager->CreateTexture(renderer, "earth", "Data/earth_elemental.png");
+	m_TextureManager->CreateTexture(renderer, "wind", "Data/air_elemental.png");
 	
 }
 
