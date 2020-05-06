@@ -21,6 +21,12 @@ namespace Game
 			obstacle->AddComponent<Engine::ObstacleComponent>();
 			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
 			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+
+			auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+
+			sprite->m_src = new_rect;
+			sprite->m_Animation = true;
+
 			break;
 
 		case LevelNumber::LEVEL_TWO:
@@ -29,6 +35,11 @@ namespace Game
 			obstacle->AddComponent<Engine::ObstacleComponent>();
 			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
 			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+
+			auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+
+			sprite->m_src = new_rect;
+			sprite->m_Animation = false;
 
 
 			break;
@@ -40,6 +51,11 @@ namespace Game
 			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
 			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
+			auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+
+			sprite->m_src = new_rect;
+			sprite->m_Animation = false;
+
 
 			break;
 
@@ -49,15 +65,17 @@ namespace Game
 			obstacle->AddComponent<Engine::ObstacleComponent>();
 			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
 			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+
+			auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+
+			sprite->m_src = new_rect;
+			sprite->m_Animation = false;
+
 			break;
 		}
 
 
 
-		auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
-		
-		sprite->m_src = new_rect;
-		sprite->m_Animation = true;
 
 		entityManager->AddEntity(std::move(obstacle));
 
