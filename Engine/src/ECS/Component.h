@@ -129,6 +129,11 @@ namespace Engine
 
     };
 
+	struct HudComponent : public Component
+	{
+
+	};
+
     struct ItemComponent : public Component
     {
         int m_timeCreated;

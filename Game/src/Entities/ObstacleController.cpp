@@ -45,7 +45,7 @@ namespace Game
 					obstacle->AddComponent<Engine::TransformComponent>(loc.first, loc.second, 50.f, 50.f);
 					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 					obstacle->AddComponent<Engine::ObstacleComponent>();
-					obstacle->AddComponent<Engine::WallComponent>();
+					obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 					entityManager->AddEntity(std::move(obstacle));
 				}
@@ -98,7 +98,7 @@ namespace Game
 					obstacle->AddComponent<Engine::TransformComponent>(loc.first, loc.second, 50.f, 50.f);
 					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 					obstacle->AddComponent<Engine::ObstacleComponent>();
-					obstacle->AddComponent<Engine::WallComponent>();
+					obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 					entityManager->AddEntity(std::move(obstacle));
 				}
@@ -118,14 +118,33 @@ namespace Game
 				obstacle->AddComponent<Engine::TransformComponent>(width / 4, height / 4, 50.f, 50.f);
 				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 				obstacle->AddComponent<Engine::ObstacleComponent>();
-				obstacle->AddComponent<Engine::WallComponent>();
+
+					entityManager->AddEntity(std::move(obstacle));
+				}
+
+				break;
+			}
+
+			default:
+			{
+				auto obstacle = std::make_unique<Engine::Entity>();
+				obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+				auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+				SDL_Rect new_rect = { 0, 100, 50, 50 };
+				sprite->m_src = new_rect;
+				sprite->m_Animation = true;
+
+				obstacle->AddComponent<Engine::TransformComponent>(width / 4, height / 4, 50.f, 50.f);
+				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
+				obstacle->AddComponent<Engine::ObstacleComponent>();
+				obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 				entityManager->AddEntity(std::move(obstacle));
 
 				break;
 			}
 		}
-		
+
 
 
 

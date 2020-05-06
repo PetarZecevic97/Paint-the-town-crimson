@@ -5,6 +5,7 @@ namespace Game
 	enum class EnemyType
 	{
 		Invalid,
+		Mental,
 		Water,
 		Earth,
 		Wind,
@@ -42,6 +43,11 @@ namespace Game
 	};
 
 	struct EarthNPCComponent : public Engine::Component
+	{
+
+	};
+
+	struct MentalNPCComponent : public Engine::Component
 	{
 
 	};
