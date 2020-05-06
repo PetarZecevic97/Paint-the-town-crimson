@@ -106,24 +106,6 @@ namespace Game
 				break;
 			}
 
-			default:
-			{
-				auto obstacle = std::make_unique<Engine::Entity>();
-				obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
-				auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
-				SDL_Rect new_rect = { 0, 100, 50, 50 };
-				sprite->m_src = new_rect;
-				sprite->m_Animation = true;
-
-				obstacle->AddComponent<Engine::TransformComponent>(width / 4, height / 4, 50.f, 50.f);
-				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
-				obstacle->AddComponent<Engine::ObstacleComponent>();
-
-					entityManager->AddEntity(std::move(obstacle));
-				}
-
-				break;
-			}
 
 			default:
 			{
@@ -144,15 +126,6 @@ namespace Game
 				break;
 			}
 		}
-
-
-
-
-
-		
-
-
-
 		return true;
 	}
 

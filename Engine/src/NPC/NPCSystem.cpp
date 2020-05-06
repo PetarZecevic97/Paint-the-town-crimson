@@ -6,7 +6,7 @@
 #include "ECS/Component.h"
 
 #define STEP  2 // STEP * SPEED =>  0.1*100
-#define MAX_PATHFINDING_ITERATIONS 20 //Num of iterations for ray casting
+#define MAX_PATHFINDING_ITERATIONS 12 //Num of iterations for ray casting
 
 namespace Engine
 {
