@@ -92,7 +92,11 @@ namespace Engine
 
     struct PlayerComponent : public Component
     {
-
+        float m_speed{ 200.f };
+        int m_fireballCooldown{ 500 };
+        bool m_timeoutBuff{ false };
+        bool m_tripleshotBuff{ false };
+        bool m_multishotBuff{ false };
     };
 
     struct FireballComponent : public Component
@@ -105,11 +109,43 @@ namespace Engine
 
     };
 
+    struct LeftBorderComponent : public Component
+    {
+
+    };
+
+    struct RightBorderComponent : public Component
+    {
+
+    };
+
+    struct TopBorderComponent : public Component
+    {
+
+    };
+
+    struct BottomBorderComponent : public Component
+    {
+
+    };
+
     struct ItemComponent : public Component
     {
         int m_timeCreated;
+        int m_itemType;
 
-        ItemComponent(int time) : m_timeCreated(time) {}
+      //  ItemComponent(int time, int item_type) : m_timeCreated(time), m_itemType(item_type) {};
+        ItemComponent(int time) : m_timeCreated(time) {};
+    };
+
+    struct BuffComponent : public Component
+    {
+        int m_duration{ 5000 };
+        int m_timeCreated;
+        int m_buffType;
+
+        BuffComponent(int time) : m_timeCreated(time) {};
+
     };
 
     struct HealthComponent : public Component

@@ -15,6 +15,7 @@ namespace Game
         item->AddComponent<Engine::TransformComponent>(x, y, 22.f, 22.f);
         item->AddComponent<Engine::CollisionComponent>(22.f, 22.f);
         item->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
+        item->GetComponent<Engine::ItemComponent>()->m_itemType = item_type;
         item->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
         SDL_Rect new_rect;
@@ -42,7 +43,7 @@ namespace Game
 
         auto items = entityManager_->GetAllEntitiesWithComponents<Engine::ItemComponent>();
 
-        for (auto& item : items)
+        for (auto* item : items)
         {
 
 
@@ -58,16 +59,63 @@ namespace Game
             {
                 if (entity->HasComponent<Engine::PlayerComponent>())
                 {
-                    entityManager_->RemoveEntity(item->GetId());
+                    if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 0 || item->GetComponent<Engine::ItemComponent>()->m_itemType == 3) {
+                        entityManager_->RemoveEntity(item->GetId());
+                    }
+                    else {
+                        
+                        item->AddComponent<Engine::BuffComponent>(SDL_GetTicks());
+                        item->GetComponent<Engine::BuffComponent>()->m_buffType = item->GetComponent<Engine::ItemComponent>()->m_itemType;
+                        item->GetComponent<Engine::TransformComponent>()->m_Position.x = -2000;
+                        item->GetComponent<Engine::TransformComponent>()->m_Position.y = -2000;
+                        item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
+                       /* item->RemoveComponent<Engine::CollisionComponent>();
+                        item->RemoveComponent<Engine::SpriteComponent>();
+                        item->RemoveComponent<Engine::ItemComponent>();*/
+                        
+                        
+                    }
                     break;
                 }
             }
 
         }
 
+        auto buffs = entityManager_->GetAllEntitiesWithComponents<Engine::BuffComponent>();
+        auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
+
+        for (auto* buff : buffs)
+        {
+            auto buffComponent = buff->GetComponent<Engine::BuffComponent>();
+            if (SDL_GetTicks() > buffComponent->m_timeCreated + buffComponent->m_duration) {
+                if (buffComponent->m_buffType == 1)
+                {
+                    player->GetComponent<Engine::PlayerComponent>()->m_speed -= 100;
+                }
+                else if (buffComponent->m_buffType == 2 && player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown <= 500)
+                {
+                    player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown += 200;
+                }
+                else if (buffComponent->m_buffType == 4)
+                {
+                    player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = false;
+                }
+                else if (buffComponent->m_buffType == 5)
+                {
+                    player->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff = false;
+                }
+                else if (buffComponent->m_buffType == 6)
+                {
+                    player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff = false;
+                }
+                entityManager_->RemoveEntity(buff->GetId());
+                continue;
+            }
+        }
+
     }
 
-    bool CreateFireball(Engine::EntityManager* entityManager_) {
+    bool CreateFireball(Engine::EntityManager* entityManager_, int direction, int direction2) {
         ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to ProjectileController::Init()");
 
         auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
@@ -99,30 +147,109 @@ namespace Game
         //if we want to animate an entity
         comp->m_Animation = true;
 
-      
-        bool shootUpInput = Engine::InputManager::IsActionActive(input, "PlayerShootUp");
-        bool shootDownInput = Engine::InputManager::IsActionActive(input, "PlayerShootDown");
-        bool shootLeftInput = Engine::InputManager::IsActionActive(input, "PlayerShootLeft");
-        bool shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
-
         float speed = 300.f;
+
+        bool shootUpInput = false;
+        bool shootDownInput = false;
+        bool shootLeftInput = false;
+        bool shootRightInput = false;
+        if (player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff)
+        {
+            switch (direction2) {
+            case 1:
+                shootUpInput = true;
+                break;
+            case 2:
+                shootUpInput = true;
+                shootRightInput = true;
+                speed /= 1.41421;
+                break;
+            case 3:
+                shootRightInput = true;
+                break;
+            case 4:
+                shootRightInput = true;
+                shootDownInput = true;
+                speed /= 1.41421;
+                break;
+            case 5:
+                shootDownInput = true;
+                break;
+            case 6:
+                shootDownInput = true;
+                shootLeftInput = true;
+                speed /= 1.41421;
+                break;
+            case 7:
+                shootLeftInput = true;
+                break;
+            case 8:
+                shootLeftInput = true;
+                shootUpInput = true;
+                speed /= 1.41421;
+                break;
+            default:
+                break;
+            }
+            
+        }
+        else
+        {
+            shootUpInput = Engine::InputManager::IsActionActive(input, "PlayerShootUp");
+            shootDownInput = Engine::InputManager::IsActionActive(input, "PlayerShootDown");
+            shootLeftInput = Engine::InputManager::IsActionActive(input, "PlayerShootLeft");
+            shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
+        }
+
 
         if (shootUpInput) {
             auto move = fireball->GetComponent<Engine::MoverComponent>();
             move->m_TranslationSpeed.y = -speed;
+            if (direction == 1)
+            {
+                move->m_TranslationSpeed.x = -speed / 4;
+            } 
+            else if (direction == 2)
+            {
+                move->m_TranslationSpeed.x = speed / 4;
+            }
         }
         else if (shootDownInput) {
             auto move = fireball->GetComponent<Engine::MoverComponent>();
             move->m_TranslationSpeed.y = speed;
+            if (direction == 1)
+            {
+                move->m_TranslationSpeed.x = -speed / 4;
+            }
+            else if (direction == 2)
+            {
+                move->m_TranslationSpeed.x = speed / 4;
+            }
         }
 
         if (shootLeftInput) {
             auto move = fireball->GetComponent<Engine::MoverComponent>();
             move->m_TranslationSpeed.x = -speed;
+            if (direction == 1)
+            {
+                move->m_TranslationSpeed.y = -speed / 4;
+            }
+            else if (direction == 2)
+            {
+                move->m_TranslationSpeed.y = speed / 4;
+            }
         }
         else  if (shootRightInput) {
             auto move = fireball->GetComponent<Engine::MoverComponent>();
             move->m_TranslationSpeed.x = speed;
+            if (direction == 1)
+            {
+                move->m_TranslationSpeed.y = -speed / 4;
+            }
+            else if (direction == 2)
+            {
+                move->m_TranslationSpeed.y = speed / 4;
+            }
         }
 
         entityManager_->AddEntity(std::move(fireball));
@@ -151,7 +278,7 @@ namespace Game
             {
                 if (entity->HasComponent<Engine::NPCComponent>())
                 {
-                   CreateItem(entityManager_, 0, fireball->GetComponent<Engine::SpriteComponent>()->m_Image, entity);
+                   CreateItem(entityManager_, 6, fireball->GetComponent<Engine::SpriteComponent>()->m_Image, entity);
                    entityManager_->RemoveEntity(fireball->GetId());
                    entityManager_->RemoveEntity(entity->GetId());
                    
@@ -221,7 +348,8 @@ namespace Game
             auto move = player->GetComponent<Engine::MoverComponent>();
             auto transform = player->GetComponent<Engine::TransformComponent>();
             auto input = player->GetComponent<Engine::InputComponent>();
-            auto speed = 200.f; // entity->GetComponent<Engine::PlayerComponent>()->m_PanSpeed;
+            auto speed = player->GetComponent<Engine::PlayerComponent>()->m_speed;
+            //auto speed = 200.f; // entity->GetComponent<Engine::PlayerComponent>()->m_PanSpeed;
 
             bool moveUpInput = Engine::InputManager::IsActionActive(input, "PlayerMoveUp");
             bool moveDownInput = Engine::InputManager::IsActionActive(input, "PlayerMoveDown");
@@ -234,9 +362,23 @@ namespace Game
             bool shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
 
             int ticks = SDL_GetTicks() - m_last_fired_time;
-            if (ticks > m_fireball_cooldown && (shootUpInput || shootDownInput || shootLeftInput || shootRightInput)) {
+            if (ticks > player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown && (shootUpInput || shootDownInput || shootLeftInput || shootRightInput)) {
                 m_last_fired_time += ticks;
-                Game::CreateFireball(entityManager_);
+                int limit = 1;
+                if (player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff)
+                {
+                    limit = 8;
+                }
+                for (int i = 1; i <= limit; i++)
+                {
+                    Game::CreateFireball(entityManager_, 0, i);
+                    if (player->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
+                    {
+                        Game::CreateFireball(entityManager_, 1, i);
+                        Game::CreateFireball(entityManager_, 2, i);
+                    }
+                }
+                
             }
             
             move->m_TranslationSpeed.y = speed * ((moveUpInput ? -1.0f : 0.0f) + (moveDownInput ? 1.0f : 0.0f));
@@ -272,16 +414,88 @@ namespace Game
 				comp->m_src = new_rect;
 			}
 
+            
 
             auto collider = player->GetComponent<Engine::CollisionComponent>();
 
-            for (const auto& entity : collider->m_CollidedWith)
+            for (auto* entity : collider->m_CollidedWith)
             {
-                if (entity->HasComponent<Engine::BorderComponent>())
+
+                if (entity->HasComponent<Engine::ItemComponent>())
+                {
+                    int itemType = entity->GetComponent<Engine::ItemComponent>()->m_itemType;
+                    auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
+                    switch(itemType) {
+                    //lives
+                    case 0:
+                        m_number_of_lives++;
+                        break;
+                    //speed
+                    case 1:
+                        player->GetComponent<Engine::PlayerComponent>()->m_speed += 100;
+
+                        break;
+                    //rapid fireballs
+                    case 2:
+                        if (player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown > 100)
+                        {
+                            player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown -= 200;
+                        }
+
+                        break;
+                    //destroyer of worlds
+                    case 3:
+                        
+                        for (auto* enemy : enemies) {
+                            entityManager_->RemoveEntity(enemy->GetId());
+                        }
+                        break;
+                    //timelord
+                    case 4:
+
+                        player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = true;
+                        
+                        break;
+                    //triple
+                    case 5:
+
+                        player->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff = true;
+
+                        break;
+                    case 6:
+
+                        player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff = true;
+
+                        break;
+                    //360 noscope
+                    default:
+                        
+                        break;
+                    }
+                    
+                } 
+                else if (entity->HasComponent<Engine::BorderComponent>())
                 {
                     move->m_TranslationSpeed.y = speed * ((moveUpInput ? 20.0f : 0.0f) + (moveDownInput ? -20.0f : 0.0f));
                     move->m_TranslationSpeed.x = speed * ((moveLeftInput ? 20.0f : 0.0f) + (moveRightInput ? -20.0f : 0.0f));
+
                 }
+                else if (entity->HasComponent<Engine::NPCComponent>())
+                {
+                    m_number_of_lives--;
+                    entityManager_->RemoveEntity(entity->GetId());
+                    if (m_number_of_lives == 0) {
+                        player->GetComponent<Engine::TransformComponent>()->m_Position.x = 0.f;
+                        player->GetComponent<Engine::TransformComponent>()->m_Position.y = 0.f;
+                        m_number_of_lives = 3;
+                        auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
+                        for (auto* enemy : enemies) {
+                            entityManager_->RemoveEntity(enemy->GetId());
+                        }
+                    }
+                }
+
+
             }
         
         }
