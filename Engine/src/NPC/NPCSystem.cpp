@@ -5,7 +5,7 @@
 #include "ECS/EntityManager.h"
 #include "ECS/Component.h"
 
-#define STEP  10 // STEP * SPEED =>  0.1*100
+#define STEP  2 // STEP * SPEED =>  0.1*100
 #define MAX_PATHFINDING_ITERATIONS 10 //Num of iterations for ray casting
 
 namespace Engine

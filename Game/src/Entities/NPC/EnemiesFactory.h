@@ -7,6 +7,7 @@
 #include "Entities/NPC/Controllers/WaterNPCController.h"
 #include "Entities/NPC/Controllers/WindNPCController.h"
 #include "Entities/NPC/Controllers/EarthNPCController.h"
+#include "Entities/NPC/Controllers/MentalNPCController.h"
 
 #define MAX_ENEMIES 50
 
@@ -24,6 +25,7 @@ namespace Game
 	class FireNPCController;
 	class WindNPCController;
 	class EarthNPCController;
+	class MentalNPCController;
 
 	class EnemiesFactory
 	{
@@ -42,6 +44,7 @@ namespace Game
 		std::unique_ptr<FireNPCController> m_FireNPCController;
 		std::unique_ptr<WindNPCController> m_WindNPCController;
 		std::unique_ptr<EarthNPCController> m_EarthNPCController;
+		std::unique_ptr<MentalNPCController> m_MentalNPCController;
 		int m_CurrentElement = 1;
 		float m_Delta = 0.f;
 		float m_Width, m_Height;

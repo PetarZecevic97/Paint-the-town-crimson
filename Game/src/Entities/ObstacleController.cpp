@@ -2,6 +2,10 @@
 
 #include "ObstacleController.h"
 #include "Misc.h"
+#include <cmath>
+#include <vector>
+# define M_PI          3.141592653589793238462643383279502884L /* pi */
+
 
 namespace Game
 {
@@ -11,56 +15,116 @@ namespace Game
 		ASSERT(texture != nullptr, "Must pass valid pointer to texture to ObstacleCOntroller::Init()");
 
 		
-		auto obstacle = std::make_unique<Engine::Entity>();
-		SDL_Rect new_rect = { 0, 0, 50, 50 };
-		switch (gLevelNumber)
-		{
-		case LevelNumber::LEVEL_ONE:
-			obstacle->AddComponent<Engine::TransformComponent>(width / 2, height / 2, 50.f, 50.f);
-			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
-			obstacle->AddComponent<Engine::ObstacleComponent>();
-			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
-			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
-			break;
-
-		case LevelNumber::LEVEL_TWO:
-			obstacle->AddComponent<Engine::TransformComponent>(width / 2, height / 2, 50.f, 50.f);
-			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
-			obstacle->AddComponent<Engine::ObstacleComponent>();
-			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
-			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
-
-
-			break;
-
-		case LevelNumber::LEVEL_THREE:
-			obstacle->AddComponent<Engine::TransformComponent>(width / 2, height / 2, 50.f, 50.f);
-			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
-			obstacle->AddComponent<Engine::ObstacleComponent>();
-			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
-			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
-
-
-			break;
-
-		default:
-			obstacle->AddComponent<Engine::TransformComponent>(width / 2, height / 2, 50.f, 50.f);
-			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
-			obstacle->AddComponent<Engine::ObstacleComponent>();
-			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
-			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
-			break;
-		}
-
-
-
-		auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
 		
-		sprite->m_src = new_rect;
-		sprite->m_Animation = true;
 
-		entityManager->AddEntity(std::move(obstacle));
+		// Brancing depending on the level in question
+		switch (levelNo)
+		{
+			case LevelNumber::LEVEL_ONE:
+			{
 
+				break;
+			}
+			case LevelNumber::LEVEL_THREE:
+			{
+				std::vector < std::pair<int, int> > lObstacleLocations;
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 4,0));
+				lObstacleLocations.push_back(std::make_pair(-0.8 * height / 4, 0));
+				lObstacleLocations.push_back(std::make_pair(0, 0.8 * height / 4));
+				lObstacleLocations.push_back(std::make_pair(0, -0.8 * height / 4));
+				for (auto loc : lObstacleLocations)
+				{
+					
+					auto obstacle = std::make_unique<Engine::Entity>();
+					obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+					auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+					SDL_Rect new_rect = { 0, 0, 50, 50 };
+					sprite->m_src = new_rect;
+					sprite->m_Animation = true;
+
+					obstacle->AddComponent<Engine::TransformComponent>(loc.first, loc.second, 50.f, 50.f);
+					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
+					obstacle->AddComponent<Engine::ObstacleComponent>();
+					obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
+
+					entityManager->AddEntity(std::move(obstacle));
+				}
+
+				break;
+			}
+			case LevelNumber::LEVEL_TWO:
+			{
+				std::vector < std::pair<int, int> > lObstacleLocations;
+				
+				// TODO:Alright, there's four clumps of these fuckers as you can plainly see, it would have
+				// been smart to label which ones are which, but I'm beat right now. Good luck future me.
+
+				// Screw you future me...
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * height / 3 - 60));
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * height / 3 - 120));
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3 - 60, 0.8 * height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3 - 120, 0.8 * height / 3));
+
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3, 0.8 * height / 3 - 60));
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3, 0.8 * height / 3 - 120));
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3, 0.8 * height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3 + 60, 0.8 * height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3 + 120, 0.8 * height / 3));
+
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * -height / 3 + 60));
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * -height / 3 + 120));
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * -height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3 - 60, 0.8 * -height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3 - 120, 0.8 * -height / 3));
+
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3, 0.8 * -height / 3 + 60));
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3, 0.8 * -height / 3 + 120));
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3, 0.8 * -height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3 + 60, 0.8 * -height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8 * -height / 3 + 120, 0.8 * -height / 3));
+
+
+				for (auto loc : lObstacleLocations)
+				{
+
+					auto obstacle = std::make_unique<Engine::Entity>();
+					obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+					auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+					SDL_Rect new_rect = { 0, 50, 50, 50 };
+					sprite->m_src = new_rect;
+					sprite->m_Animation = true;
+
+					obstacle->AddComponent<Engine::TransformComponent>(loc.first, loc.second, 50.f, 50.f);
+					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
+					obstacle->AddComponent<Engine::ObstacleComponent>();
+					obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
+
+					entityManager->AddEntity(std::move(obstacle));
+				}
+
+				break;
+			}
+
+			default:
+			{
+				auto obstacle = std::make_unique<Engine::Entity>();
+				obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+				auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+				SDL_Rect new_rect = { 0, 100, 50, 50 };
+				sprite->m_src = new_rect;
+				sprite->m_Animation = true;
+
+				obstacle->AddComponent<Engine::TransformComponent>(width / 4, height / 4, 50.f, 50.f);
+				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
+				obstacle->AddComponent<Engine::ObstacleComponent>();
+				obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
+
+				entityManager->AddEntity(std::move(obstacle));
+
+				break;
+			}
+		}
 
 
 		return true;

@@ -45,6 +45,8 @@
     <ClInclude Include="src\Entities\HudController.h">
       <Filter>src\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\Entities\StageController.h" />
+    <ClInclude Include="src\Entities\NPC\Controllers\MentalNPCController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -76,6 +78,8 @@
     <ClCompile Include="src\Entities\HudController.cpp">
       <Filter>src\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entities\StageController.cpp" />
+    <ClCompile Include="src\Entities\NPC\Controllers\MentalNPCController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -92,5 +96,6 @@
     <Image Include="Data\obstacles.png" />
     <Image Include="Data\WaterElemental.png" />
     <Image Include="Data\wizard.png" />
+    <Image Include="Data\terrain.png" />
   </ItemGroup>
 </Project>

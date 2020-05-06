@@ -14,6 +14,7 @@
 #include "Entities/NPC/EnemyController.h"
 #include "Entities/NPC/EnemiesFactory.h"
 #include "Entities/Dummy/DummyController.h"
+#include "Entities/StageController.h"
 
 void Game::GameApp::GameSpecificWindowData()
 {
@@ -24,6 +25,7 @@ void Game::GameApp::GameSpecificWindowData()
     // gameSpecificWindowData.m_Vsync = true;
     SetWindowData(gameSpecificWindowData);
 }
+
 
 bool Game::GameApp::GameSpecificInit()
 {
@@ -38,7 +40,11 @@ bool Game::GameApp::GameSpecificInit()
 	m_CameraController = std::make_unique<CameraController>();
 	m_CameraController->Init(m_EntityManager.get());
 
+	m_StageController = std::make_unique<StageController>();
+	m_StageController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("stage"));
+
     m_PlayerController = std::make_unique<PlayerController>();
+    //m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("wizard"));
 	m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("mage"));
 
 	//m_DummyController = std::make_unique<DummyController>();
@@ -53,9 +59,9 @@ bool Game::GameApp::GameSpecificInit()
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
 
+
 	m_HudController = std::make_unique<HudController>();
 	m_HudController->Init(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height);
-
 
     return true;
 }
@@ -63,6 +69,7 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
+	m_ObstacleController->Update(dt, m_EntityManager.get());
 	Game::UpdateItems(m_EntityManager.get());
 	if (!m_Factory->IsFactoryPaused())
 	{
@@ -88,7 +95,6 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 		m_HudController->Update(m_EntityManager.get(), m_window_width, m_window_height);
 
 	}
-
 }
 
 bool Game::GameApp::GameSpecificShutdown()
@@ -112,7 +118,9 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "fire", "Data/FireElemental.png");
 	m_TextureManager->CreateTexture(renderer, "earth", "Data/earth_elemental.png");
 	m_TextureManager->CreateTexture(renderer, "wind", "Data/air_elemental.png");
+	m_TextureManager->CreateTexture(renderer, "stage", "Data/terrain.png");
 	m_TextureManager->CreateTexture(renderer, "items", "Data/items.png");
+	
 	
 }
 
@@ -120,4 +128,3 @@ void Game::GameApp::setWindowSize(int win_width, int win_height) {
 	m_window_width = win_width;
 	m_window_height = win_height;
 }
-

@@ -11,6 +11,7 @@ namespace Game
 		m_FireNPCController = std::make_unique<FireNPCController>();
 		m_WindNPCController = std::make_unique<WindNPCController>();
 		m_EarthNPCController = std::make_unique<EarthNPCController>();
+		m_MentalNPCController = std::make_unique<MentalNPCController>();
 
 		m_Width = 1280;
 		m_Height = 720;
@@ -41,11 +42,12 @@ namespace Game
 			m_SleepTimeStart = SDL_GetTicks();
 		}
 
-		m_WaterNPCController->Update(dt,entityManager);
+		m_WaterNPCController->Update(dt, entityManager);
 		m_FireNPCController->Update(dt, entityManager);
 		m_WindNPCController->Update(dt, entityManager);
 		m_EarthNPCController->Update(dt, entityManager);
-		
+		m_MentalNPCController->Update(dt, entityManager);
+
 	}
 
 	void EnemiesFactory::Reset()
@@ -64,7 +66,7 @@ namespace Game
 
 	void EnemiesFactory::Sleep()
 	{
-		if (SDL_GetTicks() - m_SleepTimeStart > 3000 && m_CurrentLevel<3)
+		if (SDL_GetTicks() - m_SleepTimeStart > 3000 && m_CurrentLevel < 3)
 		{
 			m_Pause = false;
 		}
@@ -74,8 +76,15 @@ namespace Game
 	{
 		m_SpawnTimer -= m_CurrentElement % m_SpawnFrequency == 0 ? (m_SpawnTimer < 0.6f ? 0.f : 0.2f) : 0.f;
 		m_Delta = 0.f;
+
+		int enemyType = 4;
+		float strongerNPCprobability = static_cast<float>(rand()) / RAND_MAX;
+		if (strongerNPCprobability >= 0.7)
+		{
+			enemyType = rand() % 4;
+		}
+
 		int randomPosition = rand() % 4;
-		int enemyType = rand() % 4;
 		switch (enemyType)
 		{
 		case 0:
@@ -89,6 +98,9 @@ namespace Game
 			break;
 		case 3:
 			m_EarthNPCController->Init(entityManager, texture->GetTexture("earth"), m_SpawnPositions[randomPosition]);
+			break;
+		case 4:
+			m_MentalNPCController->Init(entityManager, texture->GetTexture("earth"), m_SpawnPositions[randomPosition]);
 			break;
 		default:
 			ASSERT(randomPosition > 3 || randomPosition < 0, "Out of range: [0,3]");
