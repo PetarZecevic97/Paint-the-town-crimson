@@ -8,6 +8,8 @@ namespace Game
 		LEVEL_ONE = 0,
 		LEVEL_TWO,
 		LEVEL_THREE,
+		LEVEL_WIN,
+		LEVEL_GAME_OVER,
 		NUM_OF_LEVELS
 	};
 

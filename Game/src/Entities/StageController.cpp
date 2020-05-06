@@ -20,7 +20,16 @@ namespace Game
         stage->AddComponent<Engine::ObstacleComponent>();
 
         entityManager_->AddEntity(std::move(stage));
+        m_currentLevelNo = LevelNumber::LEVEL_ONE;
 
         return true;
+    }
+
+    void StageController::Update(Engine::EntityManager* entityManager_, int window_width, int window_height,bool isGameOver_) 
+    {
+        if(isGameOver_)m_currentLevelNo = LevelNumber::LEVEL_GAME_OVER;
+        if (m_currentLevelNo == LevelNumber::LEVEL_ONE)m_currentLevelNo = LevelNumber::LEVEL_TWO;
+        else if (m_currentLevelNo == LevelNumber::LEVEL_TWO)m_currentLevelNo = LevelNumber::LEVEL_THREE;
+        else if (m_currentLevelNo == LevelNumber::LEVEL_THREE)m_currentLevelNo = LevelNumber::LEVEL_WIN;
     }
 }
