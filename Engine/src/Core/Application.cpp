@@ -105,6 +105,12 @@ namespace Engine {
                 {
                     m_Running = false;
                 }
+
+				if (event.type == SDL_WINDOWEVENT &&
+					event.window.event == SDL_WINDOWEVENT_RESIZED)
+				{
+					setWindowSize(event.window.data1, event.window.data2);
+				}
             }
 
             auto frameTime = SDL_GetPerformanceCounter();

@@ -76,8 +76,16 @@ namespace Game
         auto player_trans = player->GetComponent<Engine::TransformComponent>();
         float x = player_trans->m_Position[0];
         float y = player_trans->m_Position[1];
+		auto input = player->GetComponent<Engine::InputComponent>();
 
-        fireball->AddComponent<Engine::TransformComponent>(x, y, 22.f, 22.f);
+
+		bool moveUpInput = Engine::InputManager::IsActionActive(input, "PlayerMoveUp");
+		bool moveDownInput = Engine::InputManager::IsActionActive(input, "PlayerMoveDown");
+		bool moveLeftInput = Engine::InputManager::IsActionActive(input, "PlayerMoveLeft");
+		bool moveRightInput = Engine::InputManager::IsActionActive(input, "PlayerMoveRight");
+
+
+        fireball->AddComponent<Engine::TransformComponent>(x-36*(((moveUpInput || moveLeftInput) && !moveRightInput && !moveDownInput) ? -1 : 1), y-6, 22.f, 22.f);
         fireball->AddComponent<Engine::CollisionComponent>(22.f, 22.f);
         fireball->AddComponent<Engine::FireballComponent>();
         fireball->AddComponent<Engine::MoverComponent>();
@@ -91,8 +99,7 @@ namespace Game
         //if we want to animate an entity
         comp->m_Animation = true;
 
-        auto input = player->GetComponent<Engine::InputComponent>();
-
+      
         bool shootUpInput = Engine::InputManager::IsActionActive(input, "PlayerShootUp");
         bool shootDownInput = Engine::InputManager::IsActionActive(input, "PlayerShootDown");
         bool shootLeftInput = Engine::InputManager::IsActionActive(input, "PlayerShootLeft");

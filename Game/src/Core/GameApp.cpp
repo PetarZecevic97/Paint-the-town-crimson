@@ -82,3 +82,8 @@ void Game::GameApp::LoadTextures()
 	
 }
 
+void Game::GameApp::setWindowSize(int win_width, int win_height) {
+	m_window_width = win_width;
+	m_window_height = win_height;
+}
+

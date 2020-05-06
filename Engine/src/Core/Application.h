@@ -40,6 +40,7 @@ namespace Engine {
         virtual bool GameSpecificInit() = 0;
         virtual bool GameSpecificShutdown() = 0;
         virtual void GameSpecificUpdate(float dt) = 0;
+		virtual void setWindowSize(int win_width, int win_height) = 0;
 
         void Update(float dt);
 

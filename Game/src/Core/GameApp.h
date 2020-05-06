@@ -14,11 +14,16 @@ namespace Game
 
     class GameApp final : public Engine::Application
     {
+	public:
+		
+		int m_window_width{ 1280 };
+		int m_window_height{ 720 };
     private:
         void GameSpecificWindowData() override;
         bool GameSpecificInit() override;
         void GameSpecificUpdate(float dt) override;
         bool GameSpecificShutdown() override;
+		void setWindowSize(int win_width, int win_height) override;
 
 		void LoadTextures();
 
@@ -30,10 +35,6 @@ namespace Game
 
         std::unique_ptr<BorderController> m_BorderController{};
         
-
-        int m_window_width{ 1280 };
-        int m_window_height{ 720 };
-
 
         std::unique_ptr<EnemiesFactory> m_Factory{};
     };
