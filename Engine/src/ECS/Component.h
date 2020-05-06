@@ -170,7 +170,7 @@ namespace Engine
 
 	struct NPCComponent : public Component
 	{
-
+        int m_SideToLook = 1;
 	};
 
     struct WallComponent : public Component
