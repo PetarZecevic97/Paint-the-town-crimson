@@ -69,6 +69,19 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	{
 		m_Factory->Sleep();
 	}
+	SDL_Event event{ };
+
+	while (SDL_PollEvent(&event) != 0)
+	{
+
+		if (event.type == SDL_WINDOWEVENT &&
+			event.window.event == SDL_WINDOWEVENT_RESIZED)
+		{
+			m_BorderController->Update(m_EntityManager.get(), event.window.data1, event.window.data2);
+
+		}
+	}
+
 }
 
 bool Game::GameApp::GameSpecificShutdown()

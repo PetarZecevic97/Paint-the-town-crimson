@@ -57,8 +57,19 @@ namespace Engine
 				angle += pi / 4;
 
 			}
-			mover->m_TranslationSpeed.x = (addition < twoPI) ? (std::cosf(angle) * 200.f) : (-mover->m_TranslationSpeed.x);
-			mover->m_TranslationSpeed.y = (addition < twoPI) ? (std::sinf(angle) * 200.f)  : (-mover->m_TranslationSpeed.y);
+
+			//Petar je menjao ovde kod!
+			if (players[0]->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff)
+			{
+				mover->m_TranslationSpeed.x = 0.f;
+				mover->m_TranslationSpeed.y = 0.f;
+			}
+			else
+			{
+
+				mover->m_TranslationSpeed.x = (addition < twoPI) ? (std::cosf(angle) * 200.f) : (-mover->m_TranslationSpeed.x);
+				mover->m_TranslationSpeed.y = (addition < twoPI) ? (std::sinf(angle) * 200.f) : (-mover->m_TranslationSpeed.y);
+			}
 
 		}
 	}
