@@ -1,11 +1,11 @@
 #pragma once
-
+#include "Misc.h"
 
 namespace Engine
 {
 	class EntityManager;
 	class TextureManager;
-	class Texture;
+	struct Texture;
 }
 
 namespace Game
@@ -13,7 +13,7 @@ namespace Game
 	class ObstacleController
 	{
 	public:
-		bool Init(Engine::EntityManager* entityManager, Engine::Texture* texture, int numberOfObstacles)
+		bool Init(Engine::EntityManager* entityManager, Engine::Texture* texture, LevelNumber levelNo, int width, int height);
 		void Update(float dt, Engine::EntityManager* entityManager);
 		bool ShutDown();
 	private:

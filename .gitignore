@@ -359,3 +359,6 @@ Engine/Engine.vcxproj
 Engine/packages.config
 Engine/packages.config
 Engine/packages.config
+Game/Game.vcxproj.filters
+Game/Game.vcxproj
+Game/Game.vcxproj.filters
