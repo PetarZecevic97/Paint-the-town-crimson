@@ -29,6 +29,10 @@ bool Game::GameApp::GameSpecificInit()
     m_RenderSystem->SetBackgroundColor(148, 0, 211, 1);
 
 	LoadTextures();
+	//here we try to get the correct window height and width upon entry
+	int w, h;
+	SDL_GetRendererOutputSize(m_RenderSystem->GetRenderer()->GetNativeRenderer(), &w, &h);
+	setWindowSize(w, h);
 
 	m_CameraController = std::make_unique<CameraController>();
 	m_CameraController->Init(m_EntityManager.get());

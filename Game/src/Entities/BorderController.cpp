@@ -13,7 +13,7 @@ namespace Game
         auto border = std::make_unique<Engine::Entity>();
 
         border->AddComponent<Engine::BorderComponent>();
-        border->AddComponent<Engine::TransformComponent>(-window_width * 1.0 / 2, 0.f, 1.f, window_height * 1.0);
+        border->AddComponent<Engine::TransformComponent>(-window_width * 0.8 / 2, 0.f, 1.f, window_height * 1.0);
         border->AddComponent<Engine::CollisionComponent>(1.f, window_height*1.0);
         border->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
