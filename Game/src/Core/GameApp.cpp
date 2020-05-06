@@ -39,6 +39,9 @@ bool Game::GameApp::GameSpecificInit()
 	m_CameraController = std::make_unique<CameraController>();
 	m_CameraController->Init(m_EntityManager.get());
 
+	m_StageController = std::make_unique<StageController>();
+	m_StageController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("stage"));
+
     m_PlayerController = std::make_unique<PlayerController>();
     //m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("wizard"));
 	m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("mage"));
@@ -52,10 +55,12 @@ bool Game::GameApp::GameSpecificInit()
 	m_ObstacleController = std::make_unique<ObstacleController>();
 	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), LevelNumber::LEVEL_TWO, m_window_width, m_window_height);
 
-
-
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
+
+
+
+
 
 
     return true;
@@ -96,6 +101,7 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "fire", "Data/FireElemental.png");
 	m_TextureManager->CreateTexture(renderer, "earth", "Data/earth_elemental.png");
 	m_TextureManager->CreateTexture(renderer, "wind", "Data/air_elemental.png");
+	m_TextureManager->CreateTexture(renderer, "stage", "Data/terrain.png");
 	
 }
 

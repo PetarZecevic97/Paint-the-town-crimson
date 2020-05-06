@@ -42,6 +42,7 @@
     </ClInclude>
     <ClInclude Include="src\Entities\Misc.h" />
     <ClInclude Include="src\Entities\ObstacleController.h" />
+    <ClInclude Include="src\Entities\StageController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -70,6 +71,7 @@
       <Filter>src\Entities</Filter>
     </ClCompile>
     <ClCompile Include="src\Entities\ObstacleController.cpp" />
+    <ClCompile Include="src\Entities\StageController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -86,5 +88,6 @@
     <Image Include="Data\obstacles.png" />
     <Image Include="Data\WaterElemental.png" />
     <Image Include="Data\wizard.png" />
+    <Image Include="Data\terrain.png" />
   </ItemGroup>
 </Project>

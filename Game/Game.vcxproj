@@ -170,6 +170,7 @@
     <ClInclude Include="src\Entities\NPC\Controllers\FireNPCController.h" />
     <ClInclude Include="src\Entities\ObstacleController.h" />
     <ClInclude Include="src\Entities\PlayerController.h" />
+    <ClInclude Include="src\Entities\StageController.h" />
     <ClInclude Include="src\precomp.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\WaterNPCController.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\WindNPCController.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="src\Entities\NPC\Controllers\FireNPCController.cpp" />
     <ClCompile Include="src\Entities\ObstacleController.cpp" />
     <ClCompile Include="src\Entities\PlayerController.cpp" />
+    <ClCompile Include="src\Entities\StageController.cpp" />
     <ClCompile Include="src\precomp.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\WaterNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\WindNPCController.cpp" />
@@ -208,6 +210,7 @@
     <Image Include="Data\Items.png" />
     <Image Include="Data\mage_3.png" />
     <Image Include="Data\obstacles.png" />
+    <Image Include="Data\terrain.png" />
     <Image Include="Data\WaterElemental.png" />
     <Image Include="Data\wizard.png" />
   </ItemGroup>
