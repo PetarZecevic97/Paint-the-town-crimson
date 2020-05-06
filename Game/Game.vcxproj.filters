@@ -43,6 +43,7 @@
     <ClInclude Include="src\Entities\Misc.h" />
     <ClInclude Include="src\Entities\ObstacleController.h" />
     <ClInclude Include="src\Entities\StageController.h" />
+    <ClInclude Include="src\Entities\NPC\Controllers\MentalNPCController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -72,6 +73,7 @@
     </ClCompile>
     <ClCompile Include="src\Entities\ObstacleController.cpp" />
     <ClCompile Include="src\Entities\StageController.cpp" />
+    <ClCompile Include="src\Entities\NPC\Controllers\MentalNPCController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
