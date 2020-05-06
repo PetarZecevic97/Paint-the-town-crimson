@@ -11,6 +11,7 @@ namespace Game
     class EnemiesFactory;
     class BorderController;
     class ObstacleController;
+    class StageController;
 
 
     class GameApp final : public Engine::Application
@@ -32,6 +33,7 @@ namespace Game
 		std::unique_ptr<PlayerController> m_PlayerController{};
         std::unique_ptr<ObstacleController> m_ObstacleController{};
         std::unique_ptr<BorderController> m_BorderController{};
+        std::unique_ptr<StageController> m_BorderController{};
 
 		//std::unique_ptr<DummyController> m_DummyController{};
 

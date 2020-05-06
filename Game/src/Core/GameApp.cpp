@@ -13,6 +13,7 @@
 #include "Entities/NPC/EnemyController.h"
 #include "Entities/NPC/EnemiesFactory.h"
 #include "Entities/Dummy/DummyController.h"
+#include "Entities/StageController.h"
 
 void Game::GameApp::GameSpecificWindowData()
 {
@@ -23,6 +24,7 @@ void Game::GameApp::GameSpecificWindowData()
     // gameSpecificWindowData.m_Vsync = true;
     SetWindowData(gameSpecificWindowData);
 }
+
 
 bool Game::GameApp::GameSpecificInit()
 {
@@ -50,6 +52,8 @@ bool Game::GameApp::GameSpecificInit()
 	m_ObstacleController = std::make_unique<ObstacleController>();
 	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), LevelNumber::LEVEL_TWO, m_window_width, m_window_height);
 
+
+
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
 
@@ -60,6 +64,7 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
+	m_ObstacleController->Update(dt, m_EntityManager.get());
 	Game::UpdateItems(m_EntityManager.get());
 	if (!m_Factory->IsFactoryPaused())
 	{
