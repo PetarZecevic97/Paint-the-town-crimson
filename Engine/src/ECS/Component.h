@@ -84,7 +84,7 @@ namespace Engine
     {
         Texture* m_Image{};
 		//We need these two if we want to animate a bitch
-		SDL_Rect m_src;
+        SDL_Rect m_src{};
 		bool m_Animation{ false };
         bool m_FlipHorizontal{ false };
         bool m_FlipVertical{ false };

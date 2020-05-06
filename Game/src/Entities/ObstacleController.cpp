@@ -5,55 +5,72 @@
 
 namespace Game
 {
-	bool ObstacleController::Init(Engine::EntityManager* entityManager, Engine::Texture* texture, int numberOfObstacles)
+	bool ObstacleController::Init(Engine::EntityManager* entityManager, Engine::Texture* texture, LevelNumber levelNo, int width, int height)
 	{
-		ASSERT(entityManager != nullptr, "Must pass valid pointer to entitymanager to WaterNPCCOntroller::Init()");
-		ASSERT(texture != nullptr, "Must pass valid pointer to texture to WaterNPCCOntroller::Init()");
+		ASSERT(entityManager != nullptr, "Must pass valid pointer to entitymanager to ObstacleCOntroller::Init()");
+		ASSERT(texture != nullptr, "Must pass valid pointer to texture to ObstacleCOntroller::Init()");
 
 		
 		auto obstacle = std::make_unique<Engine::Entity>();
-
+		SDL_Rect new_rect = { 0, 0, 50, 50 };
 		switch (gLevelNumber)
 		{
 		case LevelNumber::LEVEL_ONE:
+			obstacle->AddComponent<Engine::TransformComponent>(width / 2, height / 2, 50.f, 50.f);
+			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
+			obstacle->AddComponent<Engine::ObstacleComponent>();
+			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
+			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 			break;
+
 		case LevelNumber::LEVEL_TWO:
-
-
-			//enemy->AddComponent<Engine::TransformComponent>(m_SpawnPositions[randomPosition].x, m_SpawnPositions[randomPosition].y, 50.f, 50.f);
-			obstacle->AddComponent<Engine::TransformComponent>(spawnPosition.x, spawnPosition.y, 50.f, 50.f);
-
-
+			obstacle->AddComponent<Engine::TransformComponent>(width / 2, height / 2, 50.f, 50.f);
 			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 			obstacle->AddComponent<Engine::ObstacleComponent>();
+			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
 			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
-			entityManager->AddEntity(std::move(obstacle));
+
+
 			break;
+
 		case LevelNumber::LEVEL_THREE:
-			//enemy->AddComponent<Engine::TransformComponent>(m_SpawnPositions[randomPosition].x, m_SpawnPositions[randomPosition].y, 50.f, 50.f);
-			obstacle->AddComponent<Engine::TransformComponent>(spawnPosition.x, spawnPosition.y, 50.f, 50.f);
-
-
+			obstacle->AddComponent<Engine::TransformComponent>(width / 2, height / 2, 50.f, 50.f);
 			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 			obstacle->AddComponent<Engine::ObstacleComponent>();
+			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
 			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
-			entityManager->AddEntity(std::move(obstacle));
+
+
 			break;
+
 		default:
+			obstacle->AddComponent<Engine::TransformComponent>(width / 2, height / 2, 50.f, 50.f);
+			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
+			obstacle->AddComponent<Engine::ObstacleComponent>();
+			obstacle->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
+			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 			break;
 		}
 
-	
+
+
+		auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
 		
+		sprite->m_src = new_rect;
+		sprite->m_Animation = true;
+
+		entityManager->AddEntity(std::move(obstacle));
+
+
 
 		return true;
 	}
 
 	void ObstacleController::Update(float dt, Engine::EntityManager* entityManager)
 	{
-		auto ewaterNPC = entityManager->GetAllEntitiesWithComponent<Engine::ObstacleComponent>();
+		auto obstacles = entityManager->GetAllEntitiesWithComponent<Engine::ObstacleComponent>();
 
-		for (auto& enemy : ewaterNPC)
+		for (auto& obstacle : obstacles)
 		{
 			// CPU
 		}

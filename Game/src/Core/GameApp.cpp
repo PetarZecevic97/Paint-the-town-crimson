@@ -9,6 +9,7 @@
 #include <Engine.h>
 #include <Core/EntryPoint.h>
 #include "Entities/CameraController.h"
+#include "Entities/ObstacleController.h"
 #include "Entities/NPC/EnemyController.h"
 #include "Entities/NPC/EnemiesFactory.h"
 #include "Entities/Dummy/DummyController.h"
@@ -42,7 +43,8 @@ bool Game::GameApp::GameSpecificInit()
     m_Factory = std::make_unique<EnemiesFactory>();
 	m_Factory->Init();
 
-	// 
+	m_ObstacleController = std::make_unique<ObstacleController>();
+	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), LevelNumber::LEVEL_TWO, m_window_width, m_window_height);
 
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
@@ -55,8 +57,14 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
 	Game::UpdateItems(m_EntityManager.get());
-	
-	m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+	if (!m_Factory->IsFactoryPaused())
+	{
+		m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+	}
+	else
+	{
+		m_Factory->Sleep();
+	}
 }
 
 bool Game::GameApp::GameSpecificShutdown()
@@ -69,7 +77,7 @@ void Game::GameApp::LoadTextures()
 	auto renderer = m_RenderSystem->GetRenderer();
 	m_TextureManager->CreateTexture(renderer, "enemy", "Data/enemy.jpg");
 	m_TextureManager->CreateTexture(renderer, "dummy", "Data/dummy.jpg");
-	m_TextureManager->CreateTexture(renderer, "obstacle", "Data/obstacle.png");
+	m_TextureManager->CreateTexture(renderer, "obstacle", "Data/obstacles.png");
 	//wizard is an old and haggard texture, with mage_3 everyone is gonna be like: Wizard WHO?
 	m_TextureManager->CreateTexture(renderer, "wizard", "Data/wizard.png");
 

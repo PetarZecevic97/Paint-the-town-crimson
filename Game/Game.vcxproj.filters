@@ -40,6 +40,8 @@
     <ClInclude Include="src\Entities\NPC\EnemyAnimation.h">
       <Filter>src\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\Entities\Misc.h" />
+    <ClInclude Include="src\Entities\ObstacleController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -67,8 +69,22 @@
     <ClCompile Include="src\Entities\NPC\EnemyAnimation.cpp">
       <Filter>src\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entities\ObstacleController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Data\air_elemental.png" />
+    <Image Include="Data\blank.png" />
+    <Image Include="Data\dummy.jpg" />
+    <Image Include="Data\earth_elemental.png" />
+    <Image Include="Data\enemy.jpg" />
+    <Image Include="Data\FireElemental.png" />
+    <Image Include="Data\Items.png" />
+    <Image Include="Data\mage_3.png" />
+    <Image Include="Data\obstacles.png" />
+    <Image Include="Data\WaterElemental.png" />
+    <Image Include="Data\wizard.png" />
   </ItemGroup>
 </Project>
