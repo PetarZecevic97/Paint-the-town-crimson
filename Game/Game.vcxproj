@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\HudController.h" />
     <ClInclude Include="src\Entities\Misc.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\EarthNPCController.h" />
     <ClInclude Include="src\Entities\NPC\EnemiesFactory.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="src\Entities\NPC\Controllers\WindNPCController.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\HudController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\EarthNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\EnemiesFactory.cpp" />
     <ClCompile Include="src\Entities\BorderController.cpp" />

@@ -42,6 +42,9 @@
     </ClInclude>
     <ClInclude Include="src\Entities\Misc.h" />
     <ClInclude Include="src\Entities\ObstacleController.h" />
+    <ClInclude Include="src\Entities\HudController.h">
+      <Filter>src\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -70,6 +73,9 @@
       <Filter>src\Entities</Filter>
     </ClCompile>
     <ClCompile Include="src\Entities\ObstacleController.cpp" />
+    <ClCompile Include="src\Entities\HudController.cpp">
+      <Filter>src\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
