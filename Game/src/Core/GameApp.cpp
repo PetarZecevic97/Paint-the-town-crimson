@@ -5,6 +5,7 @@
 #include "Entities/PlayerController.h"
 #include "Entities/CameraController.h"
 #include "Entities/BorderController.h"
+#include "Entities/HudController.h"
 
 #include <Engine.h>
 #include <Core/EntryPoint.h>
@@ -59,8 +60,8 @@ bool Game::GameApp::GameSpecificInit()
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
 
 
-
-
+	m_HudController = std::make_unique<HudController>();
+	m_HudController->Init(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height);
 
 
     return true;
@@ -78,6 +79,22 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	else
 	{
 		m_Factory->Sleep();
+	}
+	SDL_Event event{ };
+
+	while (SDL_PollEvent(&event) != 0)
+	{
+
+		if (event.type == SDL_WINDOWEVENT &&
+			event.window.event == SDL_WINDOWEVENT_RESIZED)
+		{
+			
+			m_BorderController->Update(m_EntityManager.get(), event.window.data1, event.window.data2);
+			setWindowSize(event.window.data1, event.window.data2);
+			
+		}
+		m_HudController->Update(m_EntityManager.get(), m_window_width, m_window_height);
+
 	}
 }
 
@@ -97,11 +114,14 @@ void Game::GameApp::LoadTextures()
 
 	m_TextureManager->CreateTexture(renderer, "mage", "Data/mage_3.png");
 	m_TextureManager->CreateTexture(renderer, "blank", "Data/blank.png");
+	m_TextureManager->CreateTexture(renderer, "unblank", "Data/UnBlank.png");
 	m_TextureManager->CreateTexture(renderer, "water", "Data/WaterElemental.png");
 	m_TextureManager->CreateTexture(renderer, "fire", "Data/FireElemental.png");
 	m_TextureManager->CreateTexture(renderer, "earth", "Data/earth_elemental.png");
 	m_TextureManager->CreateTexture(renderer, "wind", "Data/air_elemental.png");
 	m_TextureManager->CreateTexture(renderer, "stage", "Data/terrain.png");
+	m_TextureManager->CreateTexture(renderer, "items", "Data/items.png");
+	
 	
 }
 
@@ -109,4 +129,3 @@ void Game::GameApp::setWindowSize(int win_width, int win_height) {
 	m_window_width = win_width;
 	m_window_height = win_height;
 }
-

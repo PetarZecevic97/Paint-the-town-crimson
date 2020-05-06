@@ -38,6 +38,19 @@ namespace Game
 			auto mover = enemy->GetComponent<Engine::MoverComponent>();
 			mover->m_TranslationSpeed.x = mover->m_TranslationSpeed.x * 0.4f;
 			mover->m_TranslationSpeed.y = mover->m_TranslationSpeed.y * 0.4f;
+
+			auto coll = enemy->GetComponent<Engine::CollisionComponent>()->m_CollidedWith;
+			for (auto& coller : coll)
+			{
+				if (coller->HasComponent<Engine::WallComponent>())
+				{
+					mover->m_TranslationSpeed.x = mover->m_TranslationSpeed.x * 10.f / 4.f;
+					mover->m_TranslationSpeed.y = mover->m_TranslationSpeed.y * 10.f / 4.f;
+					break;
+				}
+			}
+
+
 			ElementalAnimation(entityManager->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0], enemy, 3);
 		}
 	}

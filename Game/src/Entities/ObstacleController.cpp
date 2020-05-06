@@ -45,6 +45,7 @@ namespace Game
 					obstacle->AddComponent<Engine::TransformComponent>(loc.first, loc.second, 50.f, 50.f);
 					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 					obstacle->AddComponent<Engine::ObstacleComponent>();
+					obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 					entityManager->AddEntity(std::move(obstacle));
 				}
@@ -97,12 +98,14 @@ namespace Game
 					obstacle->AddComponent<Engine::TransformComponent>(loc.first, loc.second, 50.f, 50.f);
 					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 					obstacle->AddComponent<Engine::ObstacleComponent>();
+					obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 					entityManager->AddEntity(std::move(obstacle));
 				}
 
 				break;
 			}
+
 
 			default:
 			{
@@ -116,14 +119,13 @@ namespace Game
 				obstacle->AddComponent<Engine::TransformComponent>(width / 4, height / 4, 50.f, 50.f);
 				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 				obstacle->AddComponent<Engine::ObstacleComponent>();
+				obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 				entityManager->AddEntity(std::move(obstacle));
 
 				break;
 			}
 		}
-
-
 		return true;
 	}
 
