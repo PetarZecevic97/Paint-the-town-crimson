@@ -57,8 +57,14 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 {
     m_PlayerController->Update(dt, m_EntityManager.get());
 	Game::UpdateItems(m_EntityManager.get());
-	
-	m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+	if (!m_Factory->IsFactoryPaused())
+	{
+		m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+	}
+	else
+	{
+		m_Factory->Sleep();
+	}
 }
 
 bool Game::GameApp::GameSpecificShutdown()
