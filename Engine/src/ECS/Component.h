@@ -94,9 +94,12 @@ namespace Engine
     {
         float m_speed{ 200.f };
         int m_fireballCooldown{ 500 };
+        bool m_speedBuff{ false };
+        bool m_rapidFire{ false };
         bool m_timeoutBuff{ false };
         bool m_tripleshotBuff{ false };
         bool m_multishotBuff{ false };
+		int m_number_of_lives{ 3 };
     };
 
     struct FireballComponent : public Component
@@ -133,6 +136,62 @@ namespace Engine
 	{
 
 	};
+	
+	struct SpeedHudComponent : public Component
+	{
+
+	};
+
+	struct RapidHudComponent : public Component
+	{
+
+	};
+
+	struct DestroyerHudComponent : public Component
+	{
+
+	};
+
+	struct TimelordHudComponent : public Component
+	{
+
+	};
+
+	struct TripleHudComponent : public Component
+	{
+
+	};
+
+	struct MultiHudComponent : public Component
+	{
+
+	};
+	
+
+	struct XComponent : public Component
+	{
+
+	};
+
+	struct LifeDisplayComponent : public Component
+	{
+
+	};
+
+	struct SlabComponent : public Component
+	{
+
+	};
+
+	struct NumberComponent : public Component
+	{
+		int m_last_number { 3 };
+	};
+
+	struct ItemStashComponent : public Component
+	{
+
+	};
 
     struct ItemComponent : public Component
     {
@@ -145,11 +204,40 @@ namespace Engine
 
     struct BuffComponent : public Component
     {
-        int m_duration{ 5000 };
+        int m_duration{ 10000 };
         int m_timeCreated;
+        int m_timeExpires;
         int m_buffType;
 
         BuffComponent(int time) : m_timeCreated(time) {};
+
+    };
+
+    struct LivesBuffComponent : public Component {
+
+    };
+
+    struct SpeedBuffComponent : public Component {
+
+    };
+
+    struct RapidBuffComponent : public Component {
+
+    };
+
+    struct ApocalypseBuffComponent : public Component {
+
+    };
+
+    struct TimestopBuffComponent : public Component {
+
+    };
+
+    struct TripleBuffComponent : public Component {
+
+    };
+
+    struct MultiBuffComponent : public Component {
 
     };
 

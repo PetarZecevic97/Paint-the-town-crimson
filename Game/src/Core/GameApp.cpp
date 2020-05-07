@@ -59,10 +59,14 @@ bool Game::GameApp::GameSpecificInit()
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
 
-
 	m_HudController = std::make_unique<HudController>();
 	m_HudController->Init(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height);
 
+
+	auto item_sprite = std::make_unique<Engine::Entity>();
+	item_sprite->AddComponent<Engine::SpriteComponent>().m_Image = m_TextureManager->GetTexture("items");
+	item_sprite->AddComponent<Engine::ItemStashComponent>();
+	m_EntityManager.get()->AddEntity(std::move(item_sprite));
 
     return true;
 }
@@ -80,6 +84,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	{
 		m_Factory->Sleep();
 	}
+
 	SDL_Event event{ };
 
 	while (SDL_PollEvent(&event) != 0)
@@ -91,11 +96,16 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 			
 			m_BorderController->Update(m_EntityManager.get(), event.window.data1, event.window.data2);
 			setWindowSize(event.window.data1, event.window.data2);
+			m_WasThereAResize = true;
 			
 		}
-		m_HudController->Update(m_EntityManager.get(), m_window_width, m_window_height);
+		else {
+			m_WasThereAResize = false;
+		}
+		
 
 	}
+	m_HudController->Update(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height, m_WasThereAResize);
 }
 
 bool Game::GameApp::GameSpecificShutdown()
@@ -121,6 +131,9 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "wind", "Data/air_elemental.png");
 	m_TextureManager->CreateTexture(renderer, "stage", "Data/terrain.png");
 	m_TextureManager->CreateTexture(renderer, "items", "Data/items.png");
+	m_TextureManager->CreateTexture(renderer, "faded", "Data/faded.png");
+	m_TextureManager->CreateTexture(renderer, "numbers", "Data/numbers.png");
+	m_TextureManager->CreateTexture(renderer, "slab", "Data/slab.png");
 	
 	
 }
