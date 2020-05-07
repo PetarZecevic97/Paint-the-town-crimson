@@ -80,23 +80,101 @@ namespace Game
             auto collider = item->GetComponent<Engine::CollisionComponent>();
 
 
-            for (const auto& entity : collider->m_CollidedWith)
+            for (auto* entity : collider->m_CollidedWith)
             {
                 if (entity->HasComponent<Engine::PlayerComponent>())
                 {
+                    //temporary solution for lives and apocalypse
+                    //we need the items to last a little bit longer so that we can do an animation
                     if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 0 || item->GetComponent<Engine::ItemComponent>()->m_itemType == 3) {
-                        entityManager_->RemoveEntity(item->GetId());
-                    }
-                    else {
-                        
-                        item->AddComponent<Engine::BuffComponent>(SDL_GetTicks());
-                        item->GetComponent<Engine::BuffComponent>()->m_buffType = item->GetComponent<Engine::ItemComponent>()->m_itemType;
+
+                        if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 0)
+                        {
+                            auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
+                            player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives++;
+                        }
+                        else
+                        {
+                            auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
+                            for (auto* enemy : enemies) {
+                                entityManager_->RemoveEntity(enemy->GetId());
+                            }
+                        } 
+                        item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
                         item->GetComponent<Engine::TransformComponent>()->m_Position.x = -2000;
                         item->GetComponent<Engine::TransformComponent>()->m_Position.y = -2000;
-                        item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
-                       /* item->RemoveComponent<Engine::CollisionComponent>();
+                        /* item->RemoveComponent<Engine::CollisionComponent>();
                         item->RemoveComponent<Engine::SpriteComponent>();
                         item->RemoveComponent<Engine::ItemComponent>();*/
+                    }
+                    else {
+
+                        if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1 && entity->GetComponent<Engine::PlayerComponent>()->m_speedBuff)
+                        {
+                            auto speedBuff = entityManager_->GetAllEntitiesWithComponents<Engine::SpeedBuffComponent>()[0];
+                            speedBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += speedBuff->GetComponent<Engine::BuffComponent>()->m_duration;
+                        }
+                        else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 2 && entity->GetComponent<Engine::PlayerComponent>()->m_rapidFire)
+                        {
+                            auto rapidBuff = entityManager_->GetAllEntitiesWithComponents<Engine::RapidBuffComponent>()[0];
+                            rapidBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += rapidBuff->GetComponent<Engine::BuffComponent>()->m_duration;
+                        }
+                        else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 4 && entity->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff)
+                        {
+                            auto timeoutBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TimestopBuffComponent>()[0];
+                            timeoutBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += timeoutBuff->GetComponent<Engine::BuffComponent>()->m_duration;
+                        }
+                        else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5 && entity->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
+                        {
+                            auto tripleBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TripleBuffComponent>()[0];
+                            tripleBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += tripleBuff->GetComponent<Engine::BuffComponent>()->m_duration;
+                        }
+                        else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 6 && entity->GetComponent<Engine::PlayerComponent>()->m_multishotBuff)
+                        {
+                            auto multiBuff = entityManager_->GetAllEntitiesWithComponents<Engine::MultiBuffComponent>()[0];
+                            multiBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += multiBuff->GetComponent<Engine::BuffComponent>()->m_duration;
+                        }
+                        else
+                        {
+                            auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
+                            auto buff = std::make_unique<Engine::Entity>();
+                            buff->AddComponent<Engine::BuffComponent>(SDL_GetTicks());
+                            buff->GetComponent<Engine::BuffComponent>()->m_timeExpires = buff->GetComponent<Engine::BuffComponent>()->m_timeCreated + buff->GetComponent<Engine::BuffComponent>()->m_duration;
+                            buff->GetComponent<Engine::BuffComponent>()->m_buffType = item->GetComponent<Engine::ItemComponent>()->m_itemType;
+
+                            if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1)
+                            {
+                                buff->AddComponent<Engine::SpeedBuffComponent>();
+                                player->GetComponent<Engine::PlayerComponent>()->m_speedBuff = true;
+                                player->GetComponent<Engine::PlayerComponent>()->m_speed += 200;
+                            }
+                            else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 2)
+                            {
+                                buff->AddComponent<Engine::RapidBuffComponent>();
+                                player->GetComponent<Engine::PlayerComponent>()->m_rapidFire = true;
+                                player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown -= 400;
+                            }
+                            else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 4)
+                            {
+                                buff->AddComponent<Engine::TimestopBuffComponent>();
+                                player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = true;
+                            }
+                            else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5)
+                            {
+                                buff->AddComponent<Engine::TripleBuffComponent>();
+                                player->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff = true;
+                            }
+                            else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 6)
+                            {
+                                buff->AddComponent<Engine::MultiBuffComponent>();
+                                player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff = true;
+                            }
+
+                            entityManager_->AddEntity(std::move(buff));
+
+                        }
+                        entityManager_->RemoveEntity(item->GetId());
+
                         
                         
                     }
@@ -112,14 +190,16 @@ namespace Game
         for (auto* buff : buffs)
         {
             auto buffComponent = buff->GetComponent<Engine::BuffComponent>();
-            if (SDL_GetTicks() > buffComponent->m_timeCreated + buffComponent->m_duration) {
+            if (SDL_GetTicks() > buffComponent->m_timeExpires) {
                 if (buffComponent->m_buffType == 1)
                 {
-                    player->GetComponent<Engine::PlayerComponent>()->m_speed -= 100;
+                    player->GetComponent<Engine::PlayerComponent>()->m_speed -= 200;
+                    player->GetComponent<Engine::PlayerComponent>()->m_speedBuff = false;
                 }
-                else if (buffComponent->m_buffType == 2 && player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown <= 500)
+                else if (buffComponent->m_buffType == 2)
                 {
-                    player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown += 200;
+                    player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown += 400;
+                    player->GetComponent<Engine::PlayerComponent>()->m_rapidFire = false;
                 }
                 else if (buffComponent->m_buffType == 4)
                 {
@@ -305,7 +385,7 @@ namespace Game
                 {
 					auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 					auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
-                   CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
+                   CreateItem(entityManager_, 6, itemSprite->m_Image, entity);
                    entityManager_->RemoveEntity(fireball->GetId());
                    entityManager_->RemoveEntity(entity->GetId());
                    
@@ -313,7 +393,7 @@ namespace Game
 
                 }
 
-                if (entity->HasComponent<Engine::BorderComponent>())
+                if (entity->HasComponent<Engine::BorderComponent>() || entity->HasComponent<Engine::ObstacleComponent>())
                 {
                     entityManager_->RemoveEntity(fireball->GetId());
                     break;
@@ -448,60 +528,8 @@ namespace Game
             for (auto* entity : collider->m_CollidedWith)
             {
 
-                if (entity->HasComponent<Engine::ItemComponent>())
-                {
-                    int itemType = entity->GetComponent<Engine::ItemComponent>()->m_itemType;
-                    auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
-                    switch(itemType) {
-                    //lives
-                    case 0:
-						player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives++;
-                        break;
-                    //speed
-                    case 1:
-                        player->GetComponent<Engine::PlayerComponent>()->m_speed += 100;
-
-                        break;
-                    //rapid fireballs
-                    case 2:
-                        if (player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown > 100)
-                        {
-                            player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown -= 200;
-                        }
-
-                        break;
-                    //destroyer of worlds
-                    case 3:
-                        
-                        for (auto* enemy : enemies) {
-                            entityManager_->RemoveEntity(enemy->GetId());
-                        }
-                        break;
-                    //timelord
-                    case 4:
-
-                        player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = true;
-                        
-                        break;
-                    //triple
-                    case 5:
-
-                        player->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff = true;
-
-                        break;
-                    case 6:
-
-                        player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff = true;
-
-                        break;
-                    //360 noscope
-                    default:
-                        
-                        break;
-                    }
-                    
-                } 
-                else if (entity->HasComponent<Engine::BorderComponent>())
+              
+                if (entity->HasComponent<Engine::BorderComponent>())
                 {
                     move->m_TranslationSpeed.y = speed * ((moveUpInput ? 20.0f : 0.0f) + (moveDownInput ? -20.0f : 0.0f));
                     move->m_TranslationSpeed.x = speed * ((moveLeftInput ? 20.0f : 0.0f) + (moveRightInput ? -20.0f : 0.0f));

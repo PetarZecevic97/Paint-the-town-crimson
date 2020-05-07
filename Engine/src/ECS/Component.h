@@ -94,6 +94,8 @@ namespace Engine
     {
         float m_speed{ 200.f };
         int m_fireballCooldown{ 500 };
+        bool m_speedBuff{ false };
+        bool m_rapidFire{ false };
         bool m_timeoutBuff{ false };
         bool m_tripleshotBuff{ false };
         bool m_multishotBuff{ false };
@@ -202,11 +204,40 @@ namespace Engine
 
     struct BuffComponent : public Component
     {
-        int m_duration{ 5000 };
+        int m_duration{ 10000 };
         int m_timeCreated;
+        int m_timeExpires;
         int m_buffType;
 
         BuffComponent(int time) : m_timeCreated(time) {};
+
+    };
+
+    struct LivesBuffComponent : public Component {
+
+    };
+
+    struct SpeedBuffComponent : public Component {
+
+    };
+
+    struct RapidBuffComponent : public Component {
+
+    };
+
+    struct ApocalypseBuffComponent : public Component {
+
+    };
+
+    struct TimestopBuffComponent : public Component {
+
+    };
+
+    struct TripleBuffComponent : public Component {
+
+    };
+
+    struct MultiBuffComponent : public Component {
 
     };
 

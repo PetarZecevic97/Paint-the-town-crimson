@@ -42,7 +42,7 @@ namespace Game
 					sprite->m_src = new_rect;
 					sprite->m_Animation = true;
 
-					obstacle->AddComponent<Engine::TransformComponent>(loc.first, loc.second, 50.f, 50.f);
+					obstacle->AddComponent<Engine::TransformComponent>(static_cast<float>(loc.first), loc.second, 50.f, 50.f);
 					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 					obstacle->AddComponent<Engine::ObstacleComponent>();
 					obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
@@ -55,11 +55,7 @@ namespace Game
 			case LevelNumber::LEVEL_TWO:
 			{
 				std::vector < std::pair<int, int> > lObstacleLocations;
-				
-				// TODO:Alright, there's four clumps of these fuckers as you can plainly see, it would have
-				// been smart to label which ones are which, but I'm beat right now. Good luck future me.
 
-				// Screw you future me...
 				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * height / 3 - 60));
 				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * height / 3 - 120));
 				lObstacleLocations.push_back(std::make_pair(0.8 * height / 3, 0.8 * height / 3));
@@ -95,7 +91,7 @@ namespace Game
 					sprite->m_src = new_rect;
 					sprite->m_Animation = true;
 
-					obstacle->AddComponent<Engine::TransformComponent>(loc.first, loc.second, 50.f, 50.f);
+					obstacle->AddComponent<Engine::TransformComponent>(loc.first+0.06*width, loc.second, 50.f, 50.f);
 					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 					obstacle->AddComponent<Engine::ObstacleComponent>();
 					obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles

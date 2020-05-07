@@ -129,7 +129,7 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "fire", "Data/FireElemental.png");
 	m_TextureManager->CreateTexture(renderer, "earth", "Data/earth_elemental.png");
 	m_TextureManager->CreateTexture(renderer, "wind", "Data/air_elemental.png");
-	m_TextureManager->CreateTexture(renderer, "stage", "Data/terrain.png");
+	m_TextureManager->CreateTexture(renderer, "stage", "Data/stage1024.png");
 	m_TextureManager->CreateTexture(renderer, "items", "Data/items.png");
 	m_TextureManager->CreateTexture(renderer, "faded", "Data/faded.png");
 	m_TextureManager->CreateTexture(renderer, "numbers", "Data/numbers.png");
