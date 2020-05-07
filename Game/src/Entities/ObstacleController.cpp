@@ -106,6 +106,7 @@ namespace Game
 				break;
 			}
 
+
 			default:
 			{
 				auto obstacle = std::make_unique<Engine::Entity>();
@@ -125,8 +126,6 @@ namespace Game
 				break;
 			}
 		}
-
-
 		return true;
 	}
 

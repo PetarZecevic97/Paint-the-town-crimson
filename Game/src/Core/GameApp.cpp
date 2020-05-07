@@ -62,6 +62,7 @@ bool Game::GameApp::GameSpecificInit()
 	m_HudController = std::make_unique<HudController>();
 	m_HudController->Init(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height);
 
+
 	auto item_sprite = std::make_unique<Engine::Entity>();
 	item_sprite->AddComponent<Engine::SpriteComponent>().m_Image = m_TextureManager->GetTexture("items");
 	item_sprite->AddComponent<Engine::ItemStashComponent>();

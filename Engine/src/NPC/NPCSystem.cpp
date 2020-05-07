@@ -6,7 +6,7 @@
 #include "ECS/Component.h"
 
 #define STEP  2 // STEP * SPEED =>  0.1*100
-#define MAX_PATHFINDING_ITERATIONS 10 //Num of iterations for ray casting
+#define MAX_PATHFINDING_ITERATIONS 12 //Num of iterations for ray casting
 
 namespace Engine
 {
@@ -47,6 +47,8 @@ namespace Engine
 			DodgeWalls(npc);
 
 			float addition = 0;
+			LOG_INFO("start angle: {}", angle);
+			int npcLookFactor = npc->GetComponent<NPCComponent>()->m_SideToLook;
 			while (CheckRayCasting(npc, angle, send))
 			{
 				if (addition >= twoPI)
@@ -54,9 +56,15 @@ namespace Engine
 					break;
 				}
 				addition += pi / 4;
-				angle += pi / 4;
+				if (addition >= (pi))
+				{
+					npc->GetComponent<NPCComponent>()->m_SideToLook = -npcLookFactor;
+					angle = angle + npcLookFactor* addition;
+				}
+				angle = angle + npcLookFactor* pi / 4;
 
 			}
+			LOG_INFO("stop angle: {} addition: {}", angle,addition);
 
 			//Petar je menjao ovde kod!
 			if (players[0]->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff)
