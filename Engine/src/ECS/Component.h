@@ -97,6 +97,7 @@ namespace Engine
         bool m_timeoutBuff{ false };
         bool m_tripleshotBuff{ false };
         bool m_multishotBuff{ false };
+		int m_number_of_lives{ 3 };
     };
 
     struct FireballComponent : public Component
@@ -130,6 +131,62 @@ namespace Engine
     };
 
 	struct HudComponent : public Component
+	{
+
+	};
+	
+	struct SpeedHudComponent : public Component
+	{
+
+	};
+
+	struct RapidHudComponent : public Component
+	{
+
+	};
+
+	struct DestroyerHudComponent : public Component
+	{
+
+	};
+
+	struct TimelordHudComponent : public Component
+	{
+
+	};
+
+	struct TripleHudComponent : public Component
+	{
+
+	};
+
+	struct MultiHudComponent : public Component
+	{
+
+	};
+	
+
+	struct XComponent : public Component
+	{
+
+	};
+
+	struct LifeDisplayComponent : public Component
+	{
+
+	};
+
+	struct SlabComponent : public Component
+	{
+
+	};
+
+	struct NumberComponent : public Component
+	{
+		int m_last_number { 3 };
+	};
+
+	struct ItemStashComponent : public Component
 	{
 
 	};

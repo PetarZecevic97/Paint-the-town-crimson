@@ -20,9 +20,34 @@ namespace Game
 
         SDL_Rect new_rect;
         switch (item_type) {
-        case 0:
-            new_rect = { 0, 0, 18, 12 };
-            break;
+		//lives
+		case 0:
+			new_rect = { 0, 0, 18, 12 };
+			break;
+		//speed
+		case 1:
+			new_rect = { 60, 0, 15, 19 };
+			break;
+		//rapid fireballs
+		case 2:
+			new_rect = { 80, 0, 18, 13 };
+			break;
+		//destroyer of worlds
+		case 3:
+			new_rect = { 20, 0, 40, 11 };
+			break;
+		//timelord
+		case 4:
+			new_rect = { 60, 20, 13, 15 };
+			break;
+		//triple
+		case 5:
+			new_rect = { 20, 0, 40, 11 };
+			break;
+		//360 noscope
+		case 6:
+			new_rect = { 0, 20, 24, 24 };
+			break;	
         default:
             new_rect = { 0, 0, 18, 12 };
             break;
@@ -278,7 +303,9 @@ namespace Game
             {
                 if (entity->HasComponent<Engine::NPCComponent>())
                 {
-                   CreateItem(entityManager_, 6, fireball->GetComponent<Engine::SpriteComponent>()->m_Image, entity);
+					auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
+					auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
+                   CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
                    entityManager_->RemoveEntity(fireball->GetId());
                    entityManager_->RemoveEntity(entity->GetId());
                    
@@ -428,7 +455,7 @@ namespace Game
                     switch(itemType) {
                     //lives
                     case 0:
-                        m_number_of_lives++;
+						player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives++;
                         break;
                     //speed
                     case 1:
@@ -482,12 +509,14 @@ namespace Game
                 }
                 else if (entity->HasComponent<Engine::NPCComponent>())
                 {
-                    m_number_of_lives--;
+					
+					player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives--;
+					
                     entityManager_->RemoveEntity(entity->GetId());
-                    if (m_number_of_lives == 0) {
+                    if (player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0) {
                         player->GetComponent<Engine::TransformComponent>()->m_Position.x = 0.f;
                         player->GetComponent<Engine::TransformComponent>()->m_Position.y = 0.f;
-                        m_number_of_lives = 3;
+						player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives = 3;
                         auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
                         for (auto* enemy : enemies) {
                             entityManager_->RemoveEntity(enemy->GetId());

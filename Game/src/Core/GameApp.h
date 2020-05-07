@@ -21,11 +21,12 @@ namespace Game
 		
 		int m_window_width{ 1280 };
 		int m_window_height{ 720 };
+		bool m_WasThereAResize{ false };
     private:
         void GameSpecificWindowData() override;
         bool GameSpecificInit() override;
         void GameSpecificUpdate(float dt) override;
-        bool GameSpecificShutdown() override;
+        bool GameSpecificShutdown() override;		
 		void setWindowSize(int win_width, int win_height) override;
 
 		void LoadTextures();
