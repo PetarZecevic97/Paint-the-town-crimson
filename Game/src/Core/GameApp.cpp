@@ -86,7 +86,12 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	}
 	else
 	{
-		m_Factory->Sleep();
+		if (!m_Factory->Sleep())
+		{
+			// Sada se ovde vrsi ovde prebacivanje na sledeci nivo ukoliko je player ubio sve neprijatelje
+			m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+			m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false);
+		}
 	}
 
 	SDL_Event event{ };
@@ -113,14 +118,6 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	
 	m_PlayerController->Update(dt, m_EntityManager.get());
 	
-	if (SDL_GetTicks() > 4000 && done)
-	{
-		done = false;
-		m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get());
-		m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false);
-		
-	}
-
 	Game::UpdateFireballs(m_EntityManager.get());
 
 }

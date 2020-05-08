@@ -18,7 +18,6 @@ namespace Game
     class GameApp final : public Engine::Application
     {
 	public:
-        bool done{ true };
 		int m_window_width{ 1280 };
 		int m_window_height{ 720 };
 		bool m_WasThereAResize{ false };
