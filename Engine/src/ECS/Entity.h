@@ -81,9 +81,9 @@ namespace Engine
                 LOG_WARNING("Attempting to remove a component that does not exist! Entity ID : {}, ComponentType : {}", m_Id, Component::GetComponentTypeID<TComponent>());
             }
 
-            m_Components.erase(std::remove_if(begin(m_Components),
+            m_Components.erase(std::find_if(begin(m_Components),
                                                 end(m_Components),
-                                                [](const Component* component) { return component->GetType() == Component::GetComponentTypeID<TComponent>(); }));
+                                                [](const std::unique_ptr<Component>& component) { return component->m_TypeId == Component::GetComponentTypeID<TComponent>(); }));
         }
     };
 }

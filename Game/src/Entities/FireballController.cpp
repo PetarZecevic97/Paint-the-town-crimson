@@ -1,6 +1,8 @@
 #include "FireballController.h"
 #include "ItemsController.h"
 
+#include "Entities/NPC/EnemySpecificEntities.h"
+
 namespace Game
 {
 	bool CreateFireball(Engine::EntityManager* entityManager_, int direction, int direction2) {
@@ -239,8 +241,16 @@ namespace Game
 							npcHp->m_CurrentHealth--;
 							entityManager_->RemoveEntity(fireball->GetId());
 						}
+						else if (entity->HasComponent<WaterNPCComponent>() && !entity->GetComponent<WaterNPCComponent>()->isInWallForm && npcHp->m_CurrentHealth == 1)
+						{
+							entity->GetComponent<WaterNPCComponent>()->isInWallForm = true;
+							entity->RemoveComponent<Engine::MoverComponent>();
+							entity->AddComponent<Engine::WallComponent>();
+							entity->GetComponent<Engine::HealthComponent>()->m_CurrentHealth = 3;
+						}
 						else
 						{
+							
 							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
 							CreateItem(entityManager_, 5, itemSprite->m_Image, entity);
