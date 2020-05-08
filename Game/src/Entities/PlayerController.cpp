@@ -126,38 +126,43 @@ namespace Game
 			//ovo je mozda problem - ako je entyty koji removojemo u ovome
             for (auto* entity : collider->m_CollidedWith)
             {
+				if (entity != nullptr) {
 
-              
-                if (entity->HasComponent<Engine::BorderComponent>())
-                {
-                    move->m_TranslationSpeed.y = speed * ((moveUpInput ? 20.0f : 0.0f) + (moveDownInput ? -20.0f : 0.0f));
-                    move->m_TranslationSpeed.x = speed * ((moveLeftInput ? 20.0f : 0.0f) + (moveRightInput ? -20.0f : 0.0f));
+					
+					if (entity->GetId() > 10000000) {
+						continue;
+					}
 
-                }
-                else if (entity->HasComponent<Engine::NPCComponent>())
-                {
-					
-					player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives--;
-					
-                    entityManager_->RemoveEntity(entity->GetId());
-                    if (player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0) {
-                        player->GetComponent<Engine::TransformComponent>()->m_Position.x = 0.f;
-                        player->GetComponent<Engine::TransformComponent>()->m_Position.y = 0.f;
-						player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives = 3;
-                        auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
-                        for (auto* enemy : enemies) {
-                            entityManager_->RemoveEntity(enemy->GetId());
-							
-                        }
-						break;
-                    }
-                }
+					if (entity->HasComponent<Engine::BorderComponent>())
+					{
+						move->m_TranslationSpeed.y = speed * ((moveUpInput ? 20.0f : 0.0f) + (moveDownInput ? -20.0f : 0.0f));
+						move->m_TranslationSpeed.x = speed * ((moveLeftInput ? 20.0f : 0.0f) + (moveRightInput ? -20.0f : 0.0f));
+
+					}
+					 if (entity->HasComponent<Engine::NPCComponent>())
+					{
+
+						player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives--;
+
+						entityManager_->RemoveEntity(entity->GetId());
+						if (player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0) {
+							player->GetComponent<Engine::TransformComponent>()->m_Position.x = 0.f;
+							player->GetComponent<Engine::TransformComponent>()->m_Position.y = 0.f;
+							player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives = 3;
+							auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
+							for (auto* enemy : enemies) {
+								entityManager_->RemoveEntity(enemy->GetId());
+
+							}
+							break;
+						}
+					}
+				}
 
 
             }
         
         }
 
-        UpdateFireballs(entityManager_);
     }
 }

@@ -36,10 +36,10 @@ namespace Engine
         {
             for (auto& component : m_Components)
             {
-                if (component->m_TypeId == Component::GetComponentTypeID<TComponent>())
-                {
-                    return true;
-                }
+					if (component->m_TypeId == Component::GetComponentTypeID<TComponent>())
+					{
+						return true;
+					}
             }
 
             return false;

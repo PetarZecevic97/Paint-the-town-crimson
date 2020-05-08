@@ -18,16 +18,17 @@ namespace Engine
     void PhysicsSystem::Update(float dt, EntityManager* entityManager)
     {
         // Move
-        auto entitiesToMove = entityManager->GetAllEntitiesWithComponents<TransformComponent, MoverComponent>();
+			auto entitiesToMove = entityManager->GetAllEntitiesWithComponents<TransformComponent, MoverComponent>();
 
-        for (auto& entity : entitiesToMove)
-        {
-            auto transform = entity->GetComponent<TransformComponent>();
-            auto mover = entity->GetComponent<MoverComponent>();
+			for (auto& entity : entitiesToMove)
+			{
+				auto transform = entity->GetComponent<TransformComponent>();
+				auto mover = entity->GetComponent<MoverComponent>();
 
-            transform->m_Position += mover->m_TranslationSpeed * dt;
-            transform->m_Rotation += mover->m_RotationSpeed * dt;
-        }
+				transform->m_Position += mover->m_TranslationSpeed * dt;
+				transform->m_Rotation += mover->m_RotationSpeed * dt;
+			}
+		
 
         // Collide
         auto entitiesToCollide = entityManager->GetAllEntitiesWithComponents<TransformComponent, CollisionComponent>();

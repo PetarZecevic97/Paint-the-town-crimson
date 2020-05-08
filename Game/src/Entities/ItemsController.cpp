@@ -94,6 +94,9 @@ namespace Game
 			{
 				if (entity->HasComponent<Engine::PlayerComponent>())
 				{
+					if (entity->GetId() > 10000000) {
+						continue;
+					}
 					//temporary solution for lives and apocalypse
 					//we need the items to last a little bit longer so that we can do an animation
 					if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 0 || item->GetComponent<Engine::ItemComponent>()->m_itemType == 3) {
