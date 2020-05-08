@@ -93,6 +93,9 @@ namespace Engine
 		bool m_Animation{ false };
         bool m_FlipHorizontal{ false };
         bool m_FlipVertical{ false };
+        int m_zIndex = 0;
+        SpriteComponent() = default;
+        SpriteComponent(int zIndex) : m_zIndex(zIndex) {}
     };
 
     struct PlayerComponent : public Component
