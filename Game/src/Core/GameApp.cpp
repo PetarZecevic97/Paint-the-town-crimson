@@ -77,10 +77,13 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
 	Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"));
-    
-	
-	
-	if (!m_Factory->IsFactoryPaused())
+
+	if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0)
+	{
+		m_Factory->ShutDown(m_EntityManager.get());
+		m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true);
+	}
+	else if (!m_Factory->IsFactoryPaused())
 	{
 		m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
 	}
