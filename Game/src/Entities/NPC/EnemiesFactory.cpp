@@ -59,9 +59,15 @@ namespace Game
 		m_SpawnFrequency--;
 	}
 
-	bool EnemiesFactory::ShutDown()
+	void EnemiesFactory::ShutDown(Engine::EntityManager* entityManager)
 	{
-		return true;
+		auto enemies = entityManager->GetAllEntitiesWithComponents<Engine::NPCComponent>();
+		m_CurrentElement = 40;
+		m_CurrentLevel = 3;
+		for (auto* enemy : enemies) 
+		{
+			entityManager->RemoveEntity(enemy->GetId());
+		}
 	}
 
 	bool EnemiesFactory::Sleep()

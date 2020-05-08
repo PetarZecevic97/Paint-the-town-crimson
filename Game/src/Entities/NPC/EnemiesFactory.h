@@ -35,7 +35,7 @@ namespace Game
 		bool Init();
 		void Update(float dt, Engine::EntityManager* entitymanager, Engine::TextureManager* texture);
 		void Reset();
-		bool ShutDown();
+		void ShutDown(Engine::EntityManager* entityManager);
 		bool IsFactoryPaused() const { return m_Pause; }
 		bool Sleep();
 	private:
