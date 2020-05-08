@@ -17,5 +17,9 @@ namespace Game
 		void Update(float dt, Engine::EntityManager* entityManager);
 		bool ShutDown();
 	private:
+		LevelNumber m_currentLevelNo;
+		int m_height;
+		int m_width;
+		Engine::Texture* m_texture;
 	};
 }
