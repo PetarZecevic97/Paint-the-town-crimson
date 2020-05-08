@@ -40,7 +40,7 @@ namespace Game
 			auto obstacle = std::make_unique<Engine::Entity>();
 			obstacle->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 			auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
-			SDL_Rect new_rect = { 0, 50, 50, 50 };
+			SDL_Rect new_rect = { 0, 0, 50, 50 };
 			sprite->m_src = new_rect;
 			sprite->m_Animation = true;
 
@@ -65,12 +65,32 @@ namespace Game
 		// Delete all Obstacle components
 		for (auto obstacle : obstacles)
 		{
-			auto id = obstacle->GetId();
-			entityManager->RemoveEntity(id);
+			if (!obstacle->HasComponent<Engine::WallComponent>())
+			{
+				auto id = obstacle->GetId();
+				entityManager->RemoveEntity(id);
+
+			}
+			else
+			{
+				if (m_currentLevelNo == LevelNumber::LEVEL_ONE) 
+				{
+					auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+					SDL_Rect new_rect = { 0, 50, 50, 50 };
+					sprite->m_src = new_rect;
+				}
+				else if (m_currentLevelNo == LevelNumber::LEVEL_TWO)
+				{
+					auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
+					SDL_Rect new_rect = { 0, 100, 50, 50 };
+					sprite->m_src = new_rect;
+				}
+			}
 		}
 
 		if (m_currentLevelNo == LevelNumber::LEVEL_ONE)
 		{
+
 			auto obstacle = std::make_unique<Engine::Entity>();
 			std::vector < std::pair<int, int> > lObstacleLocations;
 
@@ -134,7 +154,7 @@ namespace Game
 				auto obstacle = std::make_unique<Engine::Entity>();
 				obstacle->AddComponent<Engine::SpriteComponent>().m_Image = textureManager->GetTexture("obstacle");
 				auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
-				SDL_Rect new_rect = { 0, 0, 50, 50 };
+				SDL_Rect new_rect = { 0, 100, 50, 50 };
 				sprite->m_src = new_rect;
 				sprite->m_Animation = true;
 

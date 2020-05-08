@@ -116,8 +116,9 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	if (SDL_GetTicks() > 4000 && done)
 	{
 		done = false;
+		m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get());
 		m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false);
-		//m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+		
 	}
 
 	Game::UpdateFireballs(m_EntityManager.get());
