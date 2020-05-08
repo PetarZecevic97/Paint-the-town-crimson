@@ -73,9 +73,10 @@ bool Game::GameApp::GameSpecificInit()
 
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
+	Game::UpdateItems(m_EntityManager.get());
     m_PlayerController->Update(dt, m_EntityManager.get());
 	m_ObstacleController->Update(dt, m_EntityManager.get());
-	Game::UpdateItems(m_EntityManager.get());
+	
 	if (!m_Factory->IsFactoryPaused())
 	{
 		m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());

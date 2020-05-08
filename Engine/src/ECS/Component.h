@@ -104,6 +104,7 @@ namespace Engine
         bool m_timeoutBuff{ false };
         bool m_tripleshotBuff{ false };
         bool m_multishotBuff{ false };
+		bool m_apocalypse{ false };
 		int m_number_of_lives{ 3 };
     };
 
