@@ -54,8 +54,7 @@ bool Game::GameApp::GameSpecificInit()
     m_Factory = std::make_unique<EnemiesFactory>();
 	m_Factory->Init();
 
-	m_ObstacleController = std::make_unique<ObstacleController>();
-	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), LevelNumber::LEVEL_TWO, m_window_width, m_window_height);
+	
 
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
@@ -63,6 +62,9 @@ bool Game::GameApp::GameSpecificInit()
 	m_HudController = std::make_unique<HudController>();
 	m_HudController->Init(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height);
 
+
+	m_ObstacleController = std::make_unique<ObstacleController>();
+	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), LevelNumber::LEVEL_TWO, m_window_width, m_window_height);
 
 	auto item_sprite = std::make_unique<Engine::Entity>();
 	item_sprite->AddComponent<Engine::SpriteComponent>().m_Image = m_TextureManager->GetTexture("items");
@@ -76,7 +78,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 {
 	Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"));
     
-	m_ObstacleController->Update(dt, m_EntityManager.get());
+	
 	
 	if (!m_Factory->IsFactoryPaused())
 	{
@@ -109,6 +111,13 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	}
 	m_HudController->Update(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height, m_WasThereAResize);
 	m_PlayerController->Update(dt, m_EntityManager.get());
+	
+	if (SDL_GetTicks() > 4000 && done)
+	{
+		done = false;
+		m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false);
+		//m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+	}
 }
 
 bool Game::GameApp::GameSpecificShutdown()
