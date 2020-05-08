@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "src/Entities/Misc.h"
+
 #include "Entities/NPC/EnemySpecificEntities.h"
 #include "Entities/NPC/Controllers/FireNPCController.h"
 #include "Entities/NPC/Controllers/WaterNPCController.h"
@@ -35,7 +37,7 @@ namespace Game
 		void Reset();
 		bool ShutDown();
 		bool IsFactoryPaused() const { return m_Pause; }
-		void Sleep();
+		bool Sleep();
 	private:
 
 		void SpawnNextNPC(Engine::EntityManager* entityManager, Engine::TextureManager* texture);
@@ -50,7 +52,7 @@ namespace Game
 		float m_Width, m_Height;
 		std::vector<vec2> m_SpawnPositions{};
 		float m_SpawnTimer = 2.f;
-		const int m_Levels[3] = { 1, 3, 100 };
+		const int m_Levels[4] = { 20, 30, 40, 0 };
 		int m_CurrentLevel = 0;
 		int m_SpawnFrequency = 5;
 		bool m_Pause = false;
