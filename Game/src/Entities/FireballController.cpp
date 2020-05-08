@@ -89,54 +89,115 @@ namespace Game
 			shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
 		}
 
-
-		if (shootUpInput) {
+		if (shootUpInput && shootLeftInput) {
 			auto move = fireball->GetComponent<Engine::MoverComponent>();
 			move->m_TranslationSpeed.y = -speed;
-			if (direction == 1)
-			{
-				move->m_TranslationSpeed.x = -speed / 4;
-			}
-			else if (direction == 2)
-			{
-				move->m_TranslationSpeed.x = speed / 4;
-			}
-		}
-		else if (shootDownInput) {
-			auto move = fireball->GetComponent<Engine::MoverComponent>();
-			move->m_TranslationSpeed.y = speed;
-			if (direction == 1)
-			{
-				move->m_TranslationSpeed.x = -speed / 4;
-			}
-			else if (direction == 2)
-			{
-				move->m_TranslationSpeed.x = speed / 4;
-			}
-		}
-
-		if (shootLeftInput) {
-			auto move = fireball->GetComponent<Engine::MoverComponent>();
 			move->m_TranslationSpeed.x = -speed;
 			if (direction == 1)
 			{
-				move->m_TranslationSpeed.y = -speed / 4;
+				move->m_TranslationSpeed.x = -speed*0.8f;
+				move->m_TranslationSpeed.y = -speed*1.2f;
 			}
 			else if (direction == 2)
 			{
-				move->m_TranslationSpeed.y = speed / 4;
+				move->m_TranslationSpeed.x = -speed*1.2f;
+				move->m_TranslationSpeed.y = -speed*0.8f;
 			}
 		}
-		else  if (shootRightInput) {
+		else if (shootUpInput && shootRightInput) {
 			auto move = fireball->GetComponent<Engine::MoverComponent>();
+			move->m_TranslationSpeed.y = -speed;
 			move->m_TranslationSpeed.x = speed;
 			if (direction == 1)
 			{
-				move->m_TranslationSpeed.y = -speed / 4;
+				move->m_TranslationSpeed.x = speed * 0.8f;
+				move->m_TranslationSpeed.y = -speed * 1.2f;
 			}
 			else if (direction == 2)
 			{
-				move->m_TranslationSpeed.y = speed / 4;
+				move->m_TranslationSpeed.x = speed * 1.2f;
+				move->m_TranslationSpeed.y = -speed * 0.8f;
+			}
+		}
+		else if (shootDownInput && shootLeftInput) {
+			auto move = fireball->GetComponent<Engine::MoverComponent>();
+			move->m_TranslationSpeed.y = speed;
+			move->m_TranslationSpeed.x = -speed;
+			if (direction == 1)
+			{
+				move->m_TranslationSpeed.x = -speed * 0.8f;
+				move->m_TranslationSpeed.y = speed * 1.2f;
+			}
+			else if (direction == 2)
+			{
+				move->m_TranslationSpeed.x = -speed * 1.2f;
+				move->m_TranslationSpeed.y = speed * 0.8f;
+			}
+		}
+		else if (shootDownInput && shootRightInput) {
+			auto move = fireball->GetComponent<Engine::MoverComponent>();
+			move->m_TranslationSpeed.y = speed;
+			move->m_TranslationSpeed.x = speed;
+			if (direction == 1)
+			{
+				move->m_TranslationSpeed.x = speed * 0.8f;
+				move->m_TranslationSpeed.y = speed * 1.2f;
+			}
+			else if (direction == 2)
+			{
+				move->m_TranslationSpeed.x = speed * 1.2f;
+				move->m_TranslationSpeed.y = speed * 0.8f;
+			}
+		}
+		else {
+			if (shootUpInput) {
+				auto move = fireball->GetComponent<Engine::MoverComponent>();
+				move->m_TranslationSpeed.y = -speed;
+				if (direction == 1)
+				{
+					move->m_TranslationSpeed.x = -speed / 4;
+				}
+				else if (direction == 2)
+				{
+					move->m_TranslationSpeed.x = speed / 4;
+				}
+			}
+			else if (shootDownInput) {
+				auto move = fireball->GetComponent<Engine::MoverComponent>();
+				move->m_TranslationSpeed.y = speed;
+				if (direction == 1)
+				{
+					move->m_TranslationSpeed.x = -speed / 4;
+				}
+				else if (direction == 2)
+				{
+					move->m_TranslationSpeed.x = speed / 4;
+				}
+			}
+
+			if (shootLeftInput) {
+				auto move = fireball->GetComponent<Engine::MoverComponent>();
+				move->m_TranslationSpeed.x = -speed;
+				if (direction == 1)
+				{
+					move->m_TranslationSpeed.y = -speed / 4;
+				}
+				else if (direction == 2)
+				{
+					move->m_TranslationSpeed.y = speed / 4;
+				}
+			}
+			else  if (shootRightInput) {
+				auto move = fireball->GetComponent<Engine::MoverComponent>();
+				move->m_TranslationSpeed.x = speed;
+				if (direction == 1)
+				{
+					move->m_TranslationSpeed.y = -speed / 4;
+				}
+				else if (direction == 2)
+				{
+					move->m_TranslationSpeed.y = speed / 4;
+				}
 			}
 		}
 
@@ -168,7 +229,9 @@ namespace Game
 				{
 					auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 					auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
-					CreateItem(entityManager_, 3, itemSprite->m_Image, entity);
+					CreateItem(entityManager_, 5, itemSprite->m_Image, entity);
+					CreateItem(entityManager_, 6, itemSprite->m_Image, entity);
+					CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
 					entityManager_->RemoveEntity(fireball->GetId());
 					entityManager_->RemoveEntity(entity->GetId());
 
