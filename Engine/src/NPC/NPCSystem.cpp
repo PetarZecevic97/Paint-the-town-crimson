@@ -87,6 +87,9 @@ namespace Engine
 		auto coll = npc->GetComponent<CollisionComponent>()->m_CollidedWith;
 		for (auto& coller : coll)
 		{
+			if (coller->GetId() > 10000000) {
+				continue;
+			}
 			if (coller->HasComponent<WallComponent>())
 			{
 				npc->GetComponent<MoverComponent>()->m_TranslationSpeed.x = -npc->GetComponent<MoverComponent>()->m_TranslationSpeed.x;

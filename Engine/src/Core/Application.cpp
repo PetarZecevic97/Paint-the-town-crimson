@@ -131,13 +131,14 @@ namespace Engine {
     void Application::Update(float dt)
     {
         // Update all systems
+		GameSpecificUpdate(dt);
         m_InputManager->Update(dt, m_EntityManager.get());
         m_PhysicsSystem->Update(dt, m_EntityManager.get());
         m_EntityManager->Update(dt);
         m_RenderSystem->Update(dt, m_EntityManager.get());
 		m_NPCSystem->Update(dt, m_EntityManager.get());
 
-        GameSpecificUpdate(dt);
+        
     }
 
 }

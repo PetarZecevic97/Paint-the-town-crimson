@@ -42,6 +42,9 @@ namespace Game
 			auto coll = enemy->GetComponent<Engine::CollisionComponent>()->m_CollidedWith;
 			for (auto& coller : coll)
 			{
+				if (coller->GetId() > 10000000) {
+					continue;
+				}
 				if (coller->HasComponent<Engine::WallComponent>())
 				{
 					mover->m_TranslationSpeed.x = mover->m_TranslationSpeed.x * 10.f / 4.f;

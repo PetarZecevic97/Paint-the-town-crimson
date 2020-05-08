@@ -108,7 +108,10 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 
 	}
 	m_HudController->Update(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height, m_WasThereAResize);
+	
 	m_PlayerController->Update(dt, m_EntityManager.get());
+	
+	Game::UpdateFireballs(m_EntityManager.get());
 }
 
 bool Game::GameApp::GameSpecificShutdown()

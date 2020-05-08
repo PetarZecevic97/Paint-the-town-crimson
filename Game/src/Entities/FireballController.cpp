@@ -225,18 +225,23 @@ namespace Game
 
 			for (auto* entity : collider->m_CollidedWith)
 			{
-				if (entity->HasComponent<Engine::NPCComponent>())
-				{
-					auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
-					auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
-					CreateItem(entityManager_, 5, itemSprite->m_Image, entity);
-					CreateItem(entityManager_, 6, itemSprite->m_Image, entity);
-					CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
-					entityManager_->RemoveEntity(fireball->GetId());
-					entityManager_->RemoveEntity(entity->GetId());
+				if (entity->GetId() > 10000000) {
+					continue;
+				}
+				if (entity != nullptr) {
+					if (entity->HasComponent<Engine::NPCComponent>())
+					{
+						auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
+						auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
+						CreateItem(entityManager_, 5, itemSprite->m_Image, entity);
+						CreateItem(entityManager_, 6, itemSprite->m_Image, entity);
+						CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
+						entityManager_->RemoveEntity(fireball->GetId());
+						entityManager_->RemoveEntity(entity->GetId());
 
-					break;
+						break;
 
+					}
 				}
 
 				if (entity->HasComponent<Engine::BorderComponent>() || entity->HasComponent<Engine::ObstacleComponent>())
