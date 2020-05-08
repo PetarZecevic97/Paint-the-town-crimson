@@ -39,6 +39,11 @@ namespace Engine
         ObstacleComponent(float posx_, float posy_) : m_Position(posx_, posy_) { }
 
     };
+    
+    struct LevelComponent : public Component
+    {
+        LevelComponent() = default;
+    };
 
     struct TransformComponent : public Component
     {
