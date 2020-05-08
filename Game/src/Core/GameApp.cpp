@@ -15,6 +15,7 @@
 #include "Entities/NPC/EnemiesFactory.h"
 #include "Entities/Dummy/DummyController.h"
 #include "Entities/StageController.h"
+#include "Entities/ItemsController.h"
 
 void Game::GameApp::GameSpecificWindowData()
 {
@@ -74,7 +75,7 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
 	Game::UpdateItems(m_EntityManager.get());
-    m_PlayerController->Update(dt, m_EntityManager.get());
+    
 	m_ObstacleController->Update(dt, m_EntityManager.get());
 	
 	if (!m_Factory->IsFactoryPaused())
@@ -107,6 +108,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 
 	}
 	m_HudController->Update(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height, m_WasThereAResize);
+	m_PlayerController->Update(dt, m_EntityManager.get());
 }
 
 bool Game::GameApp::GameSpecificShutdown()

@@ -155,7 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\FireballController.h" />
     <ClInclude Include="src\Entities\HudController.h" />
+    <ClInclude Include="src\Entities\ItemsController.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\MentalNPCController.h" />
     <ClInclude Include="src\Entities\Misc.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\EarthNPCController.h" />
@@ -178,7 +180,9 @@
     <ClInclude Include="src\Entities\NPC\Controllers\WindNPCController.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\FireballController.cpp" />
     <ClCompile Include="src\Entities\HudController.cpp" />
+    <ClCompile Include="src\Entities\ItemsController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\MentalNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\EarthNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\EnemiesFactory.cpp" />

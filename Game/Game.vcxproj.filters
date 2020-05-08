@@ -47,6 +47,8 @@
     </ClInclude>
     <ClInclude Include="src\Entities\StageController.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\MentalNPCController.h" />
+    <ClInclude Include="src\Entities\ItemsController.h" />
+    <ClInclude Include="src\Entities\FireballController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -80,6 +82,8 @@
     </ClCompile>
     <ClCompile Include="src\Entities\StageController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\MentalNPCController.cpp" />
+    <ClCompile Include="src\Entities\ItemsController.cpp" />
+    <ClCompile Include="src\Entities\FireballController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
