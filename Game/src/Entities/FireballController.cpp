@@ -231,16 +231,26 @@ namespace Game
 				if (entity != nullptr) {
 					if (entity->HasComponent<Engine::NPCComponent>())
 					{
-						auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
-						auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
-						CreateItem(entityManager_, 5, itemSprite->m_Image, entity);
-						CreateItem(entityManager_, 6, itemSprite->m_Image, entity);
-						CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
-						entityManager_->RemoveEntity(fireball->GetId());
-						entityManager_->RemoveEntity(entity->GetId());
-
+						// Malo sam vam menjao ovo, jer sam dodao HP componentu neprijateljima, u sustini jedan if-else
+						// koji provera hp, ukratko, fire i water imace po 2hp-a, wind i mental 1hp i earth 3hp-a
+						auto npcHp = entity->GetComponent<Engine::HealthComponent>();
+						if (npcHp->m_CurrentHealth > 1)
+						{
+							npcHp->m_CurrentHealth--;
+							entityManager_->RemoveEntity(fireball->GetId());
+						}
+						else
+						{
+							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
+							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
+							CreateItem(entityManager_, 5, itemSprite->m_Image, entity);
+							CreateItem(entityManager_, 6, itemSprite->m_Image, entity);
+							CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
+							entityManager_->RemoveEntity(fireball->GetId());
+							entityManager_->RemoveEntity(entity->GetId());
+						}
+						
 						break;
-
 					}
 				}
 
@@ -254,6 +264,5 @@ namespace Game
 
 
 		}
-
 	}
 }
