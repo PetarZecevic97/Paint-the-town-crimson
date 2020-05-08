@@ -23,7 +23,7 @@ namespace Game
 		life_display->AddComponent<Engine::LifeDisplayComponent>();
 
 		auto* sprite = life_display->GetComponent<Engine::SpriteComponent>();
-		SDL_Rect new_rect{ 0, 0, 18, 12 };
+		SDL_Rect new_rect{ 0, 0, 19, 12 };
 		sprite->m_src = new_rect;
 		sprite->m_Animation = true;
 
@@ -100,12 +100,12 @@ namespace Game
 
 		auto destroyer = std::make_unique<Engine::Entity>();
 
-		destroyer->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), -static_cast<float>(0.06f * window_height), static_cast<float>(60), static_cast<float>(76));
+		destroyer->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), -static_cast<float>(0.06f * window_height), static_cast<float>(72), static_cast<float>(66));
 		destroyer->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("faded");
 		destroyer->AddComponent<Engine::DestroyerHudComponent>();
 
 		auto* destroyer_sprite = destroyer->GetComponent<Engine::SpriteComponent>();
-		SDL_Rect new_destroyer_rect{ 60, 0, 15, 19 };
+		SDL_Rect new_destroyer_rect{ 0, 45, 24, 22 };
 		destroyer_sprite->m_src = new_destroyer_rect;
 		destroyer_sprite->m_Animation = true;
 
@@ -188,20 +188,22 @@ namespace Game
 			}
 		}
 
-		if (player->GetComponent<Engine::PlayerComponent>()->m_speed > 200.f) {
+		if (player->GetComponent<Engine::PlayerComponent>()->m_speedBuff) {
 			entityManager_->GetAllEntitiesWithComponent< Engine::SpeedHudComponent>()[0]->GetComponent<Engine::SpriteComponent>()->m_Image = texture_manager_->GetTexture("items");
 		}else{
 			entityManager_->GetAllEntitiesWithComponent< Engine::SpeedHudComponent>()[0]->GetComponent<Engine::SpriteComponent>()->m_Image = texture_manager_->GetTexture("faded");
 		}
-		//Rapid doesn'work
-		if (player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown < 500.f) {
+		
+		if (player->GetComponent<Engine::PlayerComponent>()->m_rapidFire) {
 			entityManager_->GetAllEntitiesWithComponent< Engine::RapidHudComponent>()[0]->GetComponent<Engine::SpriteComponent>()->m_Image = texture_manager_->GetTexture("items");
 		}
 		else {
 			entityManager_->GetAllEntitiesWithComponent< Engine::RapidHudComponent>()[0]->GetComponent<Engine::SpriteComponent>()->m_Image = texture_manager_->GetTexture("faded");
 		}
 
-		if (player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff) {
+		
+
+		if (player->GetComponent<Engine::PlayerComponent>()->m_apocalypse) {
 			entityManager_->GetAllEntitiesWithComponent< Engine::DestroyerHudComponent>()[0]->GetComponent<Engine::SpriteComponent>()->m_Image = texture_manager_->GetTexture("items");
 		}
 		else {

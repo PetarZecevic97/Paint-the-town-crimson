@@ -12,8 +12,8 @@ namespace Game
         float x = npc_trans->m_Position[0];
         float y = npc_trans->m_Position[1];
 
-        item->AddComponent<Engine::TransformComponent>(x, y, 22.f, 22.f);
-        item->AddComponent<Engine::CollisionComponent>(22.f, 22.f);
+        item->AddComponent<Engine::TransformComponent>(x, y, 40.f, 40.f);
+        item->AddComponent<Engine::CollisionComponent>(40.f, 40.f);
         item->AddComponent<Engine::ItemComponent>(SDL_GetTicks());
         item->GetComponent<Engine::ItemComponent>()->m_itemType = item_type;
         item->AddComponent<Engine::SpriteComponent>().m_Image = texture;
@@ -22,7 +22,7 @@ namespace Game
         switch (item_type) {
 		//lives
 		case 0:
-			new_rect = { 0, 0, 18, 12 };
+			new_rect = { 0, 0, 19, 12 };
 			break;
 		//speed
 		case 1:
@@ -34,7 +34,7 @@ namespace Game
 			break;
 		//destroyer of worlds
 		case 3:
-			new_rect = { 20, 0, 40, 11 };
+			new_rect = { 0, 45, 24, 22 };
 			break;
 		//timelord
 		case 4:
@@ -73,6 +73,10 @@ namespace Game
 
 
             if (SDL_GetTicks() > item->GetComponent<Engine::ItemComponent>()->m_timeCreated + 8000) {
+				if (item->GetComponent<Engine::TransformComponent>()->m_Position.x == -2000) {
+					auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
+					player->GetComponent<Engine::PlayerComponent>()->m_apocalypse = false;
+				}
                 entityManager_->RemoveEntity(item->GetId());
                 continue;
             }
@@ -95,10 +99,13 @@ namespace Game
                         }
                         else
                         {
+							auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
+							player->GetComponent<Engine::PlayerComponent>()->m_apocalypse = true;
                             auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
                             for (auto* enemy : enemies) {
                                 entityManager_->RemoveEntity(enemy->GetId());
                             }
+							
                         } 
                         item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
                         item->GetComponent<Engine::TransformComponent>()->m_Position.x = -2000;
@@ -385,7 +392,7 @@ namespace Game
                 {
 					auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 					auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
-                   CreateItem(entityManager_, 6, itemSprite->m_Image, entity);
+                   CreateItem(entityManager_, 3, itemSprite->m_Image, entity);
                    entityManager_->RemoveEntity(fireball->GetId());
                    entityManager_->RemoveEntity(entity->GetId());
                    
@@ -524,7 +531,7 @@ namespace Game
             
 
             auto collider = player->GetComponent<Engine::CollisionComponent>();
-
+			//ovo je mozda problem - ako je entyty koji removojemo u ovome
             for (auto* entity : collider->m_CollidedWith)
             {
 
@@ -548,7 +555,9 @@ namespace Game
                         auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
                         for (auto* enemy : enemies) {
                             entityManager_->RemoveEntity(enemy->GetId());
+							
                         }
+						break;
                     }
                 }
 
