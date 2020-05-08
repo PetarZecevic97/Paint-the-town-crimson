@@ -17,7 +17,6 @@ namespace Game
         sprite->m_Animation = true;
 
         stage->AddComponent<Engine::TransformComponent>(60, 0, 1152.f, 720.f);
-        //stage->AddComponent<Engine::ObstacleComponent>();
         stage->AddComponent<Engine::LevelComponent>();
 
         entityManager_->AddEntity(std::move(stage));
