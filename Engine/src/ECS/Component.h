@@ -194,6 +194,12 @@ namespace Engine
 		int m_last_number { 3 };
 	};
 
+	struct ExplosionComponent : public Component
+	{
+		int m_frame_counter = { 0 };
+		int m_last_time_changed = { 0 };
+	};
+
 	struct ItemStashComponent : public Component
 	{
 

@@ -74,7 +74,7 @@ bool Game::GameApp::GameSpecificInit()
 
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
-	Game::UpdateItems(m_EntityManager.get());
+	Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"));
     
 	m_ObstacleController->Update(dt, m_EntityManager.get());
 	
@@ -137,6 +137,7 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "faded", "Data/faded.png");
 	m_TextureManager->CreateTexture(renderer, "numbers", "Data/numbers.png");
 	m_TextureManager->CreateTexture(renderer, "slab", "Data/slab.png");
+	m_TextureManager->CreateTexture(renderer, "explosion", "Data/explosion-4.png");
 	
 	
 }

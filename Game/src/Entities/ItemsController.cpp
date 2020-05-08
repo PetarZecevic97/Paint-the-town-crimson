@@ -1,4 +1,7 @@
 #include "ItemsController.h"
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
 
 namespace Game
 {
@@ -63,7 +66,9 @@ namespace Game
 		return !(entityManager_->GetAllEntitiesWithComponent<Engine::ItemComponent>().empty());
 	}
 
-	void UpdateItems(Engine::EntityManager* entityManager_) {
+	void UpdateItems(Engine::EntityManager* entityManager_, Engine::Texture* texture) {
+
+		UpdateExplosion(entityManager_);
 
 		auto items = entityManager_->GetAllEntitiesWithComponents<Engine::ItemComponent>();
 
@@ -71,10 +76,12 @@ namespace Game
 		{
 
 
-			if (SDL_GetTicks() > item->GetComponent<Engine::ItemComponent>()->m_timeCreated + 8000) {
+			if (static_cast<int>(SDL_GetTicks()) > item->GetComponent<Engine::ItemComponent>()->m_timeCreated + 8000) {
 				if (item->GetComponent<Engine::TransformComponent>()->m_Position.x == -2000) {
 					auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
 					player->GetComponent<Engine::PlayerComponent>()->m_apocalypse = false;
+					
+
 				}
 				entityManager_->RemoveEntity(item->GetId());
 				continue;
@@ -104,14 +111,18 @@ namespace Game
 							for (auto* enemy : enemies) {
 								entityManager_->RemoveEntity(enemy->GetId());
 							}
+							item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
+							item->GetComponent<Engine::TransformComponent>()->m_Position.x = -2000;
+							item->GetComponent<Engine::TransformComponent>()->m_Position.y = -2000;
 
+							CreateExplosion(entityManager_, texture);
+							
+
+							/* item->RemoveComponent<Engine::CollisionComponent>();
+							item->RemoveComponent<Engine::SpriteComponent>();
+							item->RemoveComponent<Engine::ItemComponent>();*/
 						}
-						item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
-						item->GetComponent<Engine::TransformComponent>()->m_Position.x = -2000;
-						item->GetComponent<Engine::TransformComponent>()->m_Position.y = -2000;
-						/* item->RemoveComponent<Engine::CollisionComponent>();
-						item->RemoveComponent<Engine::SpriteComponent>();
-						item->RemoveComponent<Engine::ItemComponent>();*/
+						
 					}
 					else {
 
@@ -196,7 +207,7 @@ namespace Game
 		for (auto* buff : buffs)
 		{
 			auto buffComponent = buff->GetComponent<Engine::BuffComponent>();
-			if (SDL_GetTicks() > buffComponent->m_timeExpires) {
+			if (static_cast<int>(SDL_GetTicks()) > buffComponent->m_timeExpires) {
 				if (buffComponent->m_buffType == 1)
 				{
 					player->GetComponent<Engine::PlayerComponent>()->m_speed -= 200;
@@ -225,4 +236,51 @@ namespace Game
 		}
 
 	}
+
+	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture) {
+
+		srand(static_cast<int>(time(NULL)));
+		int aca = rand() % 100;
+		
+		for (int i = 0; i < 14; i++) {
+			auto explosion = std::make_unique<Engine::Entity>();
+
+			explosion->AddComponent<Engine::TransformComponent>(static_cast<float>(rand() % 7 * 128.f * pow(-1, rand() % 100)  + rand() % 256 * pow(-1, rand() % 100)), static_cast<float>(rand() % 7 * 128.f * pow(-1, rand() % 100) + rand() % 256 * pow(-1, rand() % 100)), static_cast<float>(256), static_cast<float>(256));
+			explosion->AddComponent<Engine::SpriteComponent>().m_Image = texture;
+			explosion->AddComponent<Engine::ExplosionComponent>();
+			explosion->GetComponent<Engine::ExplosionComponent>()->m_last_time_changed = SDL_GetTicks() - 200;
+
+			auto* explosion_sprite = explosion->GetComponent<Engine::SpriteComponent>();
+			SDL_Rect new_explosion_rect{ 0, 0, 128, 128 };
+			explosion_sprite->m_src = new_explosion_rect;
+			explosion_sprite->m_Animation = true;
+
+			entityManager_->AddEntity(std::move(explosion));
+		}
+	
+	}
+
+	void UpdateExplosion(Engine::EntityManager* entityManager_) {
+
+		auto explosions = entityManager_->GetAllEntitiesWithComponent<Engine::ExplosionComponent>();
+
+		for (auto* explosion : explosions) {
+
+			int ticks = SDL_GetTicks();
+			if (ticks > explosion->GetComponent<Engine::ExplosionComponent>()->m_last_time_changed + 200) {
+				explosion->GetComponent<Engine::ExplosionComponent>()->m_last_time_changed = ticks;
+				auto* explosion_sprite = explosion->GetComponent<Engine::SpriteComponent>();
+				SDL_Rect new_explosion_rect{ 128 * explosion->GetComponent<Engine::ExplosionComponent>()->m_frame_counter, 0, 128, 128 };
+				explosion_sprite->m_src = new_explosion_rect;
+				explosion->GetComponent<Engine::ExplosionComponent>()->m_frame_counter++;
+			}
+
+			if (explosion->GetComponent<Engine::ExplosionComponent>()->m_frame_counter == 12) {	
+					entityManager_->RemoveEntity(explosion->GetId());	
+			}
+		}
+	
+	}
+
+
 }
