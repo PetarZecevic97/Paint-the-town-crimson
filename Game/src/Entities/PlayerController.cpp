@@ -13,8 +13,8 @@ namespace Game
         
         auto player = std::make_unique<Engine::Entity>();
 
-        player->AddComponent<Engine::TransformComponent>(0.f, 0.f, 100.f, 100.f);
-        player->AddComponent<Engine::CollisionComponent>(100.f, 100.f);
+        player->AddComponent<Engine::TransformComponent>(0.f, 0.f, 50.f, 50.f);
+        player->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
         player->AddComponent<Engine::PlayerComponent>();
         player->AddComponent<Engine::InputComponent>();
         player->AddComponent<Engine::MoverComponent>();
@@ -66,6 +66,16 @@ namespace Game
             bool shootDownInput = Engine::InputManager::IsActionActive(input, "PlayerShootDown");
             bool shootLeftInput = Engine::InputManager::IsActionActive(input, "PlayerShootLeft");
             bool shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
+
+			if (moveLeftInput && moveRightInput) {
+				moveLeftInput = false;
+				moveRightInput = false;
+			}
+
+			if (moveUpInput && moveDownInput) {
+				moveUpInput = false;
+				moveDownInput = false;
+			}
 
             int ticks = SDL_GetTicks() - m_last_fired_time;
             if (ticks > player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown && (shootUpInput || shootDownInput || shootLeftInput || shootRightInput)) {
@@ -132,11 +142,67 @@ namespace Game
 					if (entity->GetId() > 10000000) {
 						continue;
 					}
+					if (entity->HasComponent<Engine::BorderComponent>()) {
 
-					if (entity->HasComponent<Engine::BorderComponent>())
+						move->m_TranslationSpeed.y = 0;
+						move->m_TranslationSpeed.x = 0;
+
+						auto ent_transform = entity->GetComponent<Engine::TransformComponent>();
+						float ent_left_edge = ent_transform->m_Position.x + ent_transform->m_Size.x / 2 + transform->m_Size.x / 2;
+						float ent_right_edge = ent_transform->m_Position.x - ent_transform->m_Size.x / 2 - transform->m_Size.x / 2;
+						float ent_up_edge = ent_transform->m_Position.y - ent_transform->m_Size.y / 2 - transform->m_Size.y / 2;
+						float ent_down_edge = ent_transform->m_Position.y + ent_transform->m_Size.y / 2 + transform->m_Size.y / 2;
+
+						if (entity->HasComponent<Engine::TopBorderComponent>()) {
+							transform->m_Position.y = ent_down_edge + 10;
+						}
+						else if (entity->HasComponent<Engine::BottomBorderComponent>()) {
+							transform->m_Position.y = ent_up_edge - 10;
+						}
+						else if (entity->HasComponent<Engine::LeftBorderComponent>()) {
+							transform->m_Position.x = ent_left_edge + 10;
+						}
+						else if (entity->HasComponent<Engine::RightBorderComponent>()) {
+							transform->m_Position.x = ent_right_edge - 10;
+						}
+						
+					}
+
+					if (entity->HasComponent<Engine::ObstacleComponent>())
 					{
-						move->m_TranslationSpeed.y = speed * ((moveUpInput ? 20.0f : 0.0f) + (moveDownInput ? -20.0f : 0.0f));
-						move->m_TranslationSpeed.x = speed * ((moveLeftInput ? 20.0f : 0.0f) + (moveRightInput ? -20.0f : 0.0f));
+						
+						
+						auto ent_transform = entity->GetComponent<Engine::TransformComponent>();
+						float ent_left_edge = ent_transform->m_Position.x + ent_transform->m_Size.x / 2 + transform->m_Size.x/2;
+						float ent_right_edge = ent_transform->m_Position.x - ent_transform->m_Size.x / 2 - transform->m_Size.x/2;
+						float ent_up_edge = ent_transform->m_Position.y - ent_transform->m_Size.y / 2 - transform->m_Size.y/2;
+						float ent_down_edge = ent_transform->m_Position.y + ent_transform->m_Size.y / 2 + transform->m_Size.y/2;
+
+						move->m_TranslationSpeed.y = 0;
+						move->m_TranslationSpeed.x = 0;
+
+						if (moveLeftInput && moveUpInput) {
+							transform->m_Position.x = ent_left_edge + 10;
+							transform->m_Position.y = transform->m_Position.y + 10.0f;
+						}else if (moveLeftInput && moveDownInput) {
+							transform->m_Position.x = ent_left_edge + 10;
+							transform->m_Position.y = transform->m_Position.y - 10.0f;
+						}
+						else if (moveRightInput && moveUpInput) {
+							transform->m_Position.x = ent_right_edge - 10;
+							transform->m_Position.y = transform->m_Position.y + 10.0f;
+						}
+						else if (moveRightInput && moveDownInput) {
+							transform->m_Position.x = ent_right_edge - 10;
+							transform->m_Position.y = transform->m_Position.y - 10.0f;
+						}
+						else {
+
+							transform->m_Position.x = (moveLeftInput ? ent_left_edge + 10 : transform->m_Position.x);
+							transform->m_Position.x = (moveRightInput ? ent_right_edge - 10 : transform->m_Position.x);
+							transform->m_Position.y = (moveUpInput ? ent_down_edge + 10 : transform->m_Position.y);
+							transform->m_Position.y = (moveDownInput ? ent_up_edge - 10 : transform->m_Position.y);
+						}
 
 					}
 					 if (entity->HasComponent<Engine::NPCComponent>())

@@ -1,5 +1,7 @@
 #include "FireballController.h"
 #include "ItemsController.h"
+#include <stdlib.h>
+#include <time.h>
 
 namespace Game
 {
@@ -233,9 +235,9 @@ namespace Game
 					{
 						auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 						auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
-						CreateItem(entityManager_, 5, itemSprite->m_Image, entity);
-						CreateItem(entityManager_, 6, itemSprite->m_Image, entity);
-						CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
+						srand(static_cast<int>(time(NULL)));
+						CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
+						//CreateItem(entityManager_, 0, itemSprite->m_Image, entity);
 						entityManager_->RemoveEntity(fireball->GetId());
 						entityManager_->RemoveEntity(entity->GetId());
 

@@ -114,17 +114,18 @@ namespace Game
 							for (auto* enemy : enemies) {
 								entityManager_->RemoveEntity(enemy->GetId());
 							}
-							item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
-							item->GetComponent<Engine::TransformComponent>()->m_Position.x = -2000;
-							item->GetComponent<Engine::TransformComponent>()->m_Position.y = -2000;
-
+							
 							CreateExplosion(entityManager_, texture);
 							
-
-							/* item->RemoveComponent<Engine::CollisionComponent>();
-							item->RemoveComponent<Engine::SpriteComponent>();
-							item->RemoveComponent<Engine::ItemComponent>();*/
+							
 						}
+						item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
+						item->GetComponent<Engine::TransformComponent>()->m_Position.x = -2000;
+						item->GetComponent<Engine::TransformComponent>()->m_Position.y = -2000;
+
+						/* item->RemoveComponent<Engine::CollisionComponent>();
+						item->RemoveComponent<Engine::SpriteComponent>();
+						item->RemoveComponent<Engine::ItemComponent>();*/
 						
 					}
 					else {
