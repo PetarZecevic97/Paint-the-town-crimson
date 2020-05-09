@@ -54,8 +54,7 @@ bool Game::GameApp::GameSpecificInit()
     m_Factory = std::make_unique<EnemiesFactory>();
 	m_Factory->Init();
 
-	m_ObstacleController = std::make_unique<ObstacleController>();
-	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), LevelNumber::LEVEL_TWO, m_window_width, m_window_height);
+	
 
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
@@ -63,6 +62,9 @@ bool Game::GameApp::GameSpecificInit()
 	m_HudController = std::make_unique<HudController>();
 	m_HudController->Init(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height);
 
+
+	m_ObstacleController = std::make_unique<ObstacleController>();
+	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), LevelNumber::LEVEL_TWO, m_window_width, m_window_height);
 
 	auto item_sprite = std::make_unique<Engine::Entity>();
 	item_sprite->AddComponent<Engine::SpriteComponent>().m_Image = m_TextureManager->GetTexture("items");
@@ -75,16 +77,24 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
 	Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"));
-    
-	m_ObstacleController->Update(dt, m_EntityManager.get());
-	
-	if (!m_Factory->IsFactoryPaused())
+
+	if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0)
+	{
+		m_Factory->ShutDown(m_EntityManager.get());
+		m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true);
+	}
+	else if (!m_Factory->IsFactoryPaused())
 	{
 		m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
 	}
 	else
 	{
-		m_Factory->Sleep();
+		if (!m_Factory->Sleep())
+		{
+			// Sada se ovde vrsi ovde prebacivanje na sledeci nivo ukoliko je player ubio sve neprijatelje
+			m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+			m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false);
+		}
 	}
 
 	SDL_Event event{ };
@@ -112,6 +122,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	m_PlayerController->Update(dt, m_EntityManager.get());
 	
 	Game::UpdateFireballs(m_EntityManager.get());
+
 }
 
 bool Game::GameApp::GameSpecificShutdown()

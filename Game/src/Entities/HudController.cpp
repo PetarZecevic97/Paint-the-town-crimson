@@ -13,6 +13,7 @@ namespace Game
 
 		hud_layer->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.5f*window_width), 0.f, static_cast<float>(0.2f*window_width), static_cast<float>(window_height));
 		hud_layer->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("unblank");
+		hud_layer->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		hud_layer->AddComponent<Engine::HudComponent>();
 		entityManager_->AddEntity(std::move(hud_layer));
 
@@ -20,6 +21,7 @@ namespace Game
 
 		life_display->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.47f * window_width), -static_cast<float>(0.47f * window_height), static_cast<float>(54), static_cast<float>(36));
 		life_display->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("items");
+		life_display->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		life_display->AddComponent<Engine::LifeDisplayComponent>();
 
 		auto* sprite = life_display->GetComponent<Engine::SpriteComponent>();
@@ -33,6 +35,7 @@ namespace Game
 
 		x->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.44f * window_width), -static_cast<float>(0.46f * window_height), static_cast<float>(16), static_cast<float>(19));
 		x->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("numbers");
+		x->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		x->AddComponent<Engine::XComponent>();
 
 		auto* x_sprite = x->GetComponent<Engine::SpriteComponent>();
@@ -49,6 +52,7 @@ namespace Game
 
 		number->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.43f * window_width), -static_cast<float>(0.47f * window_height), static_cast<float>(30), static_cast<float>(40));
 		number->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("numbers");
+		number->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		number->AddComponent<Engine::NumberComponent>();
 
 		auto* number_sprite = number->GetComponent<Engine::SpriteComponent>();
@@ -68,6 +72,7 @@ namespace Game
 
 		slab->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), 0.f, static_cast<float>(120), static_cast<float>(0.85f * window_height));
 		slab->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("slab");
+		slab->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		slab->AddComponent<Engine::SlabComponent>();
 
 		entityManager_->AddEntity(std::move(slab));
@@ -76,6 +81,7 @@ namespace Game
 
 		speed->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), -static_cast<float>(0.31f * window_height), static_cast<float>(60), static_cast<float>(76));
 		speed->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("faded");
+		speed->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		speed->AddComponent<Engine::SpeedHudComponent>();
 
 		auto* speed_sprite = speed->GetComponent<Engine::SpriteComponent>();
@@ -89,6 +95,7 @@ namespace Game
 
 		rapid->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), -static_cast<float>(0.18f * window_height), static_cast<float>(72), static_cast<float>(52));
 		rapid->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("faded");
+		rapid->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		rapid->AddComponent<Engine::RapidHudComponent>();
 
 		auto* rapid_sprite = rapid->GetComponent<Engine::SpriteComponent>();
@@ -102,6 +109,7 @@ namespace Game
 
 		destroyer->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), -static_cast<float>(0.06f * window_height), static_cast<float>(72), static_cast<float>(66));
 		destroyer->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("faded");
+		destroyer->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		destroyer->AddComponent<Engine::DestroyerHudComponent>();
 
 		auto* destroyer_sprite = destroyer->GetComponent<Engine::SpriteComponent>();
@@ -116,6 +124,7 @@ namespace Game
 
 		timelord->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), static_cast<float>(0.05f * window_height), static_cast<float>(52), static_cast<float>(60));
 		timelord->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("faded");
+		timelord->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		timelord->AddComponent<Engine::TimelordHudComponent>();
 
 		auto* timelord_sprite = timelord->GetComponent<Engine::SpriteComponent>();
@@ -129,6 +138,7 @@ namespace Game
 
 		triple->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), static_cast<float>(0.16f * window_height), static_cast<float>(80), static_cast<float>(44));
 		triple->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("faded");
+		triple->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		triple->AddComponent<Engine::TripleHudComponent>();
 
 		auto* triple_sprite = triple->GetComponent<Engine::SpriteComponent>();
@@ -142,6 +152,7 @@ namespace Game
 
 		multi->AddComponent<Engine::TransformComponent>(-static_cast<float>(0.45f * window_width), static_cast<float>(0.27f * window_height), static_cast<float>(72), static_cast<float>(72));
 		multi->AddComponent<Engine::SpriteComponent>().m_Image = texture_manager_->GetTexture("faded");
+		multi->GetComponent<Engine::SpriteComponent>()->m_zIndex = 1;
 		multi->AddComponent<Engine::MultiHudComponent>();
 
 		auto* multi_sprite = multi->GetComponent<Engine::SpriteComponent>();

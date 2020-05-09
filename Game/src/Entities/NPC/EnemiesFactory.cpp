@@ -59,22 +59,30 @@ namespace Game
 		m_SpawnFrequency--;
 	}
 
-	bool EnemiesFactory::ShutDown()
+	void EnemiesFactory::ShutDown(Engine::EntityManager* entityManager)
 	{
-		return true;
+		auto enemies = entityManager->GetAllEntitiesWithComponents<Engine::NPCComponent>();
+		m_CurrentElement = 40;
+		m_CurrentLevel = 3;
+		for (auto* enemy : enemies) 
+		{
+			entityManager->RemoveEntity(enemy->GetId());
+		}
 	}
 
-	void EnemiesFactory::Sleep()
+	bool EnemiesFactory::Sleep()
 	{
-		if (SDL_GetTicks() - m_SleepTimeStart > 3000 && m_CurrentLevel < 3)
+		if (SDL_GetTicks() - m_SleepTimeStart > 3000 && m_CurrentLevel < 4)
 		{
 			m_Pause = false;
+			return false;
 		}
+		return true;
 	}
 
 	void EnemiesFactory::SpawnNextNPC(Engine::EntityManager* entityManager, Engine::TextureManager* texture)
 	{
-		m_SpawnTimer -= m_CurrentElement % m_SpawnFrequency == 0 ? (m_SpawnTimer < 0.6f ? 0.f : 0.2f) : 0.f;
+		m_SpawnTimer -= m_CurrentElement % m_SpawnFrequency == 0 ? (m_SpawnTimer < 0.3f ? 0.f : 0.2f) : 0.f;
 		m_Delta = 0.f;
 
 		int enemyType = 4;

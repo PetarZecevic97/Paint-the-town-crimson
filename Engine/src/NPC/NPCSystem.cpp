@@ -47,7 +47,6 @@ namespace Engine
 			DodgeWalls(npc);
 
 			float addition = 0;
-			LOG_INFO("start angle: {}", angle);
 			int npcLookFactor = npc->GetComponent<NPCComponent>()->m_SideToLook;
 			while (CheckRayCasting(npc, angle, send))
 			{
@@ -64,7 +63,6 @@ namespace Engine
 				angle = angle + npcLookFactor* pi / 4;
 
 			}
-			LOG_INFO("stop angle: {} addition: {}", angle,addition);
 
 			//Petar je menjao ovde kod!
 			if (players[0]->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff)

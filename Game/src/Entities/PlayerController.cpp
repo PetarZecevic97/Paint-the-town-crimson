@@ -168,7 +168,7 @@ namespace Game
 						
 					}
 
-					if (entity->HasComponent<Engine::ObstacleComponent>())
+					if (entity->HasComponent<Engine::ObstacleComponent>() && !entity->HasComponent<Engine::WallComponent>())
 					{
 						
 						
@@ -207,21 +207,21 @@ namespace Game
 					}
 					 if (entity->HasComponent<Engine::NPCComponent>())
 					{
-
+                        entityManager_->RemoveEntity(entity->GetId());
 						player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives--;
 
-						entityManager_->RemoveEntity(entity->GetId());
-						if (player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0) {
+                        // Ovaj if je prakticno prebacen u GameApp, za sada je da kad player umre, samo se iscrta stage Game Over,
+                        // mozemo se dogovoriti oko tacnih detalja
+						/*if (player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0) {
 							player->GetComponent<Engine::TransformComponent>()->m_Position.x = 0.f;
 							player->GetComponent<Engine::TransformComponent>()->m_Position.y = 0.f;
 							player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives = 3;
 							auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
 							for (auto* enemy : enemies) {
 								entityManager_->RemoveEntity(enemy->GetId());
-
 							}
 							break;
-						}
+						}*/
 					}
 				}
 

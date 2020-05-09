@@ -16,9 +16,10 @@ namespace Game
 		enemy->AddComponent<Engine::NPCComponent>();
 		enemy->AddComponent<EnemyComponent>(EnemyType::Earth);
 		enemy->AddComponent<EarthNPCComponent>();
-		enemy->AddComponent<Engine::TransformComponent>(spawnPosition.x, spawnPosition.y, 50.f, 50.f);
-		enemy->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
+		enemy->AddComponent<Engine::TransformComponent>(spawnPosition.x, spawnPosition.y, 78.f, 78.f);
+		enemy->AddComponent<Engine::CollisionComponent>(78.f, 78.f);
 		enemy->AddComponent<Engine::MoverComponent>();
+		enemy->AddComponent<Engine::HealthComponent>(3, 3);
 		enemy->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 		auto* sprite = enemy->GetComponent<Engine::SpriteComponent>();
 		SDL_Rect new_rect{ 0, 0, 50, 50 };

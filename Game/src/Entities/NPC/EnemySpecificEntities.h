@@ -29,7 +29,7 @@ namespace Game
 
 	struct WaterNPCComponent : public Engine::Component
 	{
-
+		bool isInWallForm = false;
 	};
 
 	struct FireNPCComponent : public Engine::Component

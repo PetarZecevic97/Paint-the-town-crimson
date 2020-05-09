@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "Entities/NPC/EnemySpecificEntities.h"
+
 namespace Game
 {
 	bool CreateFireball(Engine::EntityManager* entityManager_, int direction, int direction2) {
@@ -233,16 +235,35 @@ namespace Game
 				if (entity != nullptr) {
 					if (entity->HasComponent<Engine::NPCComponent>())
 					{
-						auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
-						auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
-						srand(static_cast<int>(time(NULL)));
-						CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
-						//CreateItem(entityManager_, 0, itemSprite->m_Image, entity);
-						entityManager_->RemoveEntity(fireball->GetId());
-						entityManager_->RemoveEntity(entity->GetId());
+
+						// Malo sam vam menjao ovo, jer sam dodao HP componentu neprijateljima, u sustini jedan if-else
+						// koji provera hp, ukratko, fire i water imace po 2hp-a, wind i mental 1hp i earth 3hp-a
+						auto npcHp = entity->GetComponent<Engine::HealthComponent>();
+						if (npcHp->m_CurrentHealth > 1)
+						{
+							npcHp->m_CurrentHealth--;
+							entityManager_->RemoveEntity(fireball->GetId());
+						}
+						else if (entity->HasComponent<WaterNPCComponent>() && !entity->GetComponent<WaterNPCComponent>()->isInWallForm && npcHp->m_CurrentHealth == 1)
+						{
+							entity->GetComponent<WaterNPCComponent>()->isInWallForm = true;
+							entity->RemoveComponent<Engine::MoverComponent>();
+							entity->AddComponent<Engine::WallComponent>();
+							entity->GetComponent<Engine::HealthComponent>()->m_CurrentHealth = 3;
+						}
+						else
+						{
+							
+							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
+							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
+							CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
+							//CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
+							entityManager_->RemoveEntity(fireball->GetId());
+							entityManager_->RemoveEntity(entity->GetId());
+						}
+						
 
 						break;
-
 					}
 				}
 
@@ -256,6 +277,5 @@ namespace Game
 
 
 		}
-
 	}
 }

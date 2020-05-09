@@ -93,6 +93,9 @@ namespace Engine
 		bool m_Animation{ false };
         bool m_FlipHorizontal{ false };
         bool m_FlipVertical{ false };
+        int m_zIndex = 0;
+        SpriteComponent() = default;
+        SpriteComponent(int zIndex) : m_zIndex(zIndex) {}
     };
 
     struct PlayerComponent : public Component
@@ -255,8 +258,10 @@ namespace Engine
 
     struct HealthComponent : public Component
     {
-        int m_CurrentHealth;
-        int m_MaxHealth;
+        int m_CurrentHealth = 1;
+        int m_MaxHealth = 1;
+
+        HealthComponent(int currentHP, int maxHP) : m_CurrentHealth(currentHP), m_MaxHealth(maxHP) {};
     };
 
     struct CameraComponent : public Component

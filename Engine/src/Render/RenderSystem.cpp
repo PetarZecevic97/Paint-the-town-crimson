@@ -62,6 +62,10 @@ namespace Engine
 
         // Find all entities to draw
         auto renderables = entityManager->GetAllEntitiesWithComponents<TransformComponent, SpriteComponent>();
+        std::stable_partition(renderables.begin(), renderables.end(), [](const Entity* e) -> bool
+        {
+            return e->GetComponent<SpriteComponent>()->m_zIndex == 0;
+        });
         m_Renderer->DrawEntities(renderables, camera);
 
         m_Renderer->EndScene();
