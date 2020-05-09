@@ -50,6 +50,8 @@
     <ClInclude Include="src\Entities\ItemsController.h" />
     <ClInclude Include="src\Entities\FireballController.h" />
     <ClInclude Include="src\Entities\AudioController.h" />
+    <ClInclude Include="SDL_mixer.h" />
+    <ClInclude Include="src\Audio System\AudioSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -85,6 +87,7 @@
     <ClCompile Include="src\Entities\NPC\Controllers\MentalNPCController.cpp" />
     <ClCompile Include="src\Entities\ItemsController.cpp" />
     <ClCompile Include="src\Entities\FireballController.cpp" />
+    <ClCompile Include="src\Audio System\AudioSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -107,5 +110,8 @@
   <ItemGroup>
     <Media Include="Data\love_wolf.wav" />
     <Media Include="Data\beat.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SDL2_mixer.lib" />
   </ItemGroup>
 </Project>

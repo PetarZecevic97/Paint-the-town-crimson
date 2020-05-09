@@ -1060,6 +1060,7 @@
     <ClInclude Include="AudioSystem.h">
       <Filter>src\AudioSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SDL_mixer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extern\spdlog\LICENSE">
@@ -1417,5 +1418,8 @@
     <None Include="extern\glm\detail\type_vec4_simd.inl">
       <Filter>extern\glm\detail</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SDL2_mixer.lib" />
   </ItemGroup>
 </Project>

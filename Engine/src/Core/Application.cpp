@@ -70,12 +70,6 @@ namespace Engine {
 			return false;
 		}
 
-        m_AudioSystem = std::make_unique<AudioSystem>();
-        if (!m_AudioSystem->Init())
-        {
-            LOG_CRITICAL("Failed to initialize Audio System");
-            return false;
-        }
 
 
         if (GameSpecificInit() != true)

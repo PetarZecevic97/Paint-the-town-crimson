@@ -17,6 +17,7 @@
 #include "Entities/StageController.h"
 #include "Entities/ItemsController.h"
 #include "Entities/AudioController.h"
+#include "AudioSystem.h"
 
 void Game::GameApp::GameSpecificWindowData()
 {
@@ -72,14 +73,34 @@ bool Game::GameApp::GameSpecificInit()
 	item_sprite->AddComponent<Engine::ItemStashComponent>();
 	m_EntityManager.get()->AddEntity(std::move(item_sprite));
 
+	
+
+	if (SDL_Init(SDL_INIT_AUDIO) < 0)
+	{
+		LOG_CRITICAL("Unable to initialize SDL audio. SDL error: {}", Mix_GetError());
+		return false;
+	}
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		LOG_CRITICAL("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		return false;
+	}
+
+	Mix_Music* music = NULL;
+
+	//Load music
+	music = Mix_LoadMUS("Data/love_wolf.wav");
+	if (music == NULL)
+	{
+		LOG_CRITICAL("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+		return false;
+	}
+	Mix_PlayMusic(music, -1);
 
 	m_AudioSystem.get()->Init();
 	m_AudioSystem.get()->LoadMusic("Data/beat.wav", "background");
 	m_AudioSystem.get()->PlayBackgroundMusic("background");
-	//m_AudioController = std::make_unique<AudioController>();
-	//m_AudioController->Init(m_AudioSystem.get());
-
-	
 
     return true;
 }
