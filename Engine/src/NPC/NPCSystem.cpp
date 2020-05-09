@@ -34,10 +34,17 @@ namespace Engine
 		{
 			auto transform = npc->GetComponent<TransformComponent>();
 			auto mover = npc->GetComponent<MoverComponent>();
+			auto frozen = npc->GetComponent<NPCComponent>();
+			if (frozen->m_IsFrozen)
+			{
+				mover->m_TranslationSpeed.x = 0.f;
+				mover->m_TranslationSpeed.y = 0.f;
+				continue;
+			}
 
 			float angle = std::atan((pmover->m_Position.y - transform->m_Position.y)
-				/
-				(pmover->m_Position.x - transform->m_Position.x));
+				                                          /
+				                    (pmover->m_Position.x - transform->m_Position.x));
 
 			if (pmover->m_Position.x < transform->m_Position.x)
 			{
@@ -64,18 +71,8 @@ namespace Engine
 
 			}
 
-			//Petar je menjao ovde kod!
-			if (players[0]->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff)
-			{
-				mover->m_TranslationSpeed.x = 0.f;
-				mover->m_TranslationSpeed.y = 0.f;
-			}
-			else
-			{
-
 				mover->m_TranslationSpeed.x = (addition < twoPI) ? (std::cosf(angle) * 200.f) : (-mover->m_TranslationSpeed.x);
 				mover->m_TranslationSpeed.y = (addition < twoPI) ? (std::sinf(angle) * 200.f) : (-mover->m_TranslationSpeed.y);
-			}
 
 		}
 	}

@@ -52,7 +52,7 @@ namespace Game
 		float m_Width, m_Height;
 		std::vector<vec2> m_SpawnPositions{};
 		float m_SpawnTimer = 2.f;
-		const int m_Levels[4] = { 20, 30, 40, 0 };
+		const int m_Levels[4] = { 20, 30, 40, 0 }; // Ovde se definise broj neprijatelja koji ce se stoviri na nivou, tim redosledom, zadnji treba biti 0 jer je to kraj
 		int m_CurrentLevel = 0;
 		int m_SpawnFrequency = 5;
 		bool m_Pause = false;

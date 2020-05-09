@@ -288,6 +288,7 @@ namespace Engine
 	struct NPCComponent : public Component
 	{
         int m_SideToLook = 1;
+        bool m_IsFrozen = false;
 	};
 
     struct WallComponent : public Component

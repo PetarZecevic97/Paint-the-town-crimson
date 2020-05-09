@@ -144,6 +144,11 @@ namespace Game
 						{
 							auto timeoutBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TimestopBuffComponent>()[0];
 							timeoutBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += timeoutBuff->GetComponent<Engine::BuffComponent>()->m_duration;
+							auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
+							for (auto npc : allNPCs)
+							{
+								npc->GetComponent<Engine::NPCComponent>()->m_IsFrozen = true;
+							}
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5 && entity->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
 						{
@@ -179,6 +184,11 @@ namespace Game
 							{
 								buff->AddComponent<Engine::TimestopBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = true;
+								auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
+								for (auto npc : allNPCs)
+								{
+									npc->GetComponent<Engine::NPCComponent>()->m_IsFrozen = true;
+								}
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5)
 							{
@@ -225,6 +235,11 @@ namespace Game
 				else if (buffComponent->m_buffType == 4)
 				{
 					player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = false;
+					auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
+					for (auto npc : allNPCs)
+					{
+						npc->GetComponent<Engine::NPCComponent>()->m_IsFrozen = false;
+					}
 				}
 				else if (buffComponent->m_buffType == 5)
 				{
