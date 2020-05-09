@@ -168,40 +168,28 @@ namespace Game
 						
 					}
 
-					if (entity->HasComponent<Engine::ObstacleComponent>() && !entity->HasComponent<Engine::WallComponent>())
+					if (entity->HasComponent<Engine::ObstacleComponent>())
 					{
 						
-						
-						auto ent_transform = entity->GetComponent<Engine::TransformComponent>();
-						float ent_left_edge = ent_transform->m_Position.x + ent_transform->m_Size.x / 2 + transform->m_Size.x/2;
-						float ent_right_edge = ent_transform->m_Position.x - ent_transform->m_Size.x / 2 - transform->m_Size.x/2;
-						float ent_up_edge = ent_transform->m_Position.y - ent_transform->m_Size.y / 2 - transform->m_Size.y/2;
-						float ent_down_edge = ent_transform->m_Position.y + ent_transform->m_Size.y / 2 + transform->m_Size.y/2;
-
 						move->m_TranslationSpeed.y = 0;
 						move->m_TranslationSpeed.x = 0;
 
-						if (moveLeftInput && moveUpInput) {
-							transform->m_Position.x = ent_left_edge + 10;
-							transform->m_Position.y = transform->m_Position.y + 10.0f;
-						}else if (moveLeftInput && moveDownInput) {
-							transform->m_Position.x = ent_left_edge + 10;
-							transform->m_Position.y = transform->m_Position.y - 10.0f;
-						}
-						else if (moveRightInput && moveUpInput) {
-							transform->m_Position.x = ent_right_edge - 10;
-							transform->m_Position.y = transform->m_Position.y + 10.0f;
-						}
-						else if (moveRightInput && moveDownInput) {
-							transform->m_Position.x = ent_right_edge - 10;
-							transform->m_Position.y = transform->m_Position.y - 10.0f;
-						}
-						else {
+						auto ent_transform = entity->GetComponent<Engine::TransformComponent>();
+						float ent_left_edge = ent_transform->m_Position.x - ent_transform->m_Size.x / 2;
+						float ent_right_edge = ent_transform->m_Position.x + ent_transform->m_Size.x / 2;
+						float ent_up_edge = ent_transform->m_Position.y - ent_transform->m_Size.y / 2;
+						float ent_down_edge = ent_transform->m_Position.y + ent_transform->m_Size.y / 2;
 
-							transform->m_Position.x = (moveLeftInput ? ent_left_edge + 10 : transform->m_Position.x);
-							transform->m_Position.x = (moveRightInput ? ent_right_edge - 10 : transform->m_Position.x);
-							transform->m_Position.y = (moveUpInput ? ent_down_edge + 10 : transform->m_Position.y);
-							transform->m_Position.y = (moveDownInput ? ent_up_edge - 10 : transform->m_Position.y);
+
+						if (transform->m_Position.x > ent_right_edge) {
+							transform->m_Position.x = ent_right_edge + 10.f + transform->m_Size.x / 2;
+						}else if (transform->m_Position.x < ent_left_edge) {
+							transform->m_Position.x = ent_left_edge - 10.f - transform->m_Size.x / 2;
+						}else if (transform->m_Position.y > ent_down_edge) {
+							transform->m_Position.y = ent_down_edge + 10.f + transform->m_Size.y / 2;
+						}
+						else if (transform->m_Position.y < ent_up_edge) {
+							transform->m_Position.y = ent_up_edge - 10.f - transform->m_Size.y / 2;
 						}
 
 					}
