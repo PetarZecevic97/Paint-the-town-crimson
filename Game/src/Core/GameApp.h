@@ -13,6 +13,7 @@ namespace Game
     class ObstacleController;
 	class HudController;
     class StageController;
+    class AudioController;
 
 
     class GameApp final : public Engine::Application
@@ -36,6 +37,7 @@ namespace Game
         std::unique_ptr<BorderController> m_BorderController{};
 		std::unique_ptr<HudController> m_HudController{};
         std::unique_ptr<StageController> m_StageController{};
+        std::unique_ptr<AudioController> m_AudioController{};
 		//std::unique_ptr<DummyController> m_DummyController{};
         std::unique_ptr<EnemiesFactory> m_Factory{};
     };

@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\AudioController.h" />
     <ClInclude Include="src\Entities\FireballController.h" />
     <ClInclude Include="src\Entities\HudController.h" />
     <ClInclude Include="src\Entities\ItemsController.h" />
@@ -206,6 +207,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\POL-lone-wolf-short.rf64" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +223,10 @@
     <Image Include="Data\terrain.png" />
     <Image Include="Data\WaterElemental.png" />
     <Image Include="Data\wizard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Data\beat.wav" />
+    <Media Include="Data\love_wolf.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

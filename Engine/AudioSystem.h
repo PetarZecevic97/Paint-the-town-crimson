@@ -1,5 +1,6 @@
 #pragma once
-#include "Render/WindowData.h"
+#include <SDL.h>
+#include <SDL_mixer.h>
 
 namespace Engine
 {
@@ -8,21 +9,22 @@ namespace Engine
     class Entity;
     class EntityManager;
 
-    class RenderSystem
+    class AudioSystem
     {
     public:
-        bool Init(const WindowData& windowData_ = WindowData());
+        bool Init();
         bool Shutdown();
-        void Update(float dt_, EntityManager* entityManager);
-        Renderer* GetRenderer();
-        void SetBackgroundColor(unsigned char bgR_, unsigned char bgG_, unsigned char bgB_, unsigned char bgA_);
-        void SetBackgroundColor(const Color& col_);
+        bool LoadMusic(std::string path_, std::string name);
+        bool LoadSoundEffect(std::string path_, std::string name_);
+        bool PlayBackgroundMusic(std::string musicName_);
+        bool PlaySoundEffect(std::string sfxName_);
 
-        RenderSystem() = default;
+        AudioSystem() = default;
     private:
-        std::unique_ptr<Renderer> m_Renderer;
-
-        RenderSystem(const RenderSystem& other) = delete;
-        RenderSystem& operator=(RenderSystem& other) = delete;
+ 
+        AudioSystem(const AudioSystem& other) = delete;
+        AudioSystem& operator=(AudioSystem& other) = delete;
+        std::unordered_map<std::string, Mix_Chunk*> m_SoundEffectLibrary;
+        std::unordered_map<std::string, Mix_Music*> m_MusicLibrary;
     };
 }

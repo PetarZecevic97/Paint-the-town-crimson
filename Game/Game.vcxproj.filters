@@ -49,6 +49,7 @@
     <ClInclude Include="src\Entities\NPC\Controllers\MentalNPCController.h" />
     <ClInclude Include="src\Entities\ItemsController.h" />
     <ClInclude Include="src\Entities\FireballController.h" />
+    <ClInclude Include="src\Entities\AudioController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -87,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Data\POL-lone-wolf-short.rf64" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Data\air_elemental.png" />
@@ -101,5 +103,9 @@
     <Image Include="Data\WaterElemental.png" />
     <Image Include="Data\wizard.png" />
     <Image Include="Data\terrain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Data\love_wolf.wav" />
+    <Media Include="Data\beat.wav" />
   </ItemGroup>
 </Project>

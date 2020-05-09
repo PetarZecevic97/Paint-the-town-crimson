@@ -16,6 +16,7 @@
 #include "Entities/Dummy/DummyController.h"
 #include "Entities/StageController.h"
 #include "Entities/ItemsController.h"
+#include "Entities/AudioController.h"
 
 void Game::GameApp::GameSpecificWindowData()
 {
@@ -70,6 +71,11 @@ bool Game::GameApp::GameSpecificInit()
 	item_sprite->AddComponent<Engine::SpriteComponent>().m_Image = m_TextureManager->GetTexture("items");
 	item_sprite->AddComponent<Engine::ItemStashComponent>();
 	m_EntityManager.get()->AddEntity(std::move(item_sprite));
+
+	m_AudioController = std::make_unique<AudioController>();
+	m_AudioController->Init(m_AudioSystem.get());
+
+	
 
     return true;
 }

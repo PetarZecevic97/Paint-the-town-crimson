@@ -12,6 +12,7 @@
 #include "Render/WindowData.h"
 #include "Render/TextureManager.h"
 #include "Physics/PhysicsSystem.h"
+#include "AudioSystem.h"
 
 
 #include <SDL.h>
@@ -69,6 +70,14 @@ namespace Engine {
 			return false;
 		}
 
+        m_AudioSystem = std::make_unique<AudioSystem>();
+        if (!m_AudioSystem->Init())
+        {
+            LOG_CRITICAL("Failed to initialize Audio System");
+            return false;
+        }
+
+
         if (GameSpecificInit() != true)
         {
             LOG_CRITICAL("Error initializing game specific systems!");
@@ -84,6 +93,7 @@ namespace Engine {
 
         GameSpecificShutdown();
 
+        m_AudioSystem->Shutdown();
         m_RenderSystem->Shutdown();
         m_RenderSystem.reset();
 

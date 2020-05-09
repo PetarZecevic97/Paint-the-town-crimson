@@ -10,6 +10,7 @@ namespace Engine {
     class InputManager;
     class EntityManager;
     class TextureManager;
+    class AudioSystem;
 
     class Application
     {
@@ -33,6 +34,7 @@ namespace Engine {
         std::unique_ptr<EntityManager> m_EntityManager{};
         std::unique_ptr<TextureManager> m_TextureManager{};
 		std::unique_ptr<NPCSystem> m_NPCSystem{};
+        std::unique_ptr<AudioSystem> m_AudioSystem{};
 
     private:
         // To be overridden by the game
