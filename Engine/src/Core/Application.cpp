@@ -12,7 +12,6 @@
 #include "Render/WindowData.h"
 #include "Render/TextureManager.h"
 #include "Physics/PhysicsSystem.h"
-#include "AudioSystem.h"
 
 
 #include <SDL.h>
@@ -87,7 +86,6 @@ namespace Engine {
 
         GameSpecificShutdown();
 
-        m_AudioSystem->Shutdown();
         m_RenderSystem->Shutdown();
         m_RenderSystem.reset();
 

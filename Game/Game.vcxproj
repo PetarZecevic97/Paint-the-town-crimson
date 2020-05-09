@@ -229,7 +229,13 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="Data\beat.wav" />
+    <Media Include="Data\explosion.wav" />
+    <Media Include="Data\lose.wav" />
     <Media Include="Data\love_wolf.wav" />
+    <Media Include="Data\pew.wav" />
+    <Media Include="Data\powerup.wav" />
+    <Media Include="Data\powerup2.wav" />
+    <Media Include="Data\win.wav" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL2_mixer.lib" />

@@ -2,9 +2,10 @@
 #include "PlayerController.h"
 #include "FireballController.h"
 
+
 namespace Game
 {
-	
+
     bool PlayerController::Init(Engine::EntityManager* entityManager_, Engine::Texture* texture_)
     {
         ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to PlayerController::Init()");
@@ -45,10 +46,10 @@ namespace Game
         return !(entityManager_->GetAllEntitiesWithComponent<Engine::PlayerComponent>().empty());
     }
 
-    void PlayerController::Update(float dt, Engine::EntityManager* entityManager_)
+    void PlayerController::Update(float dt, Engine::EntityManager* entityManager_, AudioSystem* audioSystem_)
     {
         auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::PlayerComponent, Engine::MoverComponent, Engine::InputComponent>();
-
+		
         for (auto& player : entitiesToMove)
         {
             auto move = player->GetComponent<Engine::MoverComponent>();
@@ -76,7 +77,7 @@ namespace Game
 				moveUpInput = false;
 				moveDownInput = false;
 			}
-
+			
             int ticks = SDL_GetTicks() - m_last_fired_time;
             if (ticks > player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown && (shootUpInput || shootDownInput || shootLeftInput || shootRightInput)) {
                 m_last_fired_time += ticks;
@@ -85,9 +86,11 @@ namespace Game
                 {
                     limit = 8;
                 }
+				audioSystem_->PlaySoundEffect("fireball");
                 for (int i = 1; i <= limit; i++)
-                {
+				{
                     Game::CreateFireball(entityManager_, 0, i);
+					
                     if (player->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
                     {
                         Game::CreateFireball(entityManager_, 1, i);

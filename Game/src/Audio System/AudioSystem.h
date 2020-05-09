@@ -2,12 +2,8 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 
-namespace Engine
+namespace Game
 {
-    struct WindowData;
-    class Renderer;
-    class Entity;
-    class EntityManager;
 
     class AudioSystem
     {
@@ -24,6 +20,7 @@ namespace Engine
  
         AudioSystem(const AudioSystem& other) = delete;
         AudioSystem& operator=(AudioSystem& other) = delete;
+
         std::unordered_map<std::string, Mix_Chunk*> m_SoundEffectLibrary;
         std::unordered_map<std::string, Mix_Music*> m_MusicLibrary;
     };

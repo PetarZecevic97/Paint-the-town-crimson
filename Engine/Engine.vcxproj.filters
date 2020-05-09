@@ -55,9 +55,6 @@
     <Filter Include="src\PhysicsSystem">
       <UniqueIdentifier>{052e6dc8-81a8-4292-8613-324c90345e5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\AudioSystem">
-      <UniqueIdentifier>{e9bb8a62-a5dc-4b22-b704-66fb70506132}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Logger\Logger.cpp">
@@ -103,9 +100,6 @@
       <Filter>src\PhysicsSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\NPC\NPCSystem.cpp" />
-    <ClCompile Include="AudioSystem.cpp">
-      <Filter>src\AudioSystem</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extern\spdlog\async.h">
@@ -1057,9 +1051,6 @@
       <Filter>src\PhysicsSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\NPC\NPCSystem.h" />
-    <ClInclude Include="AudioSystem.h">
-      <Filter>src\AudioSystem</Filter>
-    </ClInclude>
     <ClInclude Include="SDL_mixer.h" />
   </ItemGroup>
   <ItemGroup>

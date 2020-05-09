@@ -1,4 +1,7 @@
 #pragma once
+#include <precomp.cpp>
+#include "Audio System/AudioSystem.h"
+
 
 namespace Engine
 {
@@ -8,11 +11,12 @@ namespace Engine
 
 namespace Game
 {
+    
     class PlayerController
     {
     public:
         bool Init(Engine::EntityManager* entityManager_, Engine::Texture* texture_);
-        void Update(float dt, Engine::EntityManager* entityManager_);       
+        void Update(float dt, Engine::EntityManager* entityManager_, AudioSystem* audioSystem_);
         int m_last_fired_time{ -100 };
         
     };
