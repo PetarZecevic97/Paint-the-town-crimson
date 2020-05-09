@@ -256,8 +256,10 @@ namespace Game
 							
 							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
-							CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
-							//CreateItem(entityManager_, 2, itemSprite->m_Image, entity);
+							double r = ((double)std::rand() / (RAND_MAX));
+							if(r < 0.5)
+								CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
+							//CreateItem(entityManager_, 4, itemSprite->m_Image, entity);
 							entityManager_->RemoveEntity(fireball->GetId());
 							entityManager_->RemoveEntity(entity->GetId());
 						}

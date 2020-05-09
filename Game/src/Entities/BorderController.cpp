@@ -53,6 +53,13 @@ namespace Game
 
         entityManager_->AddEntity(std::move(border));
 
+		auto play_area = std::make_unique<Engine::Entity>();
+
+		play_area->AddComponent<Engine::PlayAreaComponent>();
+		play_area->AddComponent<Engine::TransformComponent>(0.05f * window_width, 0.f, static_cast<float>(window_width)- 0.1f * window_width-100.f, static_cast<float>(window_height) - 100.f);
+		play_area->AddComponent<Engine::CollisionComponent>(static_cast<float>(window_width) - 100.f, static_cast<float>(window_height) - 100.f);
+		entityManager_->AddEntity(std::move(play_area));
+
         return true;
     }
 

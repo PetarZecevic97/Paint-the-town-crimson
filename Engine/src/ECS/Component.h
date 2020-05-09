@@ -148,6 +148,11 @@ namespace Engine
 
     };
 
+	struct PlayAreaComponent : public Component
+	{
+
+	};
+
 	struct HudComponent : public Component
 	{
 

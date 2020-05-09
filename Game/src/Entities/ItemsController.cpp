@@ -1,7 +1,5 @@
 #include "ItemsController.h"
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
+
 
 namespace Game
 {
@@ -92,11 +90,13 @@ namespace Game
 
 			for (auto* entity : collider->m_CollidedWith)
 			{
+
+				if (entity->GetId() > 10000000) {
+					continue;
+				}
 				if (entity->HasComponent<Engine::PlayerComponent>())
 				{
-					if (entity->GetId() > 10000000) {
-						continue;
-					}
+					
 					//temporary solution for lives and apocalypse
 					//we need the items to last a little bit longer so that we can do an animation
 					if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 0 || item->GetComponent<Engine::ItemComponent>()->m_itemType == 3) {
@@ -111,11 +111,12 @@ namespace Game
 							auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
 							player->GetComponent<Engine::PlayerComponent>()->m_apocalypse = true;
 							auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
+							CreateExplosion(entityManager_, texture);
+
 							for (auto* enemy : enemies) {
 								entityManager_->RemoveEntity(enemy->GetId());
 							}
 							
-							CreateExplosion(entityManager_, texture);
 							
 							
 						}
@@ -144,11 +145,7 @@ namespace Game
 						{
 							auto timeoutBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TimestopBuffComponent>()[0];
 							timeoutBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += timeoutBuff->GetComponent<Engine::BuffComponent>()->m_duration;
-							auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
-							for (auto npc : allNPCs)
-							{
-								npc->GetComponent<Engine::NPCComponent>()->m_IsFrozen = true;
-							}
+							
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5 && entity->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
 						{
@@ -221,6 +218,25 @@ namespace Game
 		for (auto* buff : buffs)
 		{
 			auto buffComponent = buff->GetComponent<Engine::BuffComponent>();
+			if (buffComponent->m_buffType == 4 && player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff) {
+				auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
+				for (auto npc : allNPCs)
+				{
+					auto collider = npc->GetComponent<Engine::CollisionComponent>()->m_CollidedWith;
+
+					for (auto* col : collider) {
+						if (col->GetId() > 10000000) {
+							continue;
+						}
+						if (col->HasComponent<Engine::PlayAreaComponent>()) {
+							npc->GetComponent<Engine::NPCComponent>()->m_IsFrozen = true;
+							break;
+						}
+					}
+
+				}
+			}
+			
 			if (static_cast<int>(SDL_GetTicks()) > buffComponent->m_timeExpires) {
 				if (buffComponent->m_buffType == 1)
 				{
@@ -237,7 +253,7 @@ namespace Game
 					player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = false;
 					auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
 					for (auto npc : allNPCs)
-					{
+					{	
 						npc->GetComponent<Engine::NPCComponent>()->m_IsFrozen = false;
 					}
 				}
@@ -258,13 +274,14 @@ namespace Game
 
 	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture) {
 
-		srand(static_cast<int>(time(NULL)));
-		int aca = rand() % 100;
 		
-		for (int i = 0; i < 14; i++) {
+		auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
+		for (auto* enemy : enemies) {
 			auto explosion = std::make_unique<Engine::Entity>();
 
-			explosion->AddComponent<Engine::TransformComponent>(static_cast<float>(rand() % 7 * 128.f * pow(-1, rand() % 100)  + rand() % 256 * pow(-1, rand() % 100)), static_cast<float>(rand() % 7 * 128.f * pow(-1, rand() % 100) + rand() % 256 * pow(-1, rand() % 100)), static_cast<float>(256), static_cast<float>(256));
+			auto enemy_transform = enemy->GetComponent<Engine::TransformComponent>();
+
+			explosion->AddComponent<Engine::TransformComponent>(enemy_transform->m_Position.x, enemy_transform->m_Position.y, 256.f, 256.f);
 			explosion->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 			explosion->AddComponent<Engine::ExplosionComponent>();
 			explosion->GetComponent<Engine::ExplosionComponent>()->m_last_time_changed = SDL_GetTicks() - 200;
