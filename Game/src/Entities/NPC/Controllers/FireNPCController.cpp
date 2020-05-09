@@ -39,6 +39,40 @@ namespace Game
 		for (auto& enemy : efireNPC)
 		{
 			// CPU
+
+			if (enemy->GetComponent<Engine::HealthComponent>()->m_CurrentHealth == 1 && !enemy->GetComponent<FireNPCComponent>()->m_isSplited)
+			{
+				auto oldNPCPosition = enemy->GetComponent < Engine::TransformComponent>()->m_Position;
+			
+				//making new small fire
+				auto smallfire1 = std::make_unique<Engine::Entity>();
+				smallfire1->AddComponent<Engine::NPCComponent>();
+				smallfire1->AddComponent<EnemyComponent>(EnemyType::Fire);
+				smallfire1->AddComponent<FireNPCComponent>();
+				smallfire1->GetComponent<FireNPCComponent>()->m_isSplited = true;
+				smallfire1->AddComponent<Engine::TransformComponent>(oldNPCPosition.x, oldNPCPosition.y-12.f, 24.f, 24.f);
+				smallfire1->AddComponent<Engine::CollisionComponent>(24.f, 24.f);
+				smallfire1->AddComponent<Engine::MoverComponent>();
+				smallfire1->AddComponent<Engine::HealthComponent>(1, 1);
+				smallfire1->AddComponent<Engine::SpriteComponent>().m_Image = enemy->GetComponent<Engine::SpriteComponent>()->m_Image;
+
+				auto* sprite = smallfire1->GetComponent<Engine::SpriteComponent>();
+				SDL_Rect new_rect{ 0, 0, 50, 50 };
+				sprite->m_src = new_rect;
+				sprite->m_Animation = true;
+
+				entityManager->AddEntity(std::move(smallfire1));
+
+				//remaking old one to become small fire
+
+				enemy->GetComponent<FireNPCComponent>()->m_isSplited = true;
+				auto enemyTransform = enemy->GetComponent<Engine::TransformComponent>();
+				enemyTransform->m_Position = { oldNPCPosition.x, oldNPCPosition.y + 12.f };
+				enemyTransform->m_Size = { 24.f,24.f };
+				enemy->GetComponent<Engine::CollisionComponent>()->m_Size = { 24.f,24.f };
+
+			}
+
 			ElementalAnimation(entityManager->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0], enemy, 1);
 		}
 	}
