@@ -65,7 +65,7 @@ namespace Game
 		// Delete all Obstacle components
 		for (auto obstacle : obstacles)
 		{
-			if (!obstacle->HasComponent<Engine::WallComponent>() || m_currentLevelNo == LevelNumber::LEVEL_THREE || isGameOver)
+			if (obstacle->HasComponent<Engine::InnerObstacleComponent>() || m_currentLevelNo == LevelNumber::LEVEL_THREE || isGameOver)
 			{
 				auto id = obstacle->GetId();
 				entityManager->RemoveEntity(id);
@@ -132,6 +132,9 @@ namespace Game
 				obstacle->AddComponent<Engine::TransformComponent>(loc.first + 0.06 * m_width, loc.second, 50.f, 50.f);
 				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 				obstacle->AddComponent<Engine::ObstacleComponent>();
+
+				obstacle->AddComponent<Engine::InnerObstacleComponent>();
+
 				obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 				entityManager->AddEntity(std::move(obstacle));
@@ -144,10 +147,10 @@ namespace Game
 			auto obstacle = std::make_unique<Engine::Entity>();
 
 			std::vector < std::pair<int, int> > lObstacleLocations;
-			lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 4, 0));
-			lObstacleLocations.push_back(std::make_pair(-0.8 * m_height / 4, 0));
-			lObstacleLocations.push_back(std::make_pair(0, 0.8 * m_height / 4));
-			lObstacleLocations.push_back(std::make_pair(0, -0.8 * m_height / 4));
+			lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 4 + 50, 0));
+			lObstacleLocations.push_back(std::make_pair(-0.8 * m_height / 4 + 50, 0));
+			lObstacleLocations.push_back(std::make_pair(50, 0.8 * m_height / 4));
+			lObstacleLocations.push_back(std::make_pair(50, -0.8 * m_height / 4));
 			for (auto loc : lObstacleLocations)
 			{
 
@@ -161,6 +164,7 @@ namespace Game
 				obstacle->AddComponent<Engine::TransformComponent>(static_cast<float>(loc.first), loc.second, 50.f, 50.f);
 				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 				obstacle->AddComponent<Engine::ObstacleComponent>();
+				obstacle->AddComponent<Engine::InnerObstacleComponent>();
 				obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 				entityManager->AddEntity(std::move(obstacle));
