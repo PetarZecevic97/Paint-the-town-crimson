@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string>
 
-bool Engine::AudioSystem::Init()
+bool Game::AudioSystem::Init()
 {
     //Initialize SDL audio
     if (SDL_Init(SDL_INIT_AUDIO) < 0)
@@ -23,7 +23,7 @@ bool Engine::AudioSystem::Init()
 	return false;
 }
 
-bool Engine::AudioSystem::Shutdown() 
+bool Game::AudioSystem::Shutdown() 
 {
     LOG_INFO("Shutting down AudioSystem");
 
@@ -47,7 +47,7 @@ bool Engine::AudioSystem::Shutdown()
 }
 
 
-bool Engine::AudioSystem::LoadMusic(std::string path_, std::string name_)
+bool Game::AudioSystem::LoadMusic(std::string path_, std::string name_)
 {
     Mix_Music* music = NULL;
     
@@ -58,11 +58,13 @@ bool Engine::AudioSystem::LoadMusic(std::string path_, std::string name_)
         LOG_CRITICAL("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
         return false;
     }
+    
     m_MusicLibrary.insert(std::pair(name_, std::move(music)));
+
     return true;
 }
 
-bool Engine::AudioSystem::LoadSoundEffect(std::string path_, std::string name_)
+bool Game::AudioSystem::LoadSoundEffect(std::string path_, std::string name_)
 {
     Mix_Chunk* effect = NULL;
 
@@ -74,26 +76,28 @@ bool Engine::AudioSystem::LoadSoundEffect(std::string path_, std::string name_)
         return false;
     }
     m_SoundEffectLibrary.insert(std::pair(name_, std::move(effect)));
+    Mix_Volume(-1, 20);
     return true;
 }
 
-bool Engine::AudioSystem::PlayBackgroundMusic(std::string musicName_) 
+bool Game::AudioSystem::PlayBackgroundMusic(std::string musicName_) 
 {
     //If there is no music playing
     if (Mix_PlayingMusic() == 0)
     {
         //Play the music
-        Mix_PlayMusic(m_MusicLibrary[musicName_], -1);
+        Mix_PlayMusic(m_MusicLibrary[musicName_], 1);
     }
     else
     {
         Mix_HaltMusic();
-        Mix_PlayMusic(m_MusicLibrary[musicName_], -1);
+        Mix_PlayMusic(m_MusicLibrary[musicName_], 1);
     }
+    Mix_VolumeMusic(5);
     return true;
 }
 
-bool Engine::AudioSystem::PlaySoundEffect(std::string SfxName_)
+bool Game::AudioSystem::PlaySoundEffect(std::string SfxName_)
 {
     Mix_PlayChannel(-1, m_SoundEffectLibrary[SfxName_], 0);
     return true;

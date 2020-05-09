@@ -16,6 +16,8 @@
 #include "Entities/Dummy/DummyController.h"
 #include "Entities/StageController.h"
 #include "Entities/ItemsController.h"
+#include "Entities/AudioController.h"
+#include "AudioSystem.h"
 
 void Game::GameApp::GameSpecificWindowData()
 {
@@ -31,7 +33,7 @@ void Game::GameApp::GameSpecificWindowData()
 bool Game::GameApp::GameSpecificInit()
 {
     m_RenderSystem->SetBackgroundColor(148, 0, 211, 1);
-
+	
 	LoadTextures();
 	//here we try to get the correct window height and width upon entry
 	int w, h;
@@ -70,6 +72,17 @@ bool Game::GameApp::GameSpecificInit()
 	item_sprite->AddComponent<Engine::SpriteComponent>().m_Image = m_TextureManager->GetTexture("items");
 	item_sprite->AddComponent<Engine::ItemStashComponent>();
 	m_EntityManager.get()->AddEntity(std::move(item_sprite));
+
+	m_AudioSystem = std::make_unique<AudioSystem>();
+	m_AudioSystem.get()->Init();
+	m_AudioSystem.get()->LoadSoundEffect("Data/pew.wav", "fireball");
+	m_AudioSystem.get()->LoadMusic("Data/love_wolf.wav", "background");
+	m_AudioSystem.get()->LoadSoundEffect("Data/explosion.wav", "explosion");
+	m_AudioSystem.get()->LoadSoundEffect("Data/lose.wav", "lose");
+	m_AudioSystem.get()->LoadSoundEffect("Data/powerup.wav", "powerup");
+	m_AudioSystem.get()->LoadSoundEffect("Data/powerup2.wav", "powerup2");
+	m_AudioSystem.get()->LoadSoundEffect("Data/win.wav", "win");
+	m_AudioSystem.get()->PlayBackgroundMusic("background");
 
     return true;
 }
@@ -120,7 +133,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	}
 	m_HudController->Update(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height, m_WasThereAResize);
 	
-	m_PlayerController->Update(dt, m_EntityManager.get());
+	m_PlayerController->Update(dt, m_EntityManager.get(), m_AudioSystem.get());
 	
 	Game::UpdateFireballs(m_EntityManager.get());
 

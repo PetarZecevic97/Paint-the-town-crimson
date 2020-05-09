@@ -33,6 +33,7 @@ namespace Engine {
         std::unique_ptr<EntityManager> m_EntityManager{};
         std::unique_ptr<TextureManager> m_TextureManager{};
 		std::unique_ptr<NPCSystem> m_NPCSystem{};
+        
 
     private:
         // To be overridden by the game

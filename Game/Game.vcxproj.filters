@@ -49,6 +49,9 @@
     <ClInclude Include="src\Entities\NPC\Controllers\MentalNPCController.h" />
     <ClInclude Include="src\Entities\ItemsController.h" />
     <ClInclude Include="src\Entities\FireballController.h" />
+    <ClInclude Include="src\Entities\AudioController.h" />
+    <ClInclude Include="SDL_mixer.h" />
+    <ClInclude Include="src\Audio System\AudioSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -84,9 +87,11 @@
     <ClCompile Include="src\Entities\NPC\Controllers\MentalNPCController.cpp" />
     <ClCompile Include="src\Entities\ItemsController.cpp" />
     <ClCompile Include="src\Entities\FireballController.cpp" />
+    <ClCompile Include="src\Audio System\AudioSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Data\POL-lone-wolf-short.rf64" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Data\air_elemental.png" />
@@ -101,5 +106,18 @@
     <Image Include="Data\WaterElemental.png" />
     <Image Include="Data\wizard.png" />
     <Image Include="Data\terrain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Data\love_wolf.wav" />
+    <Media Include="Data\beat.wav" />
+    <Media Include="Data\explosion.wav" />
+    <Media Include="Data\lose.wav" />
+    <Media Include="Data\pew.wav" />
+    <Media Include="Data\powerup.wav" />
+    <Media Include="Data\powerup2.wav" />
+    <Media Include="Data\win.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SDL2_mixer.lib" />
   </ItemGroup>
 </Project>
