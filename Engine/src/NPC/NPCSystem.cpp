@@ -88,7 +88,7 @@ namespace Engine
 			if (coller->GetId() > 10000000) {
 				continue;
 			}
-			if (coller->HasComponent<WallComponent>())
+			if (coller->HasComponent<ObstacleComponent>())
 			{
 				npc->GetComponent<MoverComponent>()->m_TranslationSpeed.x = -npc->GetComponent<MoverComponent>()->m_TranslationSpeed.x;
 				npc->GetComponent<MoverComponent>()->m_TranslationSpeed.y = -npc->GetComponent<MoverComponent>()->m_TranslationSpeed.y;

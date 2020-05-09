@@ -1,4 +1,6 @@
 #include "EnemyAnimation.h"
+#include "Entities/NPC/EnemySpecificEntities.h"
+
 
 void ElementalAnimation(Engine::Entity* player, Engine::Entity* npc, int elemental_type) {
 
@@ -80,6 +82,13 @@ void ElementalAnimation(Engine::Entity* player, Engine::Entity* npc, int element
 
 		SDL_Rect new_rect{ 50 * ticks, 50, 50, 50 };
 		sprite->m_src = new_rect;
+	}
+
+	if (elemental_type == 0) {
+		if (npc->GetComponent<Game::WaterNPCComponent>()->isInWallForm) {
+			SDL_Rect new_rect{ 150, 0, 50, 50 };
+			sprite->m_src = new_rect;
+		}
 	}
 
 }
