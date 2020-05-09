@@ -82,6 +82,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	{
 		m_Factory->ShutDown(m_EntityManager.get());
 		m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true);
+		m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(), true);
 	}
 	else if (!m_Factory->IsFactoryPaused())
 	{
@@ -92,7 +93,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 		if (!m_Factory->Sleep())
 		{
 			// Sada se ovde vrsi ovde prebacivanje na sledeci nivo ukoliko je player ubio sve neprijatelje
-			m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+			m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(),false);
 			m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false);
 		}
 	}

@@ -14,7 +14,7 @@ namespace Game
 	{
 	public:
 		bool Init(Engine::EntityManager* entityManager, Engine::Texture* texture, LevelNumber levelNo, int width, int height);
-		void Update(float dt, Engine::EntityManager* entityManager, Engine::TextureManager* textureManager);
+		void Update(float dt, Engine::EntityManager* entityManager, Engine::TextureManager* textureManager, bool isGameOver);
 		bool ShutDown();
 	private:
 		LevelNumber m_currentLevelNo;
