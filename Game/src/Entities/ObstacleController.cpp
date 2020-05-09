@@ -57,7 +57,7 @@ namespace Game
 		return true;
 	}
 
-	void ObstacleController::Update(float dt, Engine::EntityManager* entityManager, Engine::TextureManager* textureManager)
+	void ObstacleController::Update(float dt, Engine::EntityManager* entityManager, Engine::TextureManager* textureManager, bool isGameOver)
 	{
 		auto obstacles = entityManager->GetAllEntitiesWithComponent<Engine::ObstacleComponent>();
 		
@@ -65,7 +65,7 @@ namespace Game
 		// Delete all Obstacle components
 		for (auto obstacle : obstacles)
 		{
-			if (!obstacle->HasComponent<Engine::WallComponent>() || m_currentLevelNo == LevelNumber::LEVEL_THREE)
+			if (!obstacle->HasComponent<Engine::WallComponent>() || m_currentLevelNo == LevelNumber::LEVEL_THREE || isGameOver)
 			{
 				auto id = obstacle->GetId();
 				entityManager->RemoveEntity(id);
