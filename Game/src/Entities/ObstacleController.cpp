@@ -144,10 +144,10 @@ namespace Game
 			auto obstacle = std::make_unique<Engine::Entity>();
 
 			std::vector < std::pair<int, int> > lObstacleLocations;
-			lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 4, 0));
-			lObstacleLocations.push_back(std::make_pair(-0.8 * m_height / 4, 0));
-			lObstacleLocations.push_back(std::make_pair(0, 0.8 * m_height / 4));
-			lObstacleLocations.push_back(std::make_pair(0, -0.8 * m_height / 4));
+			lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 4 + 50, 0));
+			lObstacleLocations.push_back(std::make_pair(-0.8 * m_height / 4 + 50, 0));
+			lObstacleLocations.push_back(std::make_pair(50, 0.8 * m_height / 4));
+			lObstacleLocations.push_back(std::make_pair(50, -0.8 * m_height / 4));
 			for (auto loc : lObstacleLocations)
 			{
 
@@ -161,7 +161,7 @@ namespace Game
 				obstacle->AddComponent<Engine::TransformComponent>(static_cast<float>(loc.first), loc.second, 50.f, 50.f);
 				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 				obstacle->AddComponent<Engine::ObstacleComponent>();
-				obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
+				//obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 				entityManager->AddEntity(std::move(obstacle));
 			}
