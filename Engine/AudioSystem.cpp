@@ -17,7 +17,7 @@ bool Engine::AudioSystem::Init()
     //Initialize SDL_mixer
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
-        printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+        LOG_CRITICAL("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
         return false;
     }
 	return false;
@@ -55,7 +55,7 @@ bool Engine::AudioSystem::LoadMusic(std::string path_, std::string name_)
     music = Mix_LoadMUS(path_.c_str());
     if (music == NULL)
     {
-        printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+        LOG_CRITICAL("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
         return false;
     }
     m_MusicLibrary.insert(std::pair(name_, std::move(music)));
@@ -70,7 +70,7 @@ bool Engine::AudioSystem::LoadSoundEffect(std::string path_, std::string name_)
     effect = Mix_LoadWAV(path_.c_str());
     if (effect == NULL)
     {
-        printf("Failed to load sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+        LOG_CRITICAL("Failed to load sound effect! SDL_mixer Error: %s\n", Mix_GetError());
         return false;
     }
     m_SoundEffectLibrary.insert(std::pair(name_, std::move(effect)));

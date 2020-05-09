@@ -72,8 +72,12 @@ bool Game::GameApp::GameSpecificInit()
 	item_sprite->AddComponent<Engine::ItemStashComponent>();
 	m_EntityManager.get()->AddEntity(std::move(item_sprite));
 
-	m_AudioController = std::make_unique<AudioController>();
-	m_AudioController->Init(m_AudioSystem.get());
+
+	m_AudioSystem.get()->Init();
+	m_AudioSystem.get()->LoadMusic("Data/beat.wav", "background");
+	m_AudioSystem.get()->PlayBackgroundMusic("background");
+	//m_AudioController = std::make_unique<AudioController>();
+	//m_AudioController->Init(m_AudioSystem.get());
 
 	
 
