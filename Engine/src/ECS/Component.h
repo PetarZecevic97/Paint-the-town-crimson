@@ -68,6 +68,13 @@ namespace Engine
         MoverComponent(float x, float y, float r) : m_TranslationSpeed(x, y), m_RotationSpeed(r) { };
     };
 
+    struct InnerObstacleComponent : public Component
+    {
+
+        InnerObstacleComponent() = default;
+
+    };
+
     enum class ECollisionShape
     {
         AABox,

@@ -65,7 +65,7 @@ namespace Game
 		// Delete all Obstacle components
 		for (auto obstacle : obstacles)
 		{
-			if (!obstacle->HasComponent<Engine::WallComponent>() || m_currentLevelNo == LevelNumber::LEVEL_THREE || isGameOver)
+			if (obstacle->HasComponent<Engine::InnerObstacleComponent>() || m_currentLevelNo == LevelNumber::LEVEL_THREE || isGameOver)
 			{
 				auto id = obstacle->GetId();
 				entityManager->RemoveEntity(id);
@@ -132,7 +132,8 @@ namespace Game
 				obstacle->AddComponent<Engine::TransformComponent>(loc.first + 0.06 * m_width, loc.second, 50.f, 50.f);
 				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 				obstacle->AddComponent<Engine::ObstacleComponent>();
-				//obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
+				obstacle->AddComponent<Engine::InnerObstacleComponent>();
+				obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 				entityManager->AddEntity(std::move(obstacle));
 			}
@@ -161,7 +162,8 @@ namespace Game
 				obstacle->AddComponent<Engine::TransformComponent>(static_cast<float>(loc.first), loc.second, 50.f, 50.f);
 				obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 				obstacle->AddComponent<Engine::ObstacleComponent>();
-				//obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
+				obstacle->AddComponent<Engine::InnerObstacleComponent>();
+				obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
 
 				entityManager->AddEntity(std::move(obstacle));
 			}
