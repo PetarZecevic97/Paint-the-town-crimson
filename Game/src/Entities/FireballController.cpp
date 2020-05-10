@@ -25,8 +25,9 @@ namespace Game
 		bool moveRightInput = Engine::InputManager::IsActionActive(input, "PlayerMoveRight");
 
 
-		fireball->AddComponent<Engine::TransformComponent>(x - 36 * (((moveUpInput || moveLeftInput) && !moveRightInput && !moveDownInput) ? -1 : 1), y - 6, 22.f, 22.f);
-		fireball->AddComponent<Engine::CollisionComponent>(22.f, 22.f);
+		//fireball->AddComponent<Engine::TransformComponent>(x - 15 * (((moveUpInput || moveLeftInput) && !moveRightInput && !moveDownInput) ? -1 : 1), y - 6, 18.f, 18.f);
+		fireball->AddComponent<Engine::TransformComponent>(x, y, 18.f, 18.f);
+		fireball->AddComponent<Engine::CollisionComponent>(18.f, 18.f);
 		fireball->AddComponent<Engine::FireballComponent>();
 		fireball->AddComponent<Engine::MoverComponent>();
 		//mage firing mages yaaay
@@ -260,7 +261,7 @@ namespace Game
 							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
 							double r = ((double)std::rand() / (RAND_MAX));
-							if(r < 0.5)
+							if(r < 0.35)
 								CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
 							//CreateItem(entityManager_, 4, itemSprite->m_Image, entity);
 							entityManager_->RemoveEntity(fireball->GetId());
