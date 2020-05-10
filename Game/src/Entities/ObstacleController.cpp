@@ -29,7 +29,7 @@ namespace Game
 		}
 		for (int i = 0; i < 720; i += 60)
 		{
-			if (i > 250 && i < 550)continue;
+			if (i > 250 && i < 500)continue;
 			lObstacleLocations.push_back(std::make_pair(0.5 * width-100, -height * 0.5 + i-25));
 			lObstacleLocations.push_back(std::make_pair(-0.5 * width+80, -height * 0.5 + i-25));
 		}
