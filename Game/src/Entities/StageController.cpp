@@ -15,7 +15,7 @@ namespace Game
         sprite->m_src = new_rect;
         sprite->m_Animation = true;
 
-        stage->AddComponent<Engine::TransformComponent>(60, 0, 1240.f, 720.f);
+        stage->AddComponent<Engine::TransformComponent>(60, 0, 1200.f, 720.f);
         stage->AddComponent<Engine::LevelComponent>();
         stage->AddComponent<Engine::InputComponent>();
 
@@ -81,6 +81,7 @@ namespace Game
 
                     SDL_Rect new_rect = { 0, 0, 1280, 720 };
                     sprite->m_src = new_rect;
+                    audioSystem_->PlayBackgroundMusic("level1");
                     m_currentLevelNo = LevelNumber::LEVEL_ONE;
                 }
                 
@@ -89,6 +90,7 @@ namespace Game
             {
                 SDL_Rect new_rect = { 0, 720, 1240, 720 };
                 sprite->m_src = new_rect;
+                audioSystem_->PlayBackgroundMusic("level2");
                 m_currentLevelNo = LevelNumber::LEVEL_TWO;
                 
             }
@@ -96,12 +98,13 @@ namespace Game
             {
                 SDL_Rect new_rect = { 0, 720 * 2, 1240, 720 };
                 sprite->m_src = new_rect;
+                audioSystem_->PlayBackgroundMusic("level3");
                 m_currentLevelNo = LevelNumber::LEVEL_THREE;
                 
             }
             else if (m_currentLevelNo == LevelNumber::LEVEL_THREE)
             {
-                SDL_Rect new_rect = { 0, 720 * 4 + 50, 1240, 720 };
+                SDL_Rect new_rect = { 0, 720 * 4, 1240, 720 };
                 sprite->m_src = new_rect;
                 audioSystem_->StopMusic();
                 audioSystem_->PlaySoundEffect("win");

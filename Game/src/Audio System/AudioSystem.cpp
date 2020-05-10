@@ -93,7 +93,7 @@ bool Game::AudioSystem::PlayBackgroundMusic(std::string musicName_)
         Mix_HaltMusic();
         Mix_PlayMusic(m_MusicLibrary[musicName_], -1);
     }
-    Mix_VolumeMusic(3);
+    Mix_VolumeMusic(20);
     return true;
 }
 

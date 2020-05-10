@@ -77,11 +77,17 @@ bool Game::GameApp::GameSpecificInit()
 
 	m_AudioSystem = std::make_unique<AudioSystem>();
 	m_AudioSystem.get()->Init();
-	m_AudioSystem.get()->LoadSoundEffect("Data/pew.wav", "fireball");
+
 	//m_AudioSystem.get()->LoadSoundEffect("Data/fireball.wav", "fireball2");
 	//m_AudioSystem.get()->LoadSoundEffect("Data/fireball2.wav", "fireball2");
+
+	m_AudioSystem.get()->LoadMusic("Data/love_wolf.wav", "title");
+	m_AudioSystem.get()->LoadMusic("Data/forestLevel.mp3", "level1");
+	m_AudioSystem.get()->LoadMusic("Data/fireLevel.mp3", "level2");
+	m_AudioSystem.get()->LoadMusic("Data/cloudLevel.mp3", "level3");
+
+	m_AudioSystem.get()->LoadSoundEffect("Data/pew.wav", "fireball");
 	m_AudioSystem.get()->LoadSoundEffect("Data/fireignite.wav", "fireball2");
-	m_AudioSystem.get()->LoadMusic("Data/love_wolf.wav", "background");
 	m_AudioSystem.get()->LoadSoundEffect("Data/explosion.wav", "explosion");
 	m_AudioSystem.get()->LoadSoundEffect("Data/explosion2.wav", "apocalypse");
 	m_AudioSystem.get()->LoadSoundEffect("Data/lose.wav", "lose");
@@ -91,7 +97,7 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/slam.mp3", "slam");
 	m_AudioSystem.get()->LoadSoundEffect("Data/clocktick.wav", "clocktick");
 	m_AudioSystem.get()->LoadSoundEffect("Data/YuGiOh.wav", "life");
-	m_AudioSystem.get()->PlayBackgroundMusic("background");
+	m_AudioSystem.get()->PlayBackgroundMusic("title");
 
     return true;
 }
