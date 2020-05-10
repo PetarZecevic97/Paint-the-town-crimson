@@ -98,7 +98,7 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/clocktick.wav", "clocktick");
 	m_AudioSystem.get()->LoadSoundEffect("Data/YuGiOh.wav", "life");
 	m_AudioSystem.get()->LoadSoundEffect("Data/cock.mp3", "cock");
-	m_AudioSystem.get()->LoadSoundEffect("Data/speed.mp3", "speed");
+	m_AudioSystem.get()->LoadSoundEffect("Data/speed.wav", "speed");
 	m_AudioSystem.get()->PlayBackgroundMusic("title");
 
     return true;

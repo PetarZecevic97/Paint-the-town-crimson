@@ -77,6 +77,7 @@ bool Game::AudioSystem::LoadSoundEffect(std::string path_, std::string name_)
     }
     m_SoundEffectLibrary.insert(std::pair(name_, std::move(effect)));
     Mix_Volume(-1, 19);
+    if(name_ == "speed")Mix_Volume(-1, 30);
     return true;
 }
 
@@ -93,7 +94,7 @@ bool Game::AudioSystem::PlayBackgroundMusic(std::string musicName_)
         Mix_HaltMusic();
         Mix_PlayMusic(m_MusicLibrary[musicName_], -1);
     }
-    Mix_VolumeMusic(20);
+    Mix_VolumeMusic(15);
     return true;
 }
 
