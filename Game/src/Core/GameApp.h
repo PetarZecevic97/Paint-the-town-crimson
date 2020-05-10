@@ -23,6 +23,7 @@ namespace Game
 		int m_window_width{ 1280 };
 		int m_window_height{ 720 };
 		bool m_WasThereAResize{ false };
+        bool m_IsTitleScreen{ true };
     private:
         void GameSpecificWindowData() override;
         bool GameSpecificInit() override;

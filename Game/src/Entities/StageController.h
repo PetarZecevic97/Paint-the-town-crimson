@@ -16,6 +16,6 @@ namespace Game
     public:
         LevelNumber m_currentLevelNo;
         bool Init(Engine::EntityManager* entityManager_, int window_width, int window_height, Engine::Texture* texture);
-        void Update(Engine::EntityManager* entityManager_, int window_width, int window_height, bool isGameOver_, AudioSystem* audioSystem_);
+        void Update(Engine::EntityManager* entityManager_, int window_width, int window_height, bool isGameOver_, AudioSystem* audioSystem_, bool isTitleScreen);
     };
 }

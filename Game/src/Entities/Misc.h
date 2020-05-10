@@ -5,7 +5,8 @@ namespace Game
 {
 	enum class LevelNumber
 	{
-		LEVEL_ONE = 0,
+		LEVEL_MENU = 0,
+		LEVEL_ONE,
 		LEVEL_TWO,
 		LEVEL_THREE,
 		LEVEL_WIN,
@@ -13,5 +14,5 @@ namespace Game
 		NUM_OF_LEVELS
 	};
 
-	static LevelNumber gLevelNumber = LevelNumber::LEVEL_ONE;
+	static LevelNumber gLevelNumber = LevelNumber::LEVEL_MENU;
 }

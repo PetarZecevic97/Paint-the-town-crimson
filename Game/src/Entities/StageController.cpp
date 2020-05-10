@@ -11,20 +11,25 @@ namespace Game
         auto stage = std::make_unique<Engine::Entity>();
         stage->AddComponent<Engine::SpriteComponent>().m_Image = texture;
         auto* sprite = stage->GetComponent<Engine::SpriteComponent>();
-        SDL_Rect new_rect = { 0, 0, 1240, 720 };
+        SDL_Rect new_rect = { 0, 720*5, 1240, 720 };
         sprite->m_src = new_rect;
         sprite->m_Animation = true;
 
-        stage->AddComponent<Engine::TransformComponent>(60, 0, 1152.f, 720.f);
+        stage->AddComponent<Engine::TransformComponent>(60, 0, 1240.f, 720.f);
         stage->AddComponent<Engine::LevelComponent>();
+        stage->AddComponent<Engine::InputComponent>();
+
+        auto inputComp = stage->GetComponent<Engine::InputComponent>();
+
+        inputComp->inputActions.push_back({ "Start" });
 
         entityManager_->AddEntity(std::move(stage));
-        m_currentLevelNo = LevelNumber::LEVEL_ONE;
+        m_currentLevelNo = LevelNumber::LEVEL_MENU;
 
         return true;
     }
 
-    void StageController::Update(Engine::EntityManager* entityManager_, int window_width, int window_height,bool isGameOver_, AudioSystem* audioSystem_) 
+    void StageController::Update(Engine::EntityManager* entityManager_, int window_width, int window_height,bool isGameOver_, AudioSystem* audioSystem_, bool isTitleScreen) 
     {
         auto stages = entityManager_->GetAllEntitiesWithComponent< Engine::LevelComponent>();
 
@@ -37,11 +42,47 @@ namespace Game
 
             if (isGameOver_ && m_currentLevelNo != LevelNumber::LEVEL_GAME_OVER)
             {
-                SDL_Rect new_rect = { 0, 720 * 3, 1240, 720 };
+                SDL_Rect new_rect = { 0, 720 * 3, 1280, 720 };
                 sprite->m_src = new_rect;
                 audioSystem_->StopMusic();
                 audioSystem_->PlaySoundEffect("lose");
                 m_currentLevelNo = LevelNumber::LEVEL_GAME_OVER;
+                
+            }
+            else if (m_currentLevelNo == LevelNumber::LEVEL_MENU) 
+            {
+                if (isTitleScreen) 
+                {
+                    auto obstacles = entityManager_->GetAllEntitiesWithComponent<Engine::ObstacleComponent>();
+
+
+                    // Delete all Obstacle components
+                    for (auto obstacle : obstacles)
+                    {
+                        obstacle->GetComponent<Engine::TransformComponent>()->m_Size.x = 1;
+                        obstacle->GetComponent<Engine::TransformComponent>()->m_Size.y = 1;
+                    }
+                    int ticks = (SDL_GetTicks() / 400) % 2;
+
+                    SDL_Rect new_rect = { 0, 720 * 5+(735*ticks), 1240, 720 };
+                    sprite->m_src = new_rect;
+                }
+                else
+                {
+                    auto obstacles = entityManager_->GetAllEntitiesWithComponent<Engine::ObstacleComponent>();
+
+
+                    // Delete all Obstacle components
+                    for (auto obstacle : obstacles)
+                    {
+                        obstacle->GetComponent<Engine::TransformComponent>()->m_Size.x = 50;
+                        obstacle->GetComponent<Engine::TransformComponent>()->m_Size.y = 50;
+                    }
+
+                    SDL_Rect new_rect = { 0, 0, 1280, 720 };
+                    sprite->m_src = new_rect;
+                    m_currentLevelNo = LevelNumber::LEVEL_ONE;
+                }
                 
             }
             else if (m_currentLevelNo == LevelNumber::LEVEL_ONE)
