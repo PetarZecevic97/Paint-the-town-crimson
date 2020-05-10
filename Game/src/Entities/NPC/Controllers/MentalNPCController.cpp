@@ -39,7 +39,7 @@ namespace Game
 		for (auto& enemy : ementalNPC)
 		{
 			// CPU
-			ElementalAnimation(entityManager->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0], enemy, 2);
+			ElementalAnimation(entityManager->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0], enemy, 4);
 		}
 	}
 

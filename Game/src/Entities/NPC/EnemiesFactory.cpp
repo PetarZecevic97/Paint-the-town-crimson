@@ -108,7 +108,7 @@ namespace Game
 			m_EarthNPCController->Init(entityManager, texture->GetTexture("earth"), m_SpawnPositions[randomPosition]);
 			break;
 		case 4:
-			m_MentalNPCController->Init(entityManager, texture->GetTexture("earth"), m_SpawnPositions[randomPosition]);
+			m_MentalNPCController->Init(entityManager, texture->GetTexture("fire_villager"), m_SpawnPositions[randomPosition]);
 			break;
 		default:
 			ASSERT(randomPosition > 3 || randomPosition < 0, "Out of range: [0,3]");

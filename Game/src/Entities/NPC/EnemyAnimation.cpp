@@ -27,6 +27,9 @@ void ElementalAnimation(Engine::Entity* player, Engine::Entity* npc, int element
 	case 3:
 		number_of_frames = 2;
 		break;
+	case 4:
+		number_of_frames = 4;
+		break;
 	default:
 		number_of_frames = 2;
 		break;

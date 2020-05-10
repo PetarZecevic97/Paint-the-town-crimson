@@ -196,6 +196,7 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "numbers", "Data/numbers.png");
 	m_TextureManager->CreateTexture(renderer, "slab", "Data/slab.png");
 	m_TextureManager->CreateTexture(renderer, "explosion", "Data/explosion-4.png");
+	m_TextureManager->CreateTexture(renderer, "fire_villager", "Data/villager_fire.png");
 	
 	
 }
