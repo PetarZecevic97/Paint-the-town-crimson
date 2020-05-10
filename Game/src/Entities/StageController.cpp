@@ -42,7 +42,7 @@ namespace Game
 
             if (isGameOver_ && m_currentLevelNo != LevelNumber::LEVEL_GAME_OVER)
             {
-                SDL_Rect new_rect = { 0, 720 * 3, 1280, 720 };
+                SDL_Rect new_rect = { 0, 720 * 3, 1280, 710 };
                 sprite->m_src = new_rect;
                 audioSystem_->StopMusic();
                 audioSystem_->PlaySoundEffect("lose");

@@ -21,13 +21,13 @@ namespace Game
 		
 		// Wall init
 		std::vector < std::pair<int, int> > lObstacleLocations;
-		for (int i = 80; i < 1280; i += 60) 
+		for (int i = 80; i < 1280; i += 55) 
 		{
 			if (i > 500 && i < 750)continue;
 			lObstacleLocations.push_back(std::make_pair(-0.5*width + i, height*0.5-25));
 			lObstacleLocations.push_back(std::make_pair(-0.5 * width + i, -height * 0.5+25));
 		}
-		for (int i = 0; i < 720; i += 60)
+		for (int i = 0; i < 720; i += 55)
 		{
 			if (i > 250 && i < 500)continue;
 			lObstacleLocations.push_back(std::make_pair(0.5 * width-100, -height * 0.5 + i-25));
