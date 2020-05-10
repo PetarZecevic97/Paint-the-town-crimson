@@ -86,7 +86,7 @@ namespace Game
                 {
                     limit = 8;
                 }
-				audioSystem_->PlaySoundEffect("fireball");
+				audioSystem_->PlaySoundEffect("fireball2");
                 for (int i = 1; i <= limit; i++)
 				{
                     Game::CreateFireball(entityManager_, 0, i);
