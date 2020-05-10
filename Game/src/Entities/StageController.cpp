@@ -2,7 +2,6 @@
 #include "StageController.h"
 
 
-
 namespace Game
 {
     bool StageController::Init(Engine::EntityManager* entityManager_, int window_width, int window_height, Engine::Texture* texture)
@@ -25,7 +24,7 @@ namespace Game
         return true;
     }
 
-    void StageController::Update(Engine::EntityManager* entityManager_, int window_width, int window_height,bool isGameOver_) 
+    void StageController::Update(Engine::EntityManager* entityManager_, int window_width, int window_height,bool isGameOver_, AudioSystem* audioSystem_) 
     {
         auto stages = entityManager_->GetAllEntitiesWithComponent< Engine::LevelComponent>();
 
@@ -36,11 +35,13 @@ namespace Game
             auto stage = entityManager_->GetAllEntitiesWithComponent< Engine::LevelComponent>()[0];
             auto* sprite = stage->GetComponent<Engine::SpriteComponent>();
 
-            if (isGameOver_)
+            if (isGameOver_ && m_currentLevelNo != LevelNumber::LEVEL_GAME_OVER)
             {
                 SDL_Rect new_rect = { 0, 720 * 3, 1240, 720 };
                 sprite->m_src = new_rect;
-                LevelNumber::LEVEL_GAME_OVER;
+                audioSystem_->StopMusic();
+                audioSystem_->PlaySoundEffect("lose");
+                m_currentLevelNo = LevelNumber::LEVEL_GAME_OVER;
             }
             else if (m_currentLevelNo == LevelNumber::LEVEL_ONE)
             {
@@ -58,6 +59,8 @@ namespace Game
             {
                 SDL_Rect new_rect = { 0, 720 * 4 + 50, 1240, 720 };
                 sprite->m_src = new_rect;
+                audioSystem_->StopMusic();
+                audioSystem_->PlaySoundEffect("win");
                 m_currentLevelNo = LevelNumber::LEVEL_WIN;
             }
         }

@@ -173,7 +173,7 @@ namespace Game
 
 					if (entity->HasComponent<Engine::ObstacleComponent>())
 					{
-						
+						audioSystem_->PlaySoundEffect("slam");
 						move->m_TranslationSpeed.y = 0;
 						move->m_TranslationSpeed.x = 0;
 
@@ -198,6 +198,7 @@ namespace Game
 					}
 					 if (entity->HasComponent<Engine::NPCComponent>())
 					{
+						audioSystem_->PlaySoundEffect("slam");
                         entityManager_->RemoveEntity(entity->GetId());
 						player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives--;
 

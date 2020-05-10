@@ -64,9 +64,9 @@ namespace Game
 		return !(entityManager_->GetAllEntitiesWithComponent<Engine::ItemComponent>().empty());
 	}
 
-	void UpdateItems(Engine::EntityManager* entityManager_, Engine::Texture* texture) {
+	void UpdateItems(Engine::EntityManager* entityManager_, Engine::Texture* texture, AudioSystem* audioSystem_) {
 
-		UpdateExplosion(entityManager_);
+		UpdateExplosion(entityManager_, audioSystem_);
 
 		auto items = entityManager_->GetAllEntitiesWithComponents<Engine::ItemComponent>();
 
@@ -111,7 +111,7 @@ namespace Game
 							auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
 							player->GetComponent<Engine::PlayerComponent>()->m_apocalypse = true;
 							auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
-							CreateExplosion(entityManager_, texture);
+							CreateExplosion(entityManager_, texture, audioSystem_);
 
 							for (auto* enemy : enemies) {
 								entityManager_->RemoveEntity(enemy->GetId());
@@ -133,27 +133,32 @@ namespace Game
 
 						if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1 && entity->GetComponent<Engine::PlayerComponent>()->m_speedBuff)
 						{
+							
 							auto speedBuff = entityManager_->GetAllEntitiesWithComponents<Engine::SpeedBuffComponent>()[0];
 							speedBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += speedBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 2 && entity->GetComponent<Engine::PlayerComponent>()->m_rapidFire)
 						{
+							
 							auto rapidBuff = entityManager_->GetAllEntitiesWithComponents<Engine::RapidBuffComponent>()[0];
 							rapidBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += rapidBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 4 && entity->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff)
 						{
+							
 							auto timeoutBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TimestopBuffComponent>()[0];
 							timeoutBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += timeoutBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 							
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5 && entity->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
 						{
+							
 							auto tripleBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TripleBuffComponent>()[0];
 							tripleBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += tripleBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 6 && entity->GetComponent<Engine::PlayerComponent>()->m_multishotBuff)
 						{
+
 							auto multiBuff = entityManager_->GetAllEntitiesWithComponents<Engine::MultiBuffComponent>()[0];
 							multiBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += multiBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}
@@ -167,18 +172,21 @@ namespace Game
 
 							if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1)
 							{
+								
 								buff->AddComponent<Engine::SpeedBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_speedBuff = true;
 								player->GetComponent<Engine::PlayerComponent>()->m_speed += 200;
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 2)
 							{
+								
 								buff->AddComponent<Engine::RapidBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_rapidFire = true;
 								player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown -= 400;
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 4)
 							{
+								
 								buff->AddComponent<Engine::TimestopBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = true;
 								auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
@@ -189,11 +197,13 @@ namespace Game
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5)
 							{
+								
 								buff->AddComponent<Engine::TripleBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff = true;
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 6)
 							{
+								
 								buff->AddComponent<Engine::MultiBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff = true;
 							}
@@ -272,7 +282,7 @@ namespace Game
 
 	}
 
-	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture) {
+	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture, AudioSystem* audioSystem_) {
 
 		
 		auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
@@ -291,15 +301,16 @@ namespace Game
 			explosion_sprite->m_src = new_explosion_rect;
 			explosion_sprite->m_Animation = true;
 
+			
 			entityManager_->AddEntity(std::move(explosion));
 		}
 	
 	}
 
-	void UpdateExplosion(Engine::EntityManager* entityManager_) {
+	void UpdateExplosion(Engine::EntityManager* entityManager_, AudioSystem* audioSystem_) {
 
 		auto explosions = entityManager_->GetAllEntitiesWithComponent<Engine::ExplosionComponent>();
-
+		
 		for (auto* explosion : explosions) {
 
 			int ticks = SDL_GetTicks();

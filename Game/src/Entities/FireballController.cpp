@@ -211,7 +211,7 @@ namespace Game
 		return !(entityManager_->GetAllEntitiesWithComponent<Engine::FireballComponent>().empty());
 	}
 
-	void UpdateFireballs(Engine::EntityManager* entityManager_) {
+	void UpdateFireballs(Engine::EntityManager* entityManager_, AudioSystem* audioSystem_) {
 
 		auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::FireballComponent>();
 
@@ -233,6 +233,7 @@ namespace Game
 					continue;
 				}
 				if (entity != nullptr) {
+					
 					if (entity->HasComponent<Engine::NPCComponent>())
 					{
 
@@ -241,11 +242,13 @@ namespace Game
 						auto npcHp = entity->GetComponent<Engine::HealthComponent>();
 						if (npcHp->m_CurrentHealth > 1)
 						{
+							audioSystem_->PlaySoundEffect("slam");
 							npcHp->m_CurrentHealth--;
 							entityManager_->RemoveEntity(fireball->GetId());
 						}
 						else if (entity->HasComponent<WaterNPCComponent>() && !entity->GetComponent<WaterNPCComponent>()->isInWallForm && npcHp->m_CurrentHealth == 1)
 						{
+							audioSystem_->PlaySoundEffect("slam");
 							entity->GetComponent<WaterNPCComponent>()->isInWallForm = true;
 							entity->RemoveComponent<Engine::MoverComponent>();
 							entity->AddComponent<Engine::WallComponent>();
@@ -253,7 +256,7 @@ namespace Game
 						}
 						else
 						{
-							
+							audioSystem_->PlaySoundEffect("slam");
 							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
 							double r = ((double)std::rand() / (RAND_MAX));
@@ -271,6 +274,7 @@ namespace Game
 
 				if (entity->HasComponent<Engine::BorderComponent>() || entity->HasComponent<Engine::ObstacleComponent>())
 				{
+					
 					entityManager_->RemoveEntity(fireball->GetId());
 					break;
 				}

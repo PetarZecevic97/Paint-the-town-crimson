@@ -76,7 +76,7 @@ bool Game::AudioSystem::LoadSoundEffect(std::string path_, std::string name_)
         return false;
     }
     m_SoundEffectLibrary.insert(std::pair(name_, std::move(effect)));
-    Mix_Volume(-1, 20);
+    Mix_Volume(-1, 15);
     return true;
 }
 
@@ -86,14 +86,14 @@ bool Game::AudioSystem::PlayBackgroundMusic(std::string musicName_)
     if (Mix_PlayingMusic() == 0)
     {
         //Play the music
-        Mix_PlayMusic(m_MusicLibrary[musicName_], 1);
+        Mix_PlayMusic(m_MusicLibrary[musicName_], -1);
     }
     else
     {
         Mix_HaltMusic();
-        Mix_PlayMusic(m_MusicLibrary[musicName_], 1);
+        Mix_PlayMusic(m_MusicLibrary[musicName_], -1);
     }
-    Mix_VolumeMusic(5);
+    Mix_VolumeMusic(3);
     return true;
 }
 
@@ -101,6 +101,12 @@ bool Game::AudioSystem::PlaySoundEffect(std::string SfxName_)
 {
     Mix_PlayChannel(-1, m_SoundEffectLibrary[SfxName_], 0);
     return true;
+}
+
+bool Game::AudioSystem::StopMusic()
+{
+    Mix_HaltMusic();
+    return false;
 }
 
 

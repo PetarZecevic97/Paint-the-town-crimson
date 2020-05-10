@@ -1,4 +1,6 @@
 #pragma once
+#include <precomp.cpp>
+#include "Audio System/AudioSystem.h"
 #include "Misc.h"
 
 namespace Engine 
@@ -14,6 +16,6 @@ namespace Game
     public:
         LevelNumber m_currentLevelNo;
         bool Init(Engine::EntityManager* entityManager_, int window_width, int window_height, Engine::Texture* texture);
-        void Update(Engine::EntityManager* entityManager_, int window_width, int window_height, bool isGameOver_);
+        void Update(Engine::EntityManager* entityManager_, int window_width, int window_height, bool isGameOver_, AudioSystem* audioSystem_);
     };
 }

@@ -82,6 +82,7 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/powerup.wav", "powerup");
 	m_AudioSystem.get()->LoadSoundEffect("Data/powerup2.wav", "powerup2");
 	m_AudioSystem.get()->LoadSoundEffect("Data/win.wav", "win");
+	m_AudioSystem.get()->LoadSoundEffect("Data/slam.mp3", "slam");
 	m_AudioSystem.get()->PlayBackgroundMusic("background");
 
     return true;
@@ -89,12 +90,12 @@ bool Game::GameApp::GameSpecificInit()
 
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
-	Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"));
+	Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"), m_AudioSystem.get());
 
 	if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0)
 	{
 		m_Factory->ShutDown(m_EntityManager.get());
-		m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true);
+		m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true,m_AudioSystem.get());
 		m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(), true);
 	}
 	else if (!m_Factory->IsFactoryPaused())
@@ -107,7 +108,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 		{
 			// Sada se ovde vrsi ovde prebacivanje na sledeci nivo ukoliko je player ubio sve neprijatelje
 			m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(),false);
-			m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false);
+			m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false,m_AudioSystem.get());
 		}
 	}
 
@@ -135,7 +136,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 	
 	m_PlayerController->Update(dt, m_EntityManager.get(), m_AudioSystem.get());
 	
-	Game::UpdateFireballs(m_EntityManager.get());
+	Game::UpdateFireballs(m_EntityManager.get(),m_AudioSystem.get());
 
 }
 

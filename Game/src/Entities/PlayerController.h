@@ -25,6 +25,6 @@ namespace Game
     //void UpdateItems(Engine::EntityManager* entityManager_);
 
     bool CreateFireball(Engine::EntityManager* entityManager_, int direction, int direction2);
-    void UpdateFireballs(Engine::EntityManager* entityManager_);
+    void UpdateFireballs(Engine::EntityManager* entityManager_, AudioSystem * audioSystem_);
 
 }
