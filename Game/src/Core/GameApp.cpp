@@ -99,6 +99,7 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/jusuf.mp3", "life");
 	m_AudioSystem.get()->LoadSoundEffect("Data/cock.mp3", "cock");
 	m_AudioSystem.get()->LoadSoundEffect("Data/speed.wav", "speed");
+	m_AudioSystem.get()->LoadSoundEffect("Data/freeze.mp3", "freeze");
 	m_AudioSystem.get()->PlayBackgroundMusic("title");
 
     return true;
