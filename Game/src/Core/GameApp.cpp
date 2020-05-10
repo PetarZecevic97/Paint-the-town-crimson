@@ -79,11 +79,13 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/fireball.wav", "fireball2");
 	m_AudioSystem.get()->LoadMusic("Data/love_wolf.wav", "background");
 	m_AudioSystem.get()->LoadSoundEffect("Data/explosion.wav", "explosion");
+	m_AudioSystem.get()->LoadSoundEffect("Data/explosion2.wav", "apocalypse");
 	m_AudioSystem.get()->LoadSoundEffect("Data/lose.wav", "lose");
 	m_AudioSystem.get()->LoadSoundEffect("Data/powerup.wav", "powerup");
 	m_AudioSystem.get()->LoadSoundEffect("Data/powerup2.wav", "powerup2");
 	m_AudioSystem.get()->LoadSoundEffect("Data/win.wav", "win");
 	m_AudioSystem.get()->LoadSoundEffect("Data/slam.mp3", "slam");
+	m_AudioSystem.get()->LoadSoundEffect("Data/clocktick.wav", "clocktick");
 	m_AudioSystem.get()->PlayBackgroundMusic("background");
 
     return true;

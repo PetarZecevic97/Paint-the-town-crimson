@@ -103,6 +103,11 @@ bool Game::AudioSystem::PlaySoundEffect(std::string SfxName_)
     return true;
 }
 
+bool Game::AudioSystem::PlaySoundEffectOnLoop(std::string SfxName_, int nLoops) {
+    Mix_PlayChannel(-1, m_SoundEffectLibrary[SfxName_], nLoops);
+    return true;
+}
+
 bool Game::AudioSystem::StopMusic()
 {
     Mix_HaltMusic();

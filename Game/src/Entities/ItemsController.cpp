@@ -113,6 +113,8 @@ namespace Game
 							auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
 							CreateExplosion(entityManager_, texture, audioSystem_);
 
+							audioSystem_->PlaySoundEffect("apocalypse");
+
 							for (auto* enemy : enemies) {
 								entityManager_->RemoveEntity(enemy->GetId());
 							}
@@ -148,6 +150,8 @@ namespace Game
 							
 							auto timeoutBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TimestopBuffComponent>()[0];
 							timeoutBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += timeoutBuff->GetComponent<Engine::BuffComponent>()->m_duration;
+
+							audioSystem_->PlaySoundEffectOnLoop("clocktick", 10);
 							
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5 && entity->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
@@ -194,6 +198,8 @@ namespace Game
 								{
 									npc->GetComponent<Engine::NPCComponent>()->m_IsFrozen = true;
 								}
+
+								audioSystem_->PlaySoundEffectOnLoop("clocktick", 10);
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5)
 							{

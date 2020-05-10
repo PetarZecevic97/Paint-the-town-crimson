@@ -14,6 +14,7 @@ namespace Game
         bool LoadSoundEffect(std::string path_, std::string name_);
         bool PlayBackgroundMusic(std::string musicName_);
         bool PlaySoundEffect(std::string sfxName_);
+        bool PlaySoundEffectOnLoop(std::string sfxName_, int nLoops);
         bool StopMusic();
 
         AudioSystem() = default;
