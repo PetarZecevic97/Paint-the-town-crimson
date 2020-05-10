@@ -88,6 +88,7 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/win.wav", "win");
 	m_AudioSystem.get()->LoadSoundEffect("Data/slam.mp3", "slam");
 	m_AudioSystem.get()->LoadSoundEffect("Data/clocktick.wav", "clocktick");
+	m_AudioSystem.get()->LoadSoundEffect("Data/YuGiOh.wav", "life");
 	m_AudioSystem.get()->PlayBackgroundMusic("background");
 
     return true;

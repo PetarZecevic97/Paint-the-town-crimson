@@ -105,6 +105,8 @@ namespace Game
 						{
 							auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
 							player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives++;
+
+							audioSystem_->PlaySoundEffect("life");
 						}
 						else
 						{
