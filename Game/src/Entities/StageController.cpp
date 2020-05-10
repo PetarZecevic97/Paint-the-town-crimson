@@ -42,18 +42,21 @@ namespace Game
                 audioSystem_->StopMusic();
                 audioSystem_->PlaySoundEffect("lose");
                 m_currentLevelNo = LevelNumber::LEVEL_GAME_OVER;
+                
             }
             else if (m_currentLevelNo == LevelNumber::LEVEL_ONE)
             {
                 SDL_Rect new_rect = { 0, 720, 1240, 720 };
                 sprite->m_src = new_rect;
                 m_currentLevelNo = LevelNumber::LEVEL_TWO;
+                
             }
             else if (m_currentLevelNo == LevelNumber::LEVEL_TWO)
             {
                 SDL_Rect new_rect = { 0, 720 * 2, 1240, 720 };
                 sprite->m_src = new_rect;
                 m_currentLevelNo = LevelNumber::LEVEL_THREE;
+                
             }
             else if (m_currentLevelNo == LevelNumber::LEVEL_THREE)
             {
@@ -62,6 +65,16 @@ namespace Game
                 audioSystem_->StopMusic();
                 audioSystem_->PlaySoundEffect("win");
                 m_currentLevelNo = LevelNumber::LEVEL_WIN;
+            }
+
+            //Svaki put kad se level promeni, player se postavlja na sredinu i unistavaju se svi itemi
+            auto player = entityManager_->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0];
+            player->GetComponent<Engine::TransformComponent>()->m_Position.x = 64.f;
+            player->GetComponent<Engine::TransformComponent>()->m_Position.y = 0.f;
+            auto items = entityManager_->GetAllEntitiesWithComponent<Engine::ItemComponent>();
+            for (const auto& item : items)
+            {
+                entityManager_->RemoveEntity(item->GetId());
             }
         }
     }
