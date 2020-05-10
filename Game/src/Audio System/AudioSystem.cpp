@@ -76,7 +76,7 @@ bool Game::AudioSystem::LoadSoundEffect(std::string path_, std::string name_)
         return false;
     }
     m_SoundEffectLibrary.insert(std::pair(name_, std::move(effect)));
-    Mix_Volume(-1, 15);
+    Mix_Volume(-1, 19);
     return true;
 }
 

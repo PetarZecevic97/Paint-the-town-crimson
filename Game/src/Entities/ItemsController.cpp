@@ -178,14 +178,14 @@ namespace Game
 
 							if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1)
 							{
-								
+								audioSystem_->PlaySoundEffect("speed");
 								buff->AddComponent<Engine::SpeedBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_speedBuff = true;
 								player->GetComponent<Engine::PlayerComponent>()->m_speed += 200;
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 2)
 							{
-								
+								audioSystem_->PlaySoundEffect("powerup");
 								buff->AddComponent<Engine::RapidBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_rapidFire = true;
 								player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown -= 400;
@@ -205,13 +205,13 @@ namespace Game
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5)
 							{
-								
+								audioSystem_->PlaySoundEffect("cock");
 								buff->AddComponent<Engine::TripleBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff = true;
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 6)
 							{
-								
+								audioSystem_->PlaySoundEffect("powerup");
 								buff->AddComponent<Engine::MultiBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff = true;
 							}
