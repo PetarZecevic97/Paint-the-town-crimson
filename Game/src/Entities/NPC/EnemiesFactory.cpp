@@ -16,10 +16,10 @@ namespace Game
 		m_Width = 1280;
 		m_Height = 720;
 
-		m_SpawnPositions.push_back({ m_Width / 2.0f + 50.0f, 0 });
-		m_SpawnPositions.push_back({ -m_Width / 2.0f - 50.0f, 0 });
-		m_SpawnPositions.push_back({ 0, m_Height / 2.0f + 50.0f });
-		m_SpawnPositions.push_back({ 0, -m_Height / 2.0f - 50.0f });
+		m_SpawnPositions.push_back({ m_Width / 2.0f, 0 });
+		m_SpawnPositions.push_back({ -m_Width / 2.0f, 0 });
+		m_SpawnPositions.push_back({ 0, m_Height / 2.0f });
+		m_SpawnPositions.push_back({ 0, -m_Height / 2.0f });
 
 		srand(static_cast<unsigned int>(time(0)));
 
