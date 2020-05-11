@@ -118,21 +118,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 {
 	
 
-	//bool isPaused = m_PauseSystem.get()->Update(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("pause"),m_AudioSystem.get(),m_IsTitleScreen );
-	/*if (m_Pause)
-	{
-		if (!m_wasPaused)m_AudioSystem.get()->PauseMusic();
-		m_wasPaused = true;
 
-	}
-	else
-	{
-		if (m_wasPaused)
-		{
-			m_AudioSystem.get()->ResumeMusic();
-			m_wasPaused = false;
-		}
-	}*/
 
 		if (!m_IsTitleScreen)
 		{
