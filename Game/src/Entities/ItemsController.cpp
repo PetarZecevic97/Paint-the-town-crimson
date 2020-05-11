@@ -173,8 +173,7 @@ namespace Game
 							auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
 							auto buff = std::make_unique<Engine::Entity>();
 							buff->AddComponent<Engine::BuffComponent>(SDL_GetTicks());
-							buff->GetComponent<Engine::BuffComponent>()->m_timeExpires = buff->GetComponent<Engine::BuffComponent>()->m_timeCreated + buff->GetComponent<Engine::BuffComponent>()->m_duration;
-							buff->GetComponent<Engine::BuffComponent>()->m_buffType = item->GetComponent<Engine::ItemComponent>()->m_itemType;
+							
 
 							if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1)
 							{
@@ -217,6 +216,9 @@ namespace Game
 								buff->AddComponent<Engine::MultiBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff = true;
 							}
+
+							buff->GetComponent<Engine::BuffComponent>()->m_timeExpires = buff->GetComponent<Engine::BuffComponent>()->m_timeCreated + buff->GetComponent<Engine::BuffComponent>()->m_duration;
+							buff->GetComponent<Engine::BuffComponent>()->m_buffType = item->GetComponent<Engine::ItemComponent>()->m_itemType;
 
 							entityManager_->AddEntity(std::move(buff));
 
