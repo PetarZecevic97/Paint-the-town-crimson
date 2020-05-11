@@ -89,7 +89,7 @@ namespace Engine
         m_InputActions["PlayerShootLeft"] = VK_LEFT;
         m_InputActions["PlayerShootDown"] = VK_DOWN;
         m_InputActions["PlayerShootRight"] = VK_RIGHT;
-        m_InputActions["PauseGame"] = VK_ESCAPE;
+        m_InputActions["PauseGame"] = 'P';
         m_InputActions["RestartGame"] = 'R';
         m_InputActions["PlayerMoveUp"] = 'W';
         m_InputActions["PlayerMoveLeft"] = 'A';

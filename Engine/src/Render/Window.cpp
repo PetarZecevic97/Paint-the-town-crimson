@@ -18,7 +18,7 @@ namespace Engine
             SDL_WINDOWPOS_CENTERED,
             m_WindowData.m_Width,
             m_WindowData.m_Height,
-			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL
+			SDL_WINDOW_OPENGL
         );
 
         if (m_NativeWindowHandle == nullptr)

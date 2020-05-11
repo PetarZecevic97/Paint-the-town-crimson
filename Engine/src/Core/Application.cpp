@@ -113,13 +113,21 @@ namespace Engine {
 				{
 					setWindowSize(event.window.data1, event.window.data2);
 				}
-            }
+				if (event.type == SDL_KEYDOWN)
+				{
+					
+					if (event.key.keysym.sym == SDLK_p) {
+						m_Pause = !m_Pause;
+					}
+				}            
+			}
 
             auto frameTime = SDL_GetPerformanceCounter();
 
             float deltaTime = (frameTime - previousFrameTime) / static_cast<float>(SDL_GetPerformanceFrequency());
 
             LOG_INFO("Current FPS: {}", 1.f / deltaTime);
+			
             Update(deltaTime);
 
             previousFrameTime = frameTime;
@@ -133,12 +141,16 @@ namespace Engine {
     void Application::Update(float dt)
     {
         // Update all systems
-		GameSpecificUpdate(dt);
+		if (!m_Pause) {
+			GameSpecificUpdate(dt);
+			m_NPCSystem->Update(dt, m_EntityManager.get());
+			m_PhysicsSystem->Update(dt, m_EntityManager.get());
+		}
         m_InputManager->Update(dt, m_EntityManager.get());
-        m_PhysicsSystem->Update(dt, m_EntityManager.get());
+        
         m_EntityManager->Update(dt);
         m_RenderSystem->Update(dt, m_EntityManager.get());
-		m_NPCSystem->Update(dt, m_EntityManager.get());
+		
 
         
     }

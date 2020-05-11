@@ -1,6 +1,8 @@
 #include "precomp.h"
 
 #include "EnemiesFactory.h"
+#include <stdlib.h>
+
 
 namespace Game
 {
@@ -91,6 +93,8 @@ namespace Game
 		{
 			enemyType = rand() % 4;
 		}
+		
+		int rander = rand() % 2;
 
 		int randomPosition = rand() % 4;
 		switch (enemyType)
@@ -108,10 +112,22 @@ namespace Game
 			m_EarthNPCController->Init(entityManager, texture->GetTexture("earth"), m_SpawnPositions[randomPosition]);
 			break;
 		case 4:
-			m_MentalNPCController->Init(entityManager, texture->GetTexture("fire_villager"), m_SpawnPositions[randomPosition]);
+			
+			switch (rander) {
+			case 0:
+				m_MentalNPCController->Init(entityManager, texture->GetTexture("fire_villager"), m_SpawnPositions[randomPosition]);
+				break;
+			case 1:
+				m_MentalNPCController->Init(entityManager, texture->GetTexture("water_villager"), m_SpawnPositions[randomPosition]);
+				break;
+			default:
+				m_MentalNPCController->Init(entityManager, texture->GetTexture("fire_villager"), m_SpawnPositions[randomPosition]);
+				break;
+			}
+			
 			break;
 		default:
-			ASSERT(randomPosition > 3 || randomPosition < 0, "Out of range: [0,3]");
+			ASSERT(randomPosition > 4 || randomPosition < 0, "Out of range: [0,4]");
 		}
 		m_CurrentElement++;
 	}

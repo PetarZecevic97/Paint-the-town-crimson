@@ -106,68 +106,70 @@ bool Game::GameApp::GameSpecificInit()
 
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
-	if (!m_IsTitleScreen)
-	{
-		Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"), m_AudioSystem.get());
+	
+		if (!m_IsTitleScreen)
+		{
+			Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"), m_AudioSystem.get());
 
-		if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0)
-		{
-			m_Factory->ShutDown(m_EntityManager.get());
-			m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true, m_AudioSystem.get(), false);
-			m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(), true);
-		}
-		else if (!m_Factory->IsFactoryPaused())
-		{
-			m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+			if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0)
+			{
+				m_Factory->ShutDown(m_EntityManager.get());
+				m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true, m_AudioSystem.get(), false);
+				m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(), true);
+			}
+			else if (!m_Factory->IsFactoryPaused())
+			{
+				m_Factory->Update(dt, m_EntityManager.get(), m_TextureManager.get());
+			}
+			else
+			{
+				if (!m_Factory->Sleep())
+				{
+					// Sada se ovde vrsi ovde prebacivanje na sledeci nivo ukoliko je player ubio sve neprijatelje
+					m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(), false);
+					m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false, m_AudioSystem.get(), false);
+				}
+			}
+
+			SDL_Event event{ };
+
+			while (SDL_PollEvent(&event) != 0)
+			{
+
+				if (event.type == SDL_WINDOWEVENT &&
+					event.window.event == SDL_WINDOWEVENT_RESIZED)
+				{
+
+					m_BorderController->Update(m_EntityManager.get(), event.window.data1, event.window.data2);
+					setWindowSize(event.window.data1, event.window.data2);
+					m_WasThereAResize = true;
+
+				}
+				else {
+					m_WasThereAResize = false;
+				}
+
+
+			}
+			m_HudController->Update(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height, m_WasThereAResize);
+
+			m_PlayerController->Update(dt, m_EntityManager.get(), m_AudioSystem.get());
+
+			Game::UpdateFireballs(m_EntityManager.get(), m_AudioSystem.get());
 		}
 		else
 		{
-			if (!m_Factory->Sleep())
-			{
-				// Sada se ovde vrsi ovde prebacivanje na sledeci nivo ukoliko je player ubio sve neprijatelje
-				m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(), false);
-				m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, false, m_AudioSystem.get(), false);
-			}
-		}
-
-		SDL_Event event{ };
-
-		while (SDL_PollEvent(&event) != 0)
-		{
-
-			if (event.type == SDL_WINDOWEVENT &&
-				event.window.event == SDL_WINDOWEVENT_RESIZED)
+			if (m_IsTitleScreen)
 			{
 
-				m_BorderController->Update(m_EntityManager.get(), event.window.data1, event.window.data2);
-				setWindowSize(event.window.data1, event.window.data2);
-				m_WasThereAResize = true;
-
-			}
-			else {
-				m_WasThereAResize = false;
+				m_IsTitleScreen = !Engine::InputManager::IsActionActive(m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::LevelComponent>()[0]->GetComponent<Engine::InputComponent>(), "Start");
+				m_StageController.get()->Update(m_EntityManager.get(), m_window_width, m_window_height, false, m_AudioSystem.get(), m_IsTitleScreen);
 			}
 
-
 		}
-		m_HudController->Update(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height, m_WasThereAResize);
-
-		m_PlayerController->Update(dt, m_EntityManager.get(), m_AudioSystem.get());
-
-		Game::UpdateFireballs(m_EntityManager.get(), m_AudioSystem.get());
-	}
-	else
-	{
-		if (m_IsTitleScreen)
-		{
-
-			m_IsTitleScreen = !Engine::InputManager::IsActionActive(m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::LevelComponent>()[0]->GetComponent<Engine::InputComponent>(), "Start");
-			m_StageController.get()->Update(m_EntityManager.get(), m_window_width, m_window_height, false, m_AudioSystem.get(), m_IsTitleScreen);
-		}
-
 	}
 
-}
+
 
 bool Game::GameApp::GameSpecificShutdown()
 {
@@ -197,6 +199,7 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "slab", "Data/slab.png");
 	m_TextureManager->CreateTexture(renderer, "explosion", "Data/explosion-4.png");
 	m_TextureManager->CreateTexture(renderer, "fire_villager", "Data/villager_fire.png");
+	m_TextureManager->CreateTexture(renderer, "water_villager", "Data/water_villager.png");
 	
 	
 }

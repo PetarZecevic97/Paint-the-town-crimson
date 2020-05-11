@@ -260,6 +260,7 @@ namespace Game
 							audioSystem_->PlaySoundEffect("slam");
 							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
+							
 							double r = ((double)std::rand() / (RAND_MAX));
 							if(r < 0.35)
 								CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
