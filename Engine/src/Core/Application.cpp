@@ -145,6 +145,9 @@ namespace Engine {
 
     void Application::Update(float dt)
     {
+		m_InputManager->Update(dt, m_EntityManager.get());
+
+		
         // Update all systems
 		if (m_Pause) {
             m_AudioSystem->PauseMusic();
@@ -160,15 +163,16 @@ namespace Engine {
 			transform->m_Size.y = 0.f;
 		}
 		if (!m_Pause) {
-            m_AudioSystem->ResumeMusic();
 			GameSpecificUpdate(dt);
-			m_NPCSystem->Update(dt, m_EntityManager.get());
+            m_AudioSystem->ResumeMusic();
 			m_PhysicsSystem->Update(dt, m_EntityManager.get());
+			
+			m_NPCSystem->Update(dt, m_EntityManager.get());
+			
 		}
-        m_InputManager->Update(dt, m_EntityManager.get());
+		m_EntityManager->Update(dt);
+		m_RenderSystem->Update(dt, m_EntityManager.get());
         
-        m_EntityManager->Update(dt);
-        m_RenderSystem->Update(dt, m_EntityManager.get());
 		
 
         

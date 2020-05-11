@@ -22,7 +22,7 @@ namespace Game
 		switch (item_type) {
 			//lives
 		case 0:
-			new_rect = { 0, 0, 19, 12 };
+			new_rect = { 0, 0, 19, 13 };
 			break;
 			//speed
 		case 1:

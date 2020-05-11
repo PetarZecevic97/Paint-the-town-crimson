@@ -25,7 +25,7 @@ namespace Game
 		life_display->AddComponent<Engine::LifeDisplayComponent>();
 
 		auto* sprite = life_display->GetComponent<Engine::SpriteComponent>();
-		SDL_Rect new_rect{ 0, 0, 19, 12 };
+		SDL_Rect new_rect{ 0, 0, 19, 13 };
 		sprite->m_src = new_rect;
 		sprite->m_Animation = true;
 
