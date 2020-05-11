@@ -37,8 +37,8 @@ namespace Game
 		for (auto& enemy : eearthNPC)
 		{
 			auto mover = enemy->GetComponent<Engine::MoverComponent>();
-			mover->m_TranslationSpeed.x = mover->m_TranslationSpeed.x * 0.4f;
-			mover->m_TranslationSpeed.y = mover->m_TranslationSpeed.y * 0.4f;
+			mover->m_TranslationSpeed.x = mover->m_TranslationSpeed.x * 0.5f;
+			mover->m_TranslationSpeed.y = mover->m_TranslationSpeed.y * 0.5f;
 
 			auto coll = enemy->GetComponent<Engine::CollisionComponent>()->m_CollidedWith;
 			for (auto& coller : coll)

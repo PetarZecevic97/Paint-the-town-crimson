@@ -37,8 +37,8 @@ namespace Game
 		for (auto& enemy : ewindNPC)
 		{
 			auto mover = enemy->GetComponent<Engine::MoverComponent>();
-			mover->m_TranslationSpeed.x = mover->m_TranslationSpeed.x * 1.75f;
-			mover->m_TranslationSpeed.y = mover->m_TranslationSpeed.y * 1.75f;
+			mover->m_TranslationSpeed.x = mover->m_TranslationSpeed.x * 2.3f;
+			mover->m_TranslationSpeed.y = mover->m_TranslationSpeed.y * 2.3f;
 			ElementalAnimation(entityManager->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0], enemy, 2);
 		}
 	}
