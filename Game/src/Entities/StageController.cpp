@@ -29,7 +29,7 @@ namespace Game
         return true;
     }
 
-    void StageController::Update(Engine::EntityManager* entityManager_, int window_width, int window_height,bool isGameOver_, AudioSystem* audioSystem_, bool isTitleScreen) 
+    void StageController::Update(Engine::EntityManager* entityManager_, int window_width, int window_height,bool isGameOver_, Engine::AudioSystem * audioSystem_, bool isTitleScreen) 
     {
         auto stages = entityManager_->GetAllEntitiesWithComponent< Engine::LevelComponent>();
 

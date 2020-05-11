@@ -6,5 +6,5 @@
 namespace Game
 {
 	bool CreateFireball(Engine::EntityManager* entityManager_, int direction, int direction2);
-	void UpdateFireballs(Engine::EntityManager* entityManager_, AudioSystem * audioSystem_);
+	void UpdateFireballs(Engine::EntityManager* entityManager_, Engine::AudioSystem * audioSystem_);
 }

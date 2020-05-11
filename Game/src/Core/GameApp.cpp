@@ -16,8 +16,6 @@
 #include "Entities/Dummy/DummyController.h"
 #include "Entities/StageController.h"
 #include "Entities/ItemsController.h"
-#include "Entities/AudioController.h"
-#include "AudioSystem.h"
 #include "PauseController.h"
 
 void Game::GameApp::GameSpecificWindowData()
@@ -74,11 +72,7 @@ bool Game::GameApp::GameSpecificInit()
 	item_sprite->AddComponent<Engine::ItemStashComponent>();
 	m_EntityManager.get()->AddEntity(std::move(item_sprite));
 
-	
 
-
-	m_AudioSystem = std::make_unique<AudioSystem>();
-	m_AudioSystem.get()->Init();
 
 	m_PauseSystem = std::make_unique<PauseController>();
 	m_PauseSystem.get()->Init(m_EntityManager.get(), m_window_width, m_window_height,m_TextureManager->GetTexture("pause"));
@@ -174,7 +168,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 
 			}
 			m_HudController->Update(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height, m_WasThereAResize);
-
+			
 			m_PlayerController->Update(dt, m_EntityManager.get(), m_AudioSystem.get());
 
 			Game::UpdateFireballs(m_EntityManager.get(), m_AudioSystem.get());

@@ -12,7 +12,7 @@
 #include "Render/WindowData.h"
 #include "Render/TextureManager.h"
 #include "Physics/PhysicsSystem.h"
-
+#include "AudioSystem.h"
 
 #include <SDL.h>
 
@@ -69,7 +69,12 @@ namespace Engine {
 			return false;
 		}
 
-
+        m_AudioSystem = std::make_unique<AudioSystem>();
+        if (!m_AudioSystem->Init())
+        {
+            LOG_CRITICAL("Failed to initialize AudioSystem");
+            return false;
+        }
 
         if (GameSpecificInit() != true)
         {
@@ -142,6 +147,7 @@ namespace Engine {
     {
         // Update all systems
 		if (m_Pause) {
+            m_AudioSystem->PauseMusic();
 			auto overlay = m_EntityManager->GetAllEntitiesWithComponent<Engine::PauseComponent>()[0];
 			auto transform = overlay->GetComponent<Engine::TransformComponent>();
 			transform->m_Size.x = 1200.f;
@@ -154,6 +160,7 @@ namespace Engine {
 			transform->m_Size.y = 0.f;
 		}
 		if (!m_Pause) {
+            m_AudioSystem->ResumeMusic();
 			GameSpecificUpdate(dt);
 			m_NPCSystem->Update(dt, m_EntityManager.get());
 			m_PhysicsSystem->Update(dt, m_EntityManager.get());

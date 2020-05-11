@@ -212,7 +212,7 @@ namespace Game
 		return !(entityManager_->GetAllEntitiesWithComponent<Engine::FireballComponent>().empty());
 	}
 
-	void UpdateFireballs(Engine::EntityManager* entityManager_, AudioSystem* audioSystem_) {
+	void UpdateFireballs(Engine::EntityManager* entityManager_, Engine::AudioSystem* audioSystem_) {
 
 		auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::FireballComponent>();
 

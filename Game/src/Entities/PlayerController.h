@@ -1,6 +1,5 @@
 #pragma once
 #include <precomp.cpp>
-#include "Audio System/AudioSystem.h"
 
 
 namespace Engine
@@ -16,7 +15,7 @@ namespace Game
     {
     public:
         bool Init(Engine::EntityManager* entityManager_, Engine::Texture* texture_);
-        void Update(float dt, Engine::EntityManager* entityManager_, AudioSystem* audioSystem_);
+        void Update(float dt, Engine::EntityManager* entityManager_, Engine::AudioSystem* audioSystem_);
         int m_last_fired_time{ -100 };
         
     };
@@ -25,6 +24,6 @@ namespace Game
     //void UpdateItems(Engine::EntityManager* entityManager_);
 
     bool CreateFireball(Engine::EntityManager* entityManager_, int direction, int direction2);
-    void UpdateFireballs(Engine::EntityManager* entityManager_, AudioSystem * audioSystem_);
+    void UpdateFireballs(Engine::EntityManager* entityManager_, Engine::AudioSystem * audioSystem_);
 
 }

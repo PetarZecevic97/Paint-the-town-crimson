@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_mixer.h>
+#include <unordered_map>
 
 namespace Engine
 {
@@ -18,6 +19,10 @@ namespace Engine
         bool LoadSoundEffect(std::string path_, std::string name_);
         bool PlayBackgroundMusic(std::string musicName_);
         bool PlaySoundEffect(std::string sfxName_);
+        void PauseMusic();
+        void ResumeMusic();
+        void StopMusic();
+        void PlaySoundEffectOnLoop(std::string SfxName_, int num);
 
         AudioSystem() = default;
     private:

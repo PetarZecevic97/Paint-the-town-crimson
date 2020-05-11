@@ -2,6 +2,7 @@
 #include "Core/Application.h"
 #include "Render/RenderSystem.h"
 #include "Render/Renderer.h"
+#include "AudioSystem.h"
 
 int main(int argc, char* args[])
 {

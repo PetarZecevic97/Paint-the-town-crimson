@@ -6,7 +6,7 @@ namespace Game
 {
 
 	bool CreateItem(Engine::EntityManager* entityManager_, int item_type, Engine::Texture* texture, Engine::Entity* npc);
-	void UpdateItems(Engine::EntityManager* entityManager_, Engine::Texture* texture, AudioSystem* audioSystem_);
-	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture, AudioSystem* audioSystem_);
-	void UpdateExplosion(Engine::EntityManager* entityManager_, AudioSystem* audioSystem_);
+	void UpdateItems(Engine::EntityManager* entityManager_, Engine::Texture* texture, Engine::AudioSystem * audioSystem_);
+	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture, Engine::AudioSystem * audioSystem_);
+	void UpdateExplosion(Engine::EntityManager* entityManager_, Engine::AudioSystem * audioSystem_);
 }

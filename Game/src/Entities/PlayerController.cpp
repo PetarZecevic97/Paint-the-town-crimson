@@ -46,7 +46,7 @@ namespace Game
         return !(entityManager_->GetAllEntitiesWithComponent<Engine::PlayerComponent>().empty());
     }
 
-    void PlayerController::Update(float dt, Engine::EntityManager* entityManager_, AudioSystem* audioSystem_)
+    void PlayerController::Update(float dt, Engine::EntityManager* entityManager_, Engine::AudioSystem* audioSystem_)
     {
         auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::PlayerComponent, Engine::MoverComponent, Engine::InputComponent>();
 		

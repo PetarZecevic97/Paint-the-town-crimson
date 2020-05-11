@@ -20,7 +20,7 @@ bool Engine::AudioSystem::Init()
         LOG_CRITICAL("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
         return false;
     }
-	return false;
+	return true;
 }
 
 bool Engine::AudioSystem::Shutdown() 
@@ -97,6 +97,26 @@ bool Engine::AudioSystem::PlaySoundEffect(std::string SfxName_)
 {
     Mix_PlayChannel(-1, m_SoundEffectLibrary[SfxName_], 0);
     return true;
+}
+
+void Engine::AudioSystem::PauseMusic() 
+{
+    Mix_PauseMusic();
+}
+
+void Engine::AudioSystem::ResumeMusic()
+{
+    Mix_ResumeMusic();
+}
+
+void Engine::AudioSystem::PlaySoundEffectOnLoop(std::string SfxName_, int num)
+{
+    Mix_PlayChannel(-1, m_SoundEffectLibrary[SfxName_], num-1);
+}
+
+void Engine::AudioSystem::StopMusic()
+{
+    Mix_HaltMusic();
 }
 
 

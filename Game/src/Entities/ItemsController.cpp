@@ -64,7 +64,7 @@ namespace Game
 		return !(entityManager_->GetAllEntitiesWithComponent<Engine::ItemComponent>().empty());
 	}
 
-	void UpdateItems(Engine::EntityManager* entityManager_, Engine::Texture* texture, AudioSystem* audioSystem_) {
+	void UpdateItems(Engine::EntityManager* entityManager_, Engine::Texture* texture, Engine::AudioSystem * audioSystem_) {
 
 		UpdateExplosion(entityManager_, audioSystem_);
 
@@ -290,7 +290,7 @@ namespace Game
 
 	}
 
-	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture, AudioSystem* audioSystem_) {
+	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture, Engine::AudioSystem * audioSystem_) {
 
 		
 		auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
@@ -315,7 +315,7 @@ namespace Game
 	
 	}
 
-	void UpdateExplosion(Engine::EntityManager* entityManager_, AudioSystem* audioSystem_) {
+	void UpdateExplosion(Engine::EntityManager* entityManager_, Engine::AudioSystem * audioSystem_) {
 
 		auto explosions = entityManager_->GetAllEntitiesWithComponent<Engine::ExplosionComponent>();
 		
