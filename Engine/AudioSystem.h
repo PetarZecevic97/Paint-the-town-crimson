@@ -23,6 +23,8 @@ namespace Engine
         void ResumeMusic();
         void StopMusic();
         void PlaySoundEffectOnLoop(std::string SfxName_, int num);
+        void SetMusicVolume(int volume_);
+        void SetEffectsVolume(int volume_);
 
         AudioSystem() = default;
     private:

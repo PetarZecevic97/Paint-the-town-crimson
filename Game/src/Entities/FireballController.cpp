@@ -243,13 +243,13 @@ namespace Game
 						auto npcHp = entity->GetComponent<Engine::HealthComponent>();
 						if (npcHp->m_CurrentHealth > 1)
 						{
+							if (entity->HasComponent<FireNPCComponent>())audioSystem_->PlaySoundEffect("fireDeath");
 							audioSystem_->PlaySoundEffect("slam");
 							npcHp->m_CurrentHealth--;
 							entityManager_->RemoveEntity(fireball->GetId());
 						}
 						else if (entity->HasComponent<WaterNPCComponent>() && !entity->GetComponent<WaterNPCComponent>()->isInWallForm && npcHp->m_CurrentHealth == 1)
 						{
-							audioSystem_->PlaySoundEffect("slam");
 							audioSystem_->PlaySoundEffect("freeze");
 							entity->GetComponent<WaterNPCComponent>()->isInWallForm = true;
 							entity->RemoveComponent<Engine::MoverComponent>();
@@ -258,7 +258,41 @@ namespace Game
 						}
 						else
 						{
-							audioSystem_->PlaySoundEffect("slam");
+							if (entity->HasComponent<WaterNPCComponent>()) 
+							{
+								audioSystem_->PlaySoundEffect("slam");
+								audioSystem_->PlaySoundEffect("waterDeath");
+							}
+							else if (entity->HasComponent<EarthNPCComponent>()) 
+							{
+								audioSystem_->PlaySoundEffect("slam");
+								audioSystem_->PlaySoundEffect("rockDeath");
+							}
+							else if (entity->HasComponent<WindNPCComponent>()) 
+							{
+								audioSystem_->PlaySoundEffect("slam");
+								audioSystem_->PlaySoundEffect("airDeath");
+							}
+							else if (entity->HasComponent<MentalNPCComponent>()) 
+							{
+								audioSystem_->PlaySoundEffect("slam");
+								audioSystem_->PlaySoundEffect("mentalDeath");
+							}
+							else if (entity->HasComponent<FireNPCComponent>()) 
+							{
+								if(entity->GetComponent<Engine::TransformComponent>()->m_Size.x<50)
+								{
+									audioSystem_->PlaySoundEffect("slam");
+									audioSystem_->PlaySoundEffect("smallFireDeath");
+								}
+								else 
+								{
+									audioSystem_->PlaySoundEffect("slam");
+									audioSystem_->PlaySoundEffect("fireDeath");
+								}
+								
+							}
+							
 							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
 							

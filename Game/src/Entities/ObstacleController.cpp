@@ -14,7 +14,7 @@ namespace Game
 		ASSERT(entityManager != nullptr, "Must pass valid pointer to entitymanager to ObstacleCOntroller::Init()");
 		ASSERT(texture != nullptr, "Must pass valid pointer to texture to ObstacleCOntroller::Init()");
 		
-		m_currentLevelNo == LevelNumber::LEVEL_MENU;
+		m_currentLevelNo = LevelNumber::LEVEL_MENU;
 
 		m_height = height;
 		m_width = width;

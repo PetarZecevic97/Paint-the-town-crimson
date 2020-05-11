@@ -230,13 +230,19 @@
     <Image Include="Data\wizard.png" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Data\airDeath.mp3" />
     <Media Include="Data\beat.wav" />
     <Media Include="Data\explosion.wav" />
+    <Media Include="Data\fireDeath.mp3" />
     <Media Include="Data\lose.wav" />
     <Media Include="Data\love_wolf.wav" />
+    <Media Include="Data\mentolDeath.mp3" />
     <Media Include="Data\pew.wav" />
     <Media Include="Data\powerup.wav" />
     <Media Include="Data\powerup2.wav" />
+    <Media Include="Data\rockDeath.mp3" />
+    <Media Include="Data\smallFireDeath.mp3" />
+    <Media Include="Data\waterDeath.mp3" />
     <Media Include="Data\win.wav" />
   </ItemGroup>
   <ItemGroup>
