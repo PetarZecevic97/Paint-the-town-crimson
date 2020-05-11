@@ -137,13 +137,13 @@ namespace Game
 
 						if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1 && entity->GetComponent<Engine::PlayerComponent>()->m_speedBuff)
 						{
-							
+							audioSystem_->PlaySoundEffect("speed");
 							auto speedBuff = entityManager_->GetAllEntitiesWithComponents<Engine::SpeedBuffComponent>()[0];
 							speedBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += speedBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 2 && entity->GetComponent<Engine::PlayerComponent>()->m_rapidFire)
 						{
-							
+							audioSystem_->PlaySoundEffect("powerup");
 							auto rapidBuff = entityManager_->GetAllEntitiesWithComponents<Engine::RapidBuffComponent>()[0];
 							rapidBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += rapidBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}
@@ -158,13 +158,13 @@ namespace Game
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5 && entity->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
 						{
-							
+							audioSystem_->PlaySoundEffect("cock");
 							auto tripleBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TripleBuffComponent>()[0];
 							tripleBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += tripleBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 6 && entity->GetComponent<Engine::PlayerComponent>()->m_multishotBuff)
 						{
-
+							audioSystem_->PlaySoundEffect("powerup");
 							auto multiBuff = entityManager_->GetAllEntitiesWithComponents<Engine::MultiBuffComponent>()[0];
 							multiBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += multiBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}

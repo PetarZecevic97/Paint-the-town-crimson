@@ -58,6 +58,14 @@ namespace Engine
         TransformComponent(float posx, float posy, float sizex, float sizey) : m_Position(posx, posy), m_Size(sizex, sizey) { };
     };
 
+    struct PauseComponent : public Component
+    {
+        vec2 m_Position{};
+
+        PauseComponent() = default;
+
+    };
+
     struct MoverComponent : public Component
     {
         vec2 m_TranslationSpeed{};

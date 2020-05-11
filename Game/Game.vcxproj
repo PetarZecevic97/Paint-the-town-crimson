@@ -178,6 +178,7 @@
     <ClInclude Include="src\Entities\ObstacleController.h" />
     <ClInclude Include="src\Entities\PlayerController.h" />
     <ClInclude Include="src\Entities\StageController.h" />
+    <ClInclude Include="src\PauseController.h" />
     <ClInclude Include="src\precomp.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\WaterNPCController.h" />
     <ClInclude Include="src\Entities\NPC\Controllers\WindNPCController.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="src\Entities\ObstacleController.cpp" />
     <ClCompile Include="src\Entities\PlayerController.cpp" />
     <ClCompile Include="src\Entities\StageController.cpp" />
+    <ClCompile Include="src\PauseController.cpp" />
     <ClCompile Include="src\precomp.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\WaterNPCController.cpp" />
     <ClCompile Include="src\Entities\NPC\Controllers\WindNPCController.cpp" />
