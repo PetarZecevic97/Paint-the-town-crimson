@@ -118,6 +118,12 @@
     <Media Include="Data\powerup.wav" />
     <Media Include="Data\powerup2.wav" />
     <Media Include="Data\win.wav" />
+    <Media Include="Data\rockDeath.mp3" />
+    <Media Include="Data\smallFireDeath.mp3" />
+    <Media Include="Data\airDeath.mp3" />
+    <Media Include="Data\mentolDeath.mp3" />
+    <Media Include="Data\fireDeath.mp3" />
+    <Media Include="Data\waterDeath.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL2_mixer.lib" />

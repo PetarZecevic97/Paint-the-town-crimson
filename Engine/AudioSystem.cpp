@@ -99,6 +99,18 @@ bool Engine::AudioSystem::PlaySoundEffect(std::string SfxName_)
     return true;
 }
 
+void Engine::AudioSystem::SetMusicVolume(int volume_)
+{
+    Mix_VolumeMusic(volume_);
+}
+
+void Engine::AudioSystem::SetEffectsVolume(int volume_)
+{
+    Mix_Volume(-1, volume_);
+}
+
+
+
 void Engine::AudioSystem::PauseMusic() 
 {
     Mix_PauseMusic();

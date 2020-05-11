@@ -99,7 +99,17 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/cock.mp3", "cock");
 	m_AudioSystem.get()->LoadSoundEffect("Data/speed.wav", "speed");
 	m_AudioSystem.get()->LoadSoundEffect("Data/freeze.mp3", "freeze");
+
+	m_AudioSystem.get()->LoadSoundEffect("Data/waterDeath.mp3", "waterDeath");
+	m_AudioSystem.get()->LoadSoundEffect("Data/fireDeath.mp3", "fireDeath");
+	m_AudioSystem.get()->LoadSoundEffect("Data/smallFireDeath.mp3", "smallFireDeath");
+	m_AudioSystem.get()->LoadSoundEffect("Data/rockDeath.mp3", "rockDeath");
+	m_AudioSystem.get()->LoadSoundEffect("Data/airDeath.mp3", "airDeath");
+	m_AudioSystem.get()->LoadSoundEffect("Data/mentalDeath.mp3", "mentalDeath");
+
 	m_AudioSystem.get()->PlayBackgroundMusic("title");
+	m_AudioSystem.get()->SetMusicVolume(10);
+	m_AudioSystem.get()->SetEffectsVolume(30);
 
     return true;
 }
@@ -128,7 +138,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 		{
 			Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"), m_AudioSystem.get());
 
-			if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives == 0)
+			if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives <= 0)
 			{
 				m_Factory->ShutDown(m_EntityManager.get());
 				m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true, m_AudioSystem.get(), false);
