@@ -150,10 +150,10 @@ namespace Game
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 4 && entity->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff)
 						{
 							
+							audioSystem_->PlaySoundEffectOnLoop("clocktick", 10);
 							auto timeoutBuff = entityManager_->GetAllEntitiesWithComponents<Engine::TimestopBuffComponent>()[0];
 							timeoutBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += timeoutBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 
-							audioSystem_->PlaySoundEffectOnLoop("clocktick", 10);
 							
 						}
 						else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5 && entity->GetComponent<Engine::PlayerComponent>()->m_tripleshotBuff)
@@ -173,8 +173,7 @@ namespace Game
 							auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
 							auto buff = std::make_unique<Engine::Entity>();
 							buff->AddComponent<Engine::BuffComponent>(SDL_GetTicks());
-							buff->GetComponent<Engine::BuffComponent>()->m_timeExpires = buff->GetComponent<Engine::BuffComponent>()->m_timeCreated + buff->GetComponent<Engine::BuffComponent>()->m_duration;
-							buff->GetComponent<Engine::BuffComponent>()->m_buffType = item->GetComponent<Engine::ItemComponent>()->m_itemType;
+							
 
 							if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1)
 							{
@@ -193,6 +192,8 @@ namespace Game
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 4)
 							{
 								
+								audioSystem_->PlaySoundEffectOnLoop("clocktick", 10);
+								buff->GetComponent<Engine::BuffComponent>()->m_duration = 3000;
 								buff->AddComponent<Engine::TimestopBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff = true;
 								auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
@@ -201,7 +202,7 @@ namespace Game
 									npc->GetComponent<Engine::NPCComponent>()->m_IsFrozen = true;
 								}
 
-								audioSystem_->PlaySoundEffectOnLoop("clocktick", 10);
+								
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 5)
 							{
@@ -215,6 +216,9 @@ namespace Game
 								buff->AddComponent<Engine::MultiBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff = true;
 							}
+
+							buff->GetComponent<Engine::BuffComponent>()->m_timeExpires = buff->GetComponent<Engine::BuffComponent>()->m_timeCreated + buff->GetComponent<Engine::BuffComponent>()->m_duration;
+							buff->GetComponent<Engine::BuffComponent>()->m_buffType = item->GetComponent<Engine::ItemComponent>()->m_itemType;
 
 							entityManager_->AddEntity(std::move(buff));
 
