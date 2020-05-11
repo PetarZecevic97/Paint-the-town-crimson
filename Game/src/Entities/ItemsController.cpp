@@ -188,7 +188,7 @@ namespace Game
 								audioSystem_->PlaySoundEffect("powerup");
 								buff->AddComponent<Engine::RapidBuffComponent>();
 								player->GetComponent<Engine::PlayerComponent>()->m_rapidFire = true;
-								player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown -= 400;
+								player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown -= 300;
 							}
 							else if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 4)
 							{
@@ -263,7 +263,7 @@ namespace Game
 				}
 				else if (buffComponent->m_buffType == 2)
 				{
-					player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown += 400;
+					player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown += 300;
 					player->GetComponent<Engine::PlayerComponent>()->m_rapidFire = false;
 				}
 				else if (buffComponent->m_buffType == 4)

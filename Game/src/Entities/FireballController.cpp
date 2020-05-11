@@ -263,7 +263,7 @@ namespace Game
 							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
 							
 							double r = ((double)std::rand() / (RAND_MAX));
-							if(r < 0.35)
+							if(r < 0.2)
 								CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
 							//CreateItem(entityManager_, 4, itemSprite->m_Image, entity);
 							entityManager_->RemoveEntity(fireball->GetId());

@@ -116,7 +116,7 @@ namespace Engine
     struct PlayerComponent : public Component
     {
         float m_speed{ 200.f };
-        int m_fireballCooldown{ 500 };
+        int m_fireballCooldown{ 400 };
         bool m_speedBuff{ false };
         bool m_rapidFire{ false };
         bool m_timeoutBuff{ false };

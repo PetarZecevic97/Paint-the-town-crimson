@@ -95,7 +95,7 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/win.wav", "win");
 	m_AudioSystem.get()->LoadSoundEffect("Data/slam.mp3", "slam");
 	m_AudioSystem.get()->LoadSoundEffect("Data/clocktick.wav", "clocktick");
-	m_AudioSystem.get()->LoadSoundEffect("Data/jusuf.mp3", "life");
+	m_AudioSystem.get()->LoadSoundEffect("Data/YuGiOh.wav", "life");
 	m_AudioSystem.get()->LoadSoundEffect("Data/cock.mp3", "cock");
 	m_AudioSystem.get()->LoadSoundEffect("Data/speed.wav", "speed");
 	m_AudioSystem.get()->LoadSoundEffect("Data/freeze.mp3", "freeze");
@@ -107,22 +107,23 @@ bool Game::GameApp::GameSpecificInit()
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
 	
-/*
-	bool isPaused = m_PauseSystem.get()->Update(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("pause"),m_AudioSystem.get(),m_IsTitleScreen );
-	if (isPaused) 
+
+	//bool isPaused = m_PauseSystem.get()->Update(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("pause"),m_AudioSystem.get(),m_IsTitleScreen );
+	/*if (m_Pause)
 	{
-		if(!m_wasPaused)m_AudioSystem.get()->PauseMusic();
+		if (!m_wasPaused)m_AudioSystem.get()->PauseMusic();
 		m_wasPaused = true;
-		
+
 	}
 	else
 	{
-		if (m_wasPaused) 
+		if (m_wasPaused)
 		{
 			m_AudioSystem.get()->ResumeMusic();
 			m_wasPaused = false;
 		}
-*/
+	}*/
+
 		if (!m_IsTitleScreen)
 		{
 			Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"), m_AudioSystem.get());
@@ -217,9 +218,9 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "fire_villager", "Data/villager_fire.png");
 	m_TextureManager->CreateTexture(renderer, "water_villager", "Data/water_villager.png");
 	m_TextureManager->CreateTexture(renderer, "pause", "Data/pause.png");
+	m_TextureManager->CreateTexture(renderer, "wind_villager", "Data/wind_villager.png");
+	m_TextureManager->CreateTexture(renderer, "earth_villager", "Data/earth_villager.png");
 
-	
-	
 }
 
 void Game::GameApp::setWindowSize(int win_width, int win_height) {
