@@ -141,6 +141,18 @@ namespace Engine {
     void Application::Update(float dt)
     {
         // Update all systems
+		if (m_Pause) {
+			auto overlay = m_EntityManager->GetAllEntitiesWithComponent<Engine::PauseComponent>()[0];
+			auto transform = overlay->GetComponent<Engine::TransformComponent>();
+			transform->m_Size.x = 1200.f;
+			transform->m_Size.y = 720.f;
+		}
+		else {
+			auto overlay = m_EntityManager->GetAllEntitiesWithComponent<Engine::PauseComponent>()[0];
+			auto transform = overlay->GetComponent<Engine::TransformComponent>();
+			transform->m_Size.x = 1.f;
+			transform->m_Size.y = 0.f;
+		}
 		if (!m_Pause) {
 			GameSpecificUpdate(dt);
 			m_NPCSystem->Update(dt, m_EntityManager.get());

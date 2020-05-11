@@ -18,8 +18,8 @@ namespace Game
 		enemy->AddComponent<WaterNPCComponent>();
 
 		//enemy->AddComponent<Engine::TransformComponent>(m_SpawnPositions[randomPosition].x, m_SpawnPositions[randomPosition].y, 50.f, 50.f);
-		enemy->AddComponent<Engine::TransformComponent>(spawnPosition.x, spawnPosition.y, 50.f, 50.f);
-		enemy->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
+		enemy->AddComponent<Engine::TransformComponent>(spawnPosition.x, spawnPosition.y, 64.f, 64.f);
+		enemy->AddComponent<Engine::CollisionComponent>(64.f, 64.f);
 		enemy->AddComponent<Engine::MoverComponent>();
 		enemy->AddComponent<Engine::HealthComponent>(2, 2);
 		enemy->AddComponent<Engine::SpriteComponent>().m_Image = texture;

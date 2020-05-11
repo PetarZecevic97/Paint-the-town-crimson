@@ -71,8 +71,8 @@ namespace Engine
 
 			}
 
-				mover->m_TranslationSpeed.x = (addition < twoPI) ? (std::cosf(angle) * 200.f) : (-mover->m_TranslationSpeed.x);
-				mover->m_TranslationSpeed.y = (addition < twoPI) ? (std::sinf(angle) * 200.f) : (-mover->m_TranslationSpeed.y);
+				mover->m_TranslationSpeed.x = (addition < twoPI) ? (std::cosf(angle) * 150.f) : (-mover->m_TranslationSpeed.x);
+				mover->m_TranslationSpeed.y = (addition < twoPI) ? (std::sinf(angle) * 150.f) : (-mover->m_TranslationSpeed.y);
 
 		}
 	}

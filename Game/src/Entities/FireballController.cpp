@@ -250,6 +250,7 @@ namespace Game
 						else if (entity->HasComponent<WaterNPCComponent>() && !entity->GetComponent<WaterNPCComponent>()->isInWallForm && npcHp->m_CurrentHealth == 1)
 						{
 							audioSystem_->PlaySoundEffect("slam");
+							audioSystem_->PlaySoundEffect("freeze");
 							entity->GetComponent<WaterNPCComponent>()->isInWallForm = true;
 							entity->RemoveComponent<Engine::MoverComponent>();
 							entity->AddComponent<Engine::WallComponent>();

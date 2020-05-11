@@ -52,6 +52,7 @@
     <ClInclude Include="src\Entities\AudioController.h" />
     <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="src\Audio System\AudioSystem.h" />
+    <ClInclude Include="src\PauseController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\precomp.cpp">
@@ -88,6 +89,7 @@
     <ClCompile Include="src\Entities\ItemsController.cpp" />
     <ClCompile Include="src\Entities\FireballController.cpp" />
     <ClCompile Include="src\Audio System\AudioSystem.cpp" />
+    <ClCompile Include="src\PauseController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

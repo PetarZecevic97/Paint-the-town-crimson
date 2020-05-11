@@ -63,6 +63,7 @@ namespace Engine
             for (auto& action : component->inputActions)
             {
                 action.m_Active = IsButtonActionActive(action.m_Action, action.m_ActionTriggerState);
+                action.m_JustPressed = IsButtonActionActive(action.m_Action, EInputActionState::JustPressed);
             }
         }
     }
@@ -89,7 +90,7 @@ namespace Engine
         m_InputActions["PlayerShootLeft"] = VK_LEFT;
         m_InputActions["PlayerShootDown"] = VK_DOWN;
         m_InputActions["PlayerShootRight"] = VK_RIGHT;
-        m_InputActions["PauseGame"] = 'P';
+		m_InputActions["PauseGame"] = 'P';//VK_ESCAPE;
         m_InputActions["RestartGame"] = 'R';
         m_InputActions["PlayerMoveUp"] = 'W';
         m_InputActions["PlayerMoveLeft"] = 'A';
@@ -111,6 +112,19 @@ namespace Engine
         {
             return e.m_Action == targetAction && e.m_Active == true;
         });
+
+        return found != std::end(inputComponent->inputActions);
+    }
+
+    bool InputManager::WasJustPressed(InputComponent* inputComponent, EInputAction targetAction)
+    {
+        auto found = std::find_if(
+            std::begin(inputComponent->inputActions),
+            std::end(inputComponent->inputActions),
+            [targetAction](Engine::InputAction e)
+            {
+                return e.m_Action == targetAction && e.m_JustPressed == true;
+            });
 
         return found != std::end(inputComponent->inputActions);
     }

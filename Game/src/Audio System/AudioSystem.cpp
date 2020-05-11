@@ -115,4 +115,14 @@ bool Game::AudioSystem::StopMusic()
     return false;
 }
 
+void Game::AudioSystem::PauseMusic()
+{
+    Mix_PauseMusic();
+}
+
+void Game::AudioSystem::ResumeMusic()
+{
+    Mix_ResumeMusic();
+}
+
 
