@@ -225,9 +225,8 @@ void Game::GameApp::LoadTextures()
 	m_TextureManager->CreateTexture(renderer, "water_villager", "Data/water_villager.png");
 	m_TextureManager->CreateTexture(renderer, "pause", "Data/pause.png");
 	m_TextureManager->CreateTexture(renderer, "wind_villager", "Data/wind_villager.png");
+	m_TextureManager->CreateTexture(renderer, "earth_villager", "Data/earth_villager.png");
 
-	
-	
 }
 
 void Game::GameApp::setWindowSize(int win_width, int win_height) {

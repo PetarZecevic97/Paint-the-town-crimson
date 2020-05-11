@@ -94,7 +94,7 @@ namespace Game
 			enemyType = rand() % 4;
 		}
 		
-		int rander = rand() % 3;
+		int rander = rand() % 4;
 
 		int randomPosition = rand() % 4;
 		switch (enemyType)
@@ -122,6 +122,9 @@ namespace Game
 				break;
 			case 2:
 				m_MentalNPCController->Init(entityManager, texture->GetTexture("wind_villager"), m_SpawnPositions[randomPosition]);
+				break;
+			case 3:
+				m_MentalNPCController->Init(entityManager, texture->GetTexture("earth_villager"), m_SpawnPositions[randomPosition]);
 				break;
 			default:
 				m_MentalNPCController->Init(entityManager, texture->GetTexture("fire_villager"), m_SpawnPositions[randomPosition]);
