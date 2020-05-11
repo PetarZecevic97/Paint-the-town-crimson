@@ -20,18 +20,18 @@ namespace Game
 		m_width = width;
 		
 		// Wall init
-		std::vector < std::pair<int, int> > lObstacleLocations;
+		std::vector < std::pair<float, float> > lObstacleLocations;
 		for (int i = 80; i < 1280; i += 55) 
 		{
 			if (i > 500 && i < 750)continue;
-			lObstacleLocations.push_back(std::make_pair(-0.5*width + i, height*0.5-25));
-			lObstacleLocations.push_back(std::make_pair(-0.5 * width + i, -height * 0.5+25));
+			lObstacleLocations.push_back(std::make_pair(-0.5f*width + i, height*0.5f-25.f));
+			lObstacleLocations.push_back(std::make_pair(-0.5f * width + i, -height * 0.5f+25.f));
 		}
 		for (int i = 0; i < 720; i += 55)
 		{
 			if (i > 250 && i < 500)continue;
-			lObstacleLocations.push_back(std::make_pair(0.5 * width-100, -height * 0.5 + i-25));
-			lObstacleLocations.push_back(std::make_pair(-0.5 * width+80, -height * 0.5 + i-25));
+			lObstacleLocations.push_back(std::make_pair(0.5f * width-100.f, -height * 0.5f + i-25.f));
+			lObstacleLocations.push_back(std::make_pair(-0.5f * width+80.f, -height * 0.5f + i-25.f));
 		}
 
 		for (auto loc : lObstacleLocations)
@@ -44,7 +44,7 @@ namespace Game
 			sprite->m_src = new_rect;
 			sprite->m_Animation = true;
 
-			obstacle->AddComponent<Engine::TransformComponent>(loc.first + 0.06 * m_width, loc.second, 50.f, 50.f);
+			obstacle->AddComponent<Engine::TransformComponent>(loc.first + 0.06f * m_width, loc.second, 50.f, 50.f);
 			obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 			obstacle->AddComponent<Engine::ObstacleComponent>();
 			obstacle->AddComponent<Engine::WallComponent>();   // Dodato da bi mogli majmuni (enemies) izbegavati obstacles
@@ -93,31 +93,31 @@ namespace Game
 			{
 
 				auto obstacle = std::make_unique<Engine::Entity>();
-				std::vector < std::pair<int, int> > lObstacleLocations;
+				std::vector < std::pair<float, float> > lObstacleLocations;
 
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3, 0.8 * m_height / 3 - 60));
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3, 0.8 * m_height / 3 - 120));
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3, 0.8 * m_height / 3));
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3 - 60, 0.8 * m_height / 3));
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3 - 120, 0.8 * m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3.f, 0.8f * m_height / 3.f - 60.f));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3, 0.8f * m_height / 3 - 120));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3, 0.8f * m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3 - 60, 0.8f * m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3 - 120, 0.8f * m_height / 3));
 
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3, 0.8 * m_height / 3 - 60));
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3, 0.8 * m_height / 3 - 120));
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3, 0.8 * m_height / 3));
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3 + 60, 0.8 * m_height / 3));
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3 + 120, 0.8 * m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3, 0.8f * m_height / 3 - 60));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3, 0.8f * m_height / 3 - 120));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3, 0.8f * m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3 + 60, 0.8f * m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3 + 120, 0.8f * m_height / 3));
 
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3, 0.8 * -m_height / 3 + 60));
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3, 0.8 * -m_height / 3 + 120));
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3, 0.8 * -m_height / 3));
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3 - 60, 0.8 * -m_height / 3));
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 3 - 120, 0.8 * -m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3, 0.8f * -m_height / 3 + 60));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3, 0.8f * -m_height / 3 + 120));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3, 0.8f * -m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3 - 60, 0.8f * -m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 3 - 120, 0.8f * -m_height / 3));
 
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3, 0.8 * -m_height / 3 + 60));
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3, 0.8 * -m_height / 3 + 120));
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3, 0.8 * -m_height / 3));
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3 + 60, 0.8 * -m_height / 3));
-				lObstacleLocations.push_back(std::make_pair(0.8 * -m_height / 3 + 120, 0.8 * -m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3, 0.8f * -m_height / 3 + 60));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3, 0.8f * -m_height / 3 + 120));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3, 0.8f * -m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3 + 60, 0.8f * -m_height / 3));
+				lObstacleLocations.push_back(std::make_pair(0.8f * -m_height / 3 + 120, 0.8f * -m_height / 3));
 
 
 				for (auto loc : lObstacleLocations)
@@ -130,7 +130,7 @@ namespace Game
 					sprite->m_src = new_rect;
 					sprite->m_Animation = true;
 
-					obstacle->AddComponent<Engine::TransformComponent>(loc.first + 0.06 * m_width, loc.second, 50.f, 50.f);
+					obstacle->AddComponent<Engine::TransformComponent>(loc.first + 0.06f * m_width, loc.second, 50.f, 50.f);
 					obstacle->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
 					obstacle->AddComponent<Engine::ObstacleComponent>();
 
@@ -147,11 +147,11 @@ namespace Game
 			{
 				auto obstacle = std::make_unique<Engine::Entity>();
 
-				std::vector < std::pair<int, int> > lObstacleLocations;
-				lObstacleLocations.push_back(std::make_pair(0.8 * m_height / 4 + 50, 0));
-				lObstacleLocations.push_back(std::make_pair(-0.8 * m_height / 4 + 50, 0));
-				lObstacleLocations.push_back(std::make_pair(50, 0.8 * m_height / 4));
-				lObstacleLocations.push_back(std::make_pair(50, -0.8 * m_height / 4));
+				std::vector < std::pair<float, float> > lObstacleLocations;
+				lObstacleLocations.push_back(std::make_pair(0.8f * m_height / 4 + 50.f, 0.f));
+				lObstacleLocations.push_back(std::make_pair(-0.8f * m_height / 4 + 50.f, 0.f));
+				lObstacleLocations.push_back(std::make_pair(50.f, 0.8f * m_height / 4));
+				lObstacleLocations.push_back(std::make_pair(50.f, -0.8f * m_height / 4));
 				for (auto loc : lObstacleLocations)
 				{
 

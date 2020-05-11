@@ -15,7 +15,7 @@ namespace Game
         sprite->m_src = new_rect;
         sprite->m_Animation = true;
 
-        stage->AddComponent<Engine::TransformComponent>(60, 0, 1200.f, 730.f);
+        stage->AddComponent<Engine::TransformComponent>(60.f, 0.f, 1200.f, 730.f);
         stage->AddComponent<Engine::LevelComponent>();
         stage->AddComponent<Engine::InputComponent>();
 
