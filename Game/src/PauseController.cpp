@@ -10,7 +10,7 @@ namespace Game
         auto overlay = std::make_unique<Engine::Entity>();
 
 
-        overlay->AddComponent<Engine::SpriteComponent>().m_Image = texture_;
+        overlay->AddComponent<Engine::SpriteComponent>(100).m_Image = texture_;
         auto* sprite = overlay->GetComponent<Engine::SpriteComponent>();
         SDL_Rect new_rect = { 0, 0, 1240, 720 };
         sprite->m_src = new_rect;
