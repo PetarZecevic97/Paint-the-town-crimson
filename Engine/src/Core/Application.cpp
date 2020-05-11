@@ -162,8 +162,8 @@ namespace Engine {
 		if (!m_Pause) {
             m_AudioSystem->ResumeMusic();
 			GameSpecificUpdate(dt);
+            m_PhysicsSystem->Update(dt, m_EntityManager.get());
 			m_NPCSystem->Update(dt, m_EntityManager.get());
-			m_PhysicsSystem->Update(dt, m_EntityManager.get());
 		}
         m_InputManager->Update(dt, m_EntityManager.get());
         
