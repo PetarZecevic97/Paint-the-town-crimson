@@ -116,9 +116,6 @@ bool Game::GameApp::GameSpecificInit()
 
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
-	
-
-
 
 		if (!m_IsTitleScreen)
 		{
