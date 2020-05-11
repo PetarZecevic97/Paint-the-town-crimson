@@ -259,7 +259,7 @@ namespace Game
 						}
 						else
 						{
-							// Here the elementals realeas their death cries
+							// Here the elementals release their death cries
 							if (entity->HasComponent<WaterNPCComponent>()) 
 							{
 								audioSystem_->PlaySoundEffect("slam");
