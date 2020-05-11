@@ -5,6 +5,7 @@
 
 namespace Game
 {
+	// Basic stuff - we make 4 entities that guard the window edges, so our mage doesn't do something off screen
     bool BorderController::Init(Engine::EntityManager* entityManager_, int window_width, int window_height, Engine::Texture* texture)
     {
         ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to BorderController::Init()");
@@ -53,6 +54,7 @@ namespace Game
 
         entityManager_->AddEntity(std::move(border));
 
+		// A little area inside the window that helps us with the timelord item - the enemies stop when they collide with it
 		auto play_area = std::make_unique<Engine::Entity>();
 
 		play_area->AddComponent<Engine::PlayAreaComponent>();
@@ -65,6 +67,7 @@ namespace Game
 
     void BorderController::Update(Engine::EntityManager* entityManager_, int window_width, int window_height)
     {
+	 // This should move the borders when resize happens but it doesnt work like I want it to :D
       auto leftBorder = entityManager_->GetAllEntitiesWithComponents<Engine::LeftBorderComponent>()[0];
 
       auto leftTransform = leftBorder->GetComponent<Engine::TransformComponent>();

@@ -7,6 +7,7 @@
 
 namespace Game
 {
+	// Here we can clearly see how the fireballs get created
 	bool CreateFireball(Engine::EntityManager* entityManager_, int direction, int direction2) {
 		ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to ProjectileController::Init()");
 
@@ -17,27 +18,19 @@ namespace Game
 		float x = player_trans->m_Position[0];
 		float y = player_trans->m_Position[1];
 		auto input = player->GetComponent<Engine::InputComponent>();
-
-
-		bool moveUpInput = Engine::InputManager::IsActionActive(input, "PlayerMoveUp");
-		bool moveDownInput = Engine::InputManager::IsActionActive(input, "PlayerMoveDown");
-		bool moveLeftInput = Engine::InputManager::IsActionActive(input, "PlayerMoveLeft");
-		bool moveRightInput = Engine::InputManager::IsActionActive(input, "PlayerMoveRight");
-
-
-		//fireball->AddComponent<Engine::TransformComponent>(x - 15 * (((moveUpInput || moveLeftInput) && !moveRightInput && !moveDownInput) ? -1 : 1), y - 6, 18.f, 18.f);
+		
+		// A fireball originates from the center of the mage - i wanted to move it so it gets fired from the flame
+		// but it makes the aiming weird
 		fireball->AddComponent<Engine::TransformComponent>(x, y, 18.f, 18.f);
 		fireball->AddComponent<Engine::CollisionComponent>(18.f, 18.f);
 		fireball->AddComponent<Engine::FireballComponent>();
 		fireball->AddComponent<Engine::MoverComponent>();
-		//mage firing mages yaaay
+		// Mage firing mages yaaay - this is when we had only one spritesheet and no fireballs :D
 		fireball->AddComponent<Engine::SpriteComponent>().m_Image = player->GetComponent<Engine::SpriteComponent>()->m_Image;
 
-		//Slicing up a spritesheet and taking what is ours
 		auto* comp = fireball->GetComponent<Engine::SpriteComponent>();
 		SDL_Rect new_rect{ 50, 0, 11, 11 };
 		comp->m_src = new_rect;
-		//if we want to animate an entity
 		comp->m_Animation = true;
 
 		float speed = 300.f;
@@ -46,6 +39,8 @@ namespace Game
 		bool shootDownInput = false;
 		bool shootLeftInput = false;
 		bool shootRightInput = false;
+
+		// this is for the multishot item - direction2 indicates the direction of the fireball - this fires in every direction 
 		if (player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff)
 		{
 			switch (direction2) {
@@ -55,7 +50,7 @@ namespace Game
 			case 2:
 				shootUpInput = true;
 				shootRightInput = true;
-				speed /= 1.41421;
+				speed /= 1.41421; //so it fires them in a circle shape - calculations by Zeka
 				break;
 			case 3:
 				shootRightInput = true;
@@ -88,12 +83,14 @@ namespace Game
 		}
 		else
 		{
+			// This is for standard fireball creation - here we get the direction od the fireball
 			shootUpInput = Engine::InputManager::IsActionActive(input, "PlayerShootUp");
 			shootDownInput = Engine::InputManager::IsActionActive(input, "PlayerShootDown");
 			shootLeftInput = Engine::InputManager::IsActionActive(input, "PlayerShootLeft");
 			shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
 		}
 
+		// Here we apply the correct direction to the fireball and the direction if else is used for the triple shot item
 		if (shootUpInput && shootLeftInput) {
 			auto move = fireball->GetComponent<Engine::MoverComponent>();
 			move->m_TranslationSpeed.y = -speed;
@@ -214,11 +211,12 @@ namespace Game
 
 	void UpdateFireballs(Engine::EntityManager* entityManager_, Engine::AudioSystem* audioSystem_) {
 
+		// EntitiesToMove is not just a copy pasta went wrong :D aw who am I kidding... Shame on us
 		auto entitiesToMove = entityManager_->GetAllEntitiesWithComponents<Engine::FireballComponent>();
 
 		for (auto& fireball : entitiesToMove)
 		{
-
+			// Fireball spinning animation
 			auto* sprite = fireball->GetComponent<Engine::SpriteComponent>();
 
 			int ticks = (SDL_GetTicks() / 200) % 4;
@@ -230,26 +228,29 @@ namespace Game
 
 			for (auto* entity : collider->m_CollidedWith)
 			{
+				// The beautiful patch to our exception problem 
 				if (entity->GetId() > 10000000) {
 					continue;
 				}
 				if (entity != nullptr) {
 					
+					// If we hit an npc with a fireball 
 					if (entity->HasComponent<Engine::NPCComponent>())
 					{
-
+						
 						// Malo sam vam menjao ovo, jer sam dodao HP componentu neprijateljima, u sustini jedan if-else
 						// koji provera hp, ukratko, fire i water imace po 2hp-a, wind i mental 1hp i earth 3hp-a
 						auto npcHp = entity->GetComponent<Engine::HealthComponent>();
 						if (npcHp->m_CurrentHealth > 1)
 						{
-							if (entity->HasComponent<FireNPCComponent>())audioSystem_->PlaySoundEffect("fireDeath");
+							if (entity->HasComponent<FireNPCComponent>())audioSystem_->PlaySoundEffect("fireDeath"); 
 							audioSystem_->PlaySoundEffect("slam");
-							npcHp->m_CurrentHealth--;
-							entityManager_->RemoveEntity(fireball->GetId());
+							npcHp->m_CurrentHealth--; // Lower the hp of the npc if it has more then 1hp
+							entityManager_->RemoveEntity(fireball->GetId()); // Destroy the fireball
 						}
 						else if (entity->HasComponent<WaterNPCComponent>() && !entity->GetComponent<WaterNPCComponent>()->isInWallForm && npcHp->m_CurrentHealth == 1)
 						{
+							// When we kill a water elemental it freezes over to make a wall that has 3 hp
 							audioSystem_->PlaySoundEffect("freeze");
 							entity->GetComponent<WaterNPCComponent>()->isInWallForm = true;
 							entity->RemoveComponent<Engine::MoverComponent>();
@@ -258,6 +259,7 @@ namespace Game
 						}
 						else
 						{
+							// Here the elementals realeas their death cries
 							if (entity->HasComponent<WaterNPCComponent>()) 
 							{
 								audioSystem_->PlaySoundEffect("slam");
@@ -296,10 +298,10 @@ namespace Game
 							auto itemStash = entityManager_->GetAllEntitiesWithComponents<Engine::ItemStashComponent>()[0];
 							auto itemSprite = itemStash->GetComponent<Engine::SpriteComponent>();
 							
+							// The entity drops a random item upon death
 							double r = ((double)std::rand() / (RAND_MAX));
 							if(r < 0.2)
 								CreateItem(entityManager_, rand()%7, itemSprite->m_Image, entity);
-							//CreateItem(entityManager_, 4, itemSprite->m_Image, entity);
 							entityManager_->RemoveEntity(fireball->GetId());
 							entityManager_->RemoveEntity(entity->GetId());
 						}
@@ -309,6 +311,7 @@ namespace Game
 					}
 				}
 
+				// Remove the fireball if it hits an obstacle or the border
 				if (entity->HasComponent<Engine::BorderComponent>() || entity->HasComponent<Engine::ObstacleComponent>())
 				{
 					

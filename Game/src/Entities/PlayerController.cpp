@@ -1,11 +1,11 @@
 #include "precomp.h"
 #include "PlayerController.h"
 #include "FireballController.h"
-
+// You can't have Magemaggedon without a Mage! - we never named him, I guess i should do it now: I name thee Mazonious The Flamewarden!
 
 namespace Game
 {
-
+	
     bool PlayerController::Init(Engine::EntityManager* entityManager_, Engine::Texture* texture_)
     {
         ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to PlayerController::Init()");
@@ -14,6 +14,7 @@ namespace Game
         
         auto player = std::make_unique<Engine::Entity>();
 
+
         player->AddComponent<Engine::TransformComponent>(64.f, 0.f, 50.f, 50.f);
         player->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
         player->AddComponent<Engine::PlayerComponent>();
@@ -21,13 +22,13 @@ namespace Game
         player->AddComponent<Engine::MoverComponent>();
         player->AddComponent<Engine::SpriteComponent>().m_Image = texture_;
 		
-		//Slicing up a spritesheet and taking what is ours
+		// Slicing up a spritesheet and taking what is ours - the rectangle indicates a source on the spritesheet
 		auto *comp = player->GetComponent<Engine::SpriteComponent>();
 		SDL_Rect new_rect{ 50, 50, 50, 50 };
 		comp->m_src = new_rect;
-		//if we want to animate an entity
+		// If we want to animate an entity - this is used anytime we want to cut something from a spritesheet not jst for animation
 		comp->m_Animation = true;
-
+	
         auto inputComp = player->GetComponent<Engine::InputComponent>();
 
         inputComp->inputActions.push_back({ "PlayerMoveUp" });
