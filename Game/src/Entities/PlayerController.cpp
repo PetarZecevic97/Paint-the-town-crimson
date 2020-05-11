@@ -199,8 +199,18 @@ namespace Game
 					 if (entity->HasComponent<Engine::NPCComponent>())
 					{
 						audioSystem_->PlaySoundEffect("slam");
+						
                         entityManager_->RemoveEntity(entity->GetId());
 						player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives--;
+
+						if (player->GetComponent<Engine::PlayerComponent>()->m_number_of_lives > 0)
+						{
+							audioSystem_->PlaySoundEffect("wizardHurt");
+						} 
+						else
+						{
+							audioSystem_->PlaySoundEffect("wizardDying");
+						}
 
                         // Ovaj if je prakticno prebacen u GameApp, za sada je da kad player umre, samo se iscrta stage Game Over,
                         // mozemo se dogovoriti oko tacnih detalja

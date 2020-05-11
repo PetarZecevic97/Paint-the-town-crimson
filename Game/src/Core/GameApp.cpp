@@ -107,6 +107,9 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/airDeath.mp3", "airDeath");
 	m_AudioSystem.get()->LoadSoundEffect("Data/mentalDeath.mp3", "mentalDeath");
 
+	m_AudioSystem.get()->LoadSoundEffect("Data/wizardHurt.wav", "wizardHurt");
+	m_AudioSystem.get()->LoadSoundEffect("Data/wizardDying.wav", "wizardDying");
+
 	m_AudioSystem.get()->PlayBackgroundMusic("title");
 	m_AudioSystem.get()->SetMusicVolume(10);
 	m_AudioSystem.get()->SetEffectsVolume(30);
@@ -123,6 +126,7 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 
 			if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives <= 0)
 			{
+
 				m_Factory->ShutDown(m_EntityManager.get());
 				m_StageController->Update(m_EntityManager.get(), m_window_width, m_window_height, true, m_AudioSystem.get(), false);
 				m_ObstacleController->Update(dt, m_EntityManager.get(), m_TextureManager.get(), true);
