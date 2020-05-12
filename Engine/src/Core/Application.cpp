@@ -122,6 +122,14 @@ namespace Engine {
 				{
 					
 					if (event.key.keysym.sym == SDLK_p) {
+                        if (m_Pause) 
+                        {
+                            m_AudioSystem->PlaySoundEffect("unpause");
+                        }
+                        else
+                        {
+                            m_AudioSystem->PlaySoundEffect("pause");
+                        }
 						m_Pause = !m_Pause;
 					}
 				}            
@@ -149,6 +157,7 @@ namespace Engine {
 		// Update all systems
 		if (m_Pause) {
 			m_AudioSystem->PauseMusic();
+            
 			auto overlay = m_EntityManager->GetAllEntitiesWithComponent<Engine::PauseComponent>()[0];
 			auto transform = overlay->GetComponent<Engine::TransformComponent>();
 			transform->m_Size.x = 1200.f;
@@ -161,6 +170,7 @@ namespace Engine {
 			transform->m_Size.y = 0.f;
 		}
 		if (!m_Pause) {
+            
 			m_AudioSystem->ResumeMusic();
 			GameSpecificUpdate(dt);
 			m_PhysicsSystem->Update(dt, m_EntityManager.get());

@@ -104,6 +104,8 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/mentalDeath.mp3", "mentalDeath");
 	m_AudioSystem.get()->LoadSoundEffect("Data/wizardHurt.wav", "wizardHurt");
 	m_AudioSystem.get()->LoadSoundEffect("Data/wizardDying.wav", "wizardDying");
+	m_AudioSystem.get()->LoadSoundEffect("Data/pause.mp3", "pause");
+	m_AudioSystem.get()->LoadSoundEffect("Data/unpause.mp3", "unpause");
 
 	// Initializing and configuring start state for sound mixer
 	m_AudioSystem.get()->PlayBackgroundMusic("title");
