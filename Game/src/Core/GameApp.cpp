@@ -39,23 +39,19 @@ bool Game::GameApp::GameSpecificInit()
 	SDL_GetRendererOutputSize(m_RenderSystem->GetRenderer()->GetNativeRenderer(), &w, &h);
 	setWindowSize(w, h);
 
+	// Controllers initialization
 	m_CameraController = std::make_unique<CameraController>();
 	m_CameraController->Init(m_EntityManager.get());
 
+	// Controller that switches the backdrop from main menu to levels 1,2,3
 	m_StageController = std::make_unique<StageController>();
 	m_StageController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("stage"));
 
     m_PlayerController = std::make_unique<PlayerController>();
-    //m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("wizard"));
 	m_PlayerController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("mage"));
-
-	//m_DummyController = std::make_unique<DummyController>();
-	//m_DummyController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("dummy"),200.f, 200.f);
-
+	
     m_Factory = std::make_unique<EnemiesFactory>();
 	m_Factory->Init();
-
-	
 
 	m_BorderController = std::make_unique<BorderController>();
 	m_BorderController->Init(m_EntityManager.get(), m_window_width, m_window_height, m_TextureManager->GetTexture("blank"));
@@ -63,9 +59,9 @@ bool Game::GameApp::GameSpecificInit()
 	m_HudController = std::make_unique<HudController>();
 	m_HudController->Init(m_EntityManager.get(), m_TextureManager.get(), m_window_width, m_window_height);
 
-
+	// Controller that generates collidable obstacles like rocks depending on the current level
 	m_ObstacleController = std::make_unique<ObstacleController>();
-	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), LevelNumber::LEVEL_TWO, m_window_width, m_window_height);
+	m_ObstacleController->Init(m_EntityManager.get(), m_TextureManager->GetTexture("obstacle"), m_window_width, m_window_height);
 
 	auto item_sprite = std::make_unique<Engine::Entity>();
 	item_sprite->AddComponent<Engine::SpriteComponent>().m_Image = m_TextureManager->GetTexture("items");
@@ -73,23 +69,24 @@ bool Game::GameApp::GameSpecificInit()
 	m_EntityManager.get()->AddEntity(std::move(item_sprite));
 
 
-
+	// Controller that handles exiting and pausing the game
+	// TODO: Implement game restart
 	m_PauseSystem = std::make_unique<PauseController>();
 	m_PauseSystem.get()->Init(m_EntityManager.get(), m_window_width, m_window_height,m_TextureManager->GetTexture("pause"));
 
-	//m_AudioSystem.get()->LoadSoundEffect("Data/fireball.wav", "fireball2");
-	//m_AudioSystem.get()->LoadSoundEffect("Data/fireball2.wav", "fireball2");
 
+	// Loading music for all the levels
 	m_AudioSystem.get()->LoadMusic("Data/love_wolf.wav", "title");
 	m_AudioSystem.get()->LoadMusic("Data/forestLevel.mp3", "level1");
 	m_AudioSystem.get()->LoadMusic("Data/fireLevel.mp3", "level2");
 	m_AudioSystem.get()->LoadMusic("Data/cloudLevel.mp3", "level3");
 
+	// Loading sound effects
 	m_AudioSystem.get()->LoadSoundEffect("Data/pew.wav", "fireball");
 	m_AudioSystem.get()->LoadSoundEffect("Data/fireignite.wav", "fireball2");
 	m_AudioSystem.get()->LoadSoundEffect("Data/explosion.wav", "explosion");
 	m_AudioSystem.get()->LoadSoundEffect("Data/explosion2.wav", "apocalypse");
-	m_AudioSystem.get()->LoadSoundEffect("Data/lose.wav", "lose");
+	m_AudioSystem.get()->LoadSoundEffect("Data/game_over.mp3", "lose");
 	m_AudioSystem.get()->LoadSoundEffect("Data/powerup.wav", "powerup");
 	m_AudioSystem.get()->LoadSoundEffect("Data/powerup2.wav", "powerup2");
 	m_AudioSystem.get()->LoadSoundEffect("Data/win.wav", "win");
@@ -99,17 +96,16 @@ bool Game::GameApp::GameSpecificInit()
 	m_AudioSystem.get()->LoadSoundEffect("Data/cock.mp3", "cock");
 	m_AudioSystem.get()->LoadSoundEffect("Data/speed.wav", "speed");
 	m_AudioSystem.get()->LoadSoundEffect("Data/freeze.mp3", "freeze");
-
 	m_AudioSystem.get()->LoadSoundEffect("Data/waterDeath.mp3", "waterDeath");
 	m_AudioSystem.get()->LoadSoundEffect("Data/fireDeath.mp3", "fireDeath");
 	m_AudioSystem.get()->LoadSoundEffect("Data/smallFireDeath.mp3", "smallFireDeath");
 	m_AudioSystem.get()->LoadSoundEffect("Data/rockDeath.mp3", "rockDeath");
 	m_AudioSystem.get()->LoadSoundEffect("Data/airDeath.mp3", "airDeath");
 	m_AudioSystem.get()->LoadSoundEffect("Data/mentalDeath.mp3", "mentalDeath");
-
 	m_AudioSystem.get()->LoadSoundEffect("Data/wizardHurt.wav", "wizardHurt");
 	m_AudioSystem.get()->LoadSoundEffect("Data/wizardDying.wav", "wizardDying");
 
+	// Initializing and configuring start state for sound mixer
 	m_AudioSystem.get()->PlayBackgroundMusic("title");
 	m_AudioSystem.get()->SetMusicVolume(10);
 	m_AudioSystem.get()->SetEffectsVolume(30);
@@ -119,12 +115,16 @@ bool Game::GameApp::GameSpecificInit()
 
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
+		// Inherited member vars from Application
+		// Used as indicators whether the game should exit or restart
 		m_Running = !m_PauseSystem.get()->ShouldExit(m_EntityManager.get());
 		m_Reset = m_PauseSystem.get()->ShouldReset(m_EntityManager.get());
 		if (!m_IsTitleScreen)
 		{
 			Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"), m_AudioSystem.get());
-
+			
+			// Checks if the mage has lost all of his lives, the condition is <= 0 and not == 0 
+			// because in many cases he can lose multiple lives at the same time
 			if (m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::PlayerComponent>()[0]->GetComponent<Engine::PlayerComponent>()->m_number_of_lives <= 0)
 			{
 
@@ -176,8 +176,8 @@ void Game::GameApp::GameSpecificUpdate(float dt)
 		{
 			if (m_IsTitleScreen)
 			{
-
-				m_IsTitleScreen = !Engine::InputManager::IsActionActive(m_EntityManager.get()->GetAllEntitiesWithComponent<Engine::LevelComponent>()[0]->GetComponent<Engine::InputComponent>(), "Start");
+				// Listens for start action (enter) with UpdateIsTitleSceen(), and updates the title screen animation in the meanwhile with Update(). 
+				m_IsTitleScreen = !m_StageController.get()->UpdateIsTitleSceen(m_EntityManager.get());
 				m_StageController.get()->Update(m_EntityManager.get(), m_window_width, m_window_height, false, m_AudioSystem.get(), m_IsTitleScreen);
 			}
 

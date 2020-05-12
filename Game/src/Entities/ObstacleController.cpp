@@ -8,7 +8,7 @@
 
 namespace Game
 {
-	bool ObstacleController::Init(Engine::EntityManager* entityManager, Engine::Texture* texture, LevelNumber levelNo, int width, int height)
+	bool ObstacleController::Init(Engine::EntityManager* entityManager, Engine::Texture* texture, int width, int height)
 	{
 		ASSERT(entityManager != nullptr, "Must pass valid pointer to entitymanager to ObstacleCOntroller::Init()");
 		ASSERT(texture != nullptr, "Must pass valid pointer to texture to ObstacleCOntroller::Init()");
@@ -18,7 +18,8 @@ namespace Game
 		m_height = height;
 		m_width = width;
 		
-		// Wall init
+		// Initialization of obstacles that form the wall around the stage
+		// Compared to normal obstacles, these have the Wall Component
 		std::vector < std::pair<float, float> > lObstacleLocations;
 		for (int i = 80; i < 1280; i += 55) 
 		{
@@ -56,14 +57,17 @@ namespace Game
 		return true;
 	}
 
+	// Method that advances the level obstacles-wise
 	void ObstacleController::Update(float dt, Engine::EntityManager* entityManager, Engine::TextureManager* textureManager, bool isGameOver)
 	{
 		auto obstacles = entityManager->GetAllEntitiesWithComponent<Engine::ObstacleComponent>();
 		if (m_currentLevelNo == LevelNumber::LEVEL_MENU)m_currentLevelNo = LevelNumber::LEVEL_ONE;
 
-		// Delete all Obstacle components
+		// Deletion of obstacles
 		for (auto obstacle : obstacles)
 		{
+			// The first condition is for all the inner obstacle, which should always be deleted when advancing to the next level
+			// the second condition is for when the player wins (which means that all obstacles should be deleted) as well when the player dies.
 			if (obstacle->HasComponent<Engine::InnerObstacleComponent>() || m_currentLevelNo == LevelNumber::LEVEL_THREE || isGameOver)
 			{
 				auto id = obstacle->GetId();
@@ -72,6 +76,8 @@ namespace Game
 			}
 			else
 			{
+				// These two if-s are used to convert the wall obstacles into approriate level 2/3 obstacles
+				// by changing just thir sprites.
 				if (m_currentLevelNo == LevelNumber::LEVEL_ONE) 
 				{
 					auto* sprite = obstacle->GetComponent<Engine::SpriteComponent>();
@@ -87,7 +93,7 @@ namespace Game
 			}
 		}
 		if (!isGameOver)
-		{
+		{//This part just generates the obstacles for the next level and advances the m_currentLevelNo member variable
 			if (m_currentLevelNo == LevelNumber::LEVEL_ONE)
 			{
 
