@@ -74,6 +74,7 @@ bool Engine::AudioSystem::LoadSoundEffect(std::string path_, std::string name_)
         return false;
     }
     m_SoundEffectLibrary.insert(std::pair(name_, std::move(effect)));
+
     return true;
 }
 

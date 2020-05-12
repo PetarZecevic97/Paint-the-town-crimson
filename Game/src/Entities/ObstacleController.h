@@ -13,7 +13,7 @@ namespace Game
 	class ObstacleController
 	{
 	public:
-		bool Init(Engine::EntityManager* entityManager, Engine::Texture* texture, LevelNumber levelNo, int width, int height);
+		bool Init(Engine::EntityManager* entityManager, Engine::Texture* texture, int width, int height);
 		void Update(float dt, Engine::EntityManager* entityManager, Engine::TextureManager* textureManager, bool isGameOver);
 		bool ShutDown();
 	private:
