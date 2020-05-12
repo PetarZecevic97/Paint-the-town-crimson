@@ -7,6 +7,7 @@ namespace Game
 	bool CreateItem(Engine::EntityManager* entityManager_, int item_type, Engine::Texture* texture, Engine::Entity* npc) {
 		ASSERT(entityManager_ != nullptr, "Must pass valid pointer to entitymanager to ProjectileController::Init()");
 
+		//Create the item where the enemy died
 		auto item = std::make_unique<Engine::Entity>();
 		auto npc_trans = npc->GetComponent<Engine::TransformComponent>();
 		float x = npc_trans->m_Position[0];
@@ -18,6 +19,7 @@ namespace Game
 		item->GetComponent<Engine::ItemComponent>()->m_itemType = item_type;
 		item->AddComponent<Engine::SpriteComponent>().m_Image = texture;
 
+		//Plenty of different items!
 		SDL_Rect new_rect;
 		switch (item_type) {
 			//lives
@@ -73,7 +75,7 @@ namespace Game
 		for (auto* item : items)
 		{
 
-
+			//If item isn't picked up for a long time it disappears!
 			if (static_cast<int>(SDL_GetTicks()) > item->GetComponent<Engine::ItemComponent>()->m_timeCreated + 8000) {
 				if (item->GetComponent<Engine::TransformComponent>()->m_Position.x == -2000) {
 					auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
@@ -91,6 +93,7 @@ namespace Game
 			for (auto* entity : collider->m_CollidedWith)
 			{
 
+				//The best way to get rid of a bug atm
 				if (entity->GetId() > 10000000) {
 					continue;
 				}
@@ -124,6 +127,8 @@ namespace Game
 							
 							
 						}
+
+						//TODO: Remove components instead
 						item->GetComponent<Engine::ItemComponent>()->m_timeCreated = SDL_GetTicks();
 						item->GetComponent<Engine::TransformComponent>()->m_Position.x = -2000;
 						item->GetComponent<Engine::TransformComponent>()->m_Position.y = -2000;
@@ -135,6 +140,7 @@ namespace Game
 					}
 					else {
 
+						//If we already have a buff on, we should just increase its duration
 						if (item->GetComponent<Engine::ItemComponent>()->m_itemType == 1 && entity->GetComponent<Engine::PlayerComponent>()->m_speedBuff)
 						{
 							audioSystem_->PlaySoundEffect("speed");
@@ -168,6 +174,8 @@ namespace Game
 							auto multiBuff = entityManager_->GetAllEntitiesWithComponents<Engine::MultiBuffComponent>()[0];
 							multiBuff->GetComponent<Engine::BuffComponent>()->m_timeExpires += multiBuff->GetComponent<Engine::BuffComponent>()->m_duration;
 						}
+
+						//Make a new entity that represents a buff gained from the item
 						else
 						{
 							auto player = entityManager_->GetAllEntitiesWithComponent< Engine::PlayerComponent>()[0];
@@ -239,6 +247,8 @@ namespace Game
 
 		for (auto* buff : buffs)
 		{
+
+			//Make sure that timestops freezes enemies when they enter the map, not before that
 			auto buffComponent = buff->GetComponent<Engine::BuffComponent>();
 			if (buffComponent->m_buffType == 4 && player->GetComponent<Engine::PlayerComponent>()->m_timeoutBuff) {
 				auto allNPCs = entityManager_->GetAllEntitiesWithComponent<Engine::NPCComponent>();
@@ -259,6 +269,7 @@ namespace Game
 				}
 			}
 			
+			//When the buff duration runs out return everything to the way it was before
 			if (static_cast<int>(SDL_GetTicks()) > buffComponent->m_timeExpires) {
 				if (buffComponent->m_buffType == 1)
 				{
@@ -296,7 +307,7 @@ namespace Game
 
 	void CreateExplosion(Engine::EntityManager* entityManager_, Engine::Texture* texture, Engine::AudioSystem * audioSystem_) {
 
-		
+		//Make sure that an explosion happens wherever an enemy once was when the item apocalypse is activated
 		auto enemies = entityManager_->GetAllEntitiesWithComponents<Engine::NPCComponent>();
 		for (auto* enemy : enemies) {
 			auto explosion = std::make_unique<Engine::Entity>();
@@ -323,6 +334,7 @@ namespace Game
 
 		auto explosions = entityManager_->GetAllEntitiesWithComponent<Engine::ExplosionComponent>();
 		
+		//Animate every explosion
 		for (auto* explosion : explosions) {
 
 			int ticks = SDL_GetTicks();
@@ -334,6 +346,7 @@ namespace Game
 				explosion->GetComponent<Engine::ExplosionComponent>()->m_frame_counter++;
 			}
 
+			//After the animation is over remove entity that has explosion component
 			if (explosion->GetComponent<Engine::ExplosionComponent>()->m_frame_counter == 12) {	
 					entityManager_->RemoveEntity(explosion->GetId());	
 			}

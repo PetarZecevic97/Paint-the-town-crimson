@@ -14,7 +14,7 @@ namespace Game
         
         auto player = std::make_unique<Engine::Entity>();
 
-
+		// Wizard starts on the center of the screen
         player->AddComponent<Engine::TransformComponent>(64.f, 0.f, 50.f, 50.f);
         player->AddComponent<Engine::CollisionComponent>(50.f, 50.f);
         player->AddComponent<Engine::PlayerComponent>();
@@ -26,9 +26,11 @@ namespace Game
 		auto *comp = player->GetComponent<Engine::SpriteComponent>();
 		SDL_Rect new_rect{ 50, 50, 50, 50 };
 		comp->m_src = new_rect;
-		// If we want to animate an entity - this is used anytime we want to cut something from a spritesheet not jst for animation
+
+		// If we want to animate an entity - this is used anytime we want to cut something from a spritesheet, not just for animation
 		comp->m_Animation = true;
 	
+		// Wizard can move and shoot in all directions
         auto inputComp = player->GetComponent<Engine::InputComponent>();
 
         inputComp->inputActions.push_back({ "PlayerMoveUp" });
@@ -57,7 +59,6 @@ namespace Game
             auto transform = player->GetComponent<Engine::TransformComponent>();
             auto input = player->GetComponent<Engine::InputComponent>();
             auto speed = player->GetComponent<Engine::PlayerComponent>()->m_speed;
-            //auto speed = 200.f; // entity->GetComponent<Engine::PlayerComponent>()->m_PanSpeed;
 
             bool moveUpInput = Engine::InputManager::IsActionActive(input, "PlayerMoveUp");
             bool moveDownInput = Engine::InputManager::IsActionActive(input, "PlayerMoveDown");
@@ -69,6 +70,7 @@ namespace Game
             bool shootLeftInput = Engine::InputManager::IsActionActive(input, "PlayerShootLeft");
             bool shootRightInput = Engine::InputManager::IsActionActive(input, "PlayerShootRight");
 
+			//Wizard can move left and right or up and down at the same time
 			if (moveLeftInput && moveRightInput) {
 				moveLeftInput = false;
 				moveRightInput = false;
@@ -79,15 +81,20 @@ namespace Game
 				moveDownInput = false;
 			}
 			
+			// Wizard can shoot only the cooldown is up
             int ticks = SDL_GetTicks() - m_last_fired_time;
             if (ticks > player->GetComponent<Engine::PlayerComponent>()->m_fireballCooldown && (shootUpInput || shootDownInput || shootLeftInput || shootRightInput)) {
                 m_last_fired_time += ticks;
                 int limit = 1;
+
+				//If multishot buff is on, fireballs shoot from all 8 directions
                 if (player->GetComponent<Engine::PlayerComponent>()->m_multishotBuff)
                 {
                     limit = 8;
                 }
 				audioSystem_->PlaySoundEffect("fireball2");
+
+				//Shoot multiple fireballs depending on which buffs are on
                 for (int i = 1; i <= limit; i++)
 				{
                     Game::CreateFireball(entityManager_, 0, i);
@@ -101,11 +108,13 @@ namespace Game
                 
             }
             
+			//Move on x or/and y coordinate
             move->m_TranslationSpeed.y = speed * ((moveUpInput ? -1.0f : 0.0f) + (moveDownInput ? 1.0f : 0.0f));
             move->m_TranslationSpeed.x = speed * ((moveLeftInput ? -1.0f : 0.0f) + (moveRightInput ? 1.0f : 0.0f));
 
 			//Idle Animation 
 
+			//Change animation depending on which direction the wizard is heading
             auto* comp = player->GetComponent<Engine::SpriteComponent>();
 			if (!(moveUpInput || moveDownInput || moveLeftInput || moveRightInput)) {
 				int ticks = (SDL_GetTicks() / 200) % 5;
@@ -137,15 +146,17 @@ namespace Game
             
 
             auto collider = player->GetComponent<Engine::CollisionComponent>();
-			//ovo je mozda problem - ako je entyty koji removojemo u ovome
+			
             for (auto* entity : collider->m_CollidedWith)
             {
 				if (entity != nullptr) {
 
-					
+					//A fun way to fix a bug
 					if (entity->GetId() > 10000000) {
 						continue;
 					}
+
+					//Don't allow wizard to go through the border
 					if (entity->HasComponent<Engine::BorderComponent>()) {
 
 						move->m_TranslationSpeed.y = 0;
@@ -172,6 +183,7 @@ namespace Game
 						
 					}
 
+					//Don't allow wizard to go through the obstacles
 					if (entity->HasComponent<Engine::ObstacleComponent>())
 					{
 						audioSystem_->PlaySoundEffect("slam");
@@ -197,7 +209,9 @@ namespace Game
 						}
 
 					}
-					 if (entity->HasComponent<Engine::NPCComponent>())
+
+					//If wizard gets hit by an enemy remove one life and kill the enemy!
+					if (entity->HasComponent<Engine::NPCComponent>())
 					{
 						audioSystem_->PlaySoundEffect("slam");
 						
