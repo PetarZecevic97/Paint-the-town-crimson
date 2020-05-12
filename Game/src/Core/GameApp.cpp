@@ -119,7 +119,8 @@ bool Game::GameApp::GameSpecificInit()
 
 void Game::GameApp::GameSpecificUpdate(float dt)
 {
-
+		m_Running = !m_PauseSystem.get()->ShouldExit(m_EntityManager.get());
+		m_Reset = m_PauseSystem.get()->ShouldReset(m_EntityManager.get());
 		if (!m_IsTitleScreen)
 		{
 			Game::UpdateItems(m_EntityManager.get(), m_TextureManager->GetTexture("explosion"), m_AudioSystem.get());

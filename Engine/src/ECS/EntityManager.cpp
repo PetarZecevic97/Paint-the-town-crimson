@@ -32,4 +32,10 @@ namespace Engine
         }));
 
 	}
+    void EntityManager::RemoveAllEntities()
+    {
+
+        m_Entities.erase(std::begin(m_Entities), std::end(m_Entities));
+
+    }
 }

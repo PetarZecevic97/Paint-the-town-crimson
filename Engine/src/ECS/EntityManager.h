@@ -14,6 +14,8 @@ namespace Engine
         void AddEntity(std::unique_ptr<Entity>&& e);
 		void RemoveEntity(long int id);
 
+		void RemoveAllEntities();
+
 
         template <typename TComponent>
         auto GetAllEntitiesWithComponent()

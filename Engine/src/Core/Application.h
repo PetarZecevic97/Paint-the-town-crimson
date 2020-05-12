@@ -27,6 +27,7 @@ namespace Engine {
         void SetWindowData(const WindowData& windowData_) { m_WindowData = windowData_; }
 
         bool m_Running{ false };
+        bool m_Reset{ false };
 
         WindowData m_WindowData{};
         std::unique_ptr<RenderSystem> m_RenderSystem{};

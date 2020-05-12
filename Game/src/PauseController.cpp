@@ -23,6 +23,8 @@ namespace Game
         auto inputComp = overlay->GetComponent<Engine::InputComponent>();
 
         inputComp->inputActions.push_back({ "PauseGame" });
+        inputComp->inputActions.push_back({ "Quit" });
+        inputComp->inputActions.push_back({ "Reset" });
         
         entityManager_->AddEntity(std::move(overlay));
 
@@ -37,6 +39,9 @@ namespace Game
         auto inputComp = overlay->GetComponent<Engine::InputComponent>();
         bool justPressed = Engine::InputManager::WasJustPressed(inputComp, "PauseGame");
         
+        
+
+
         auto localx = transform->m_Position.x;
         if (true)
         {
@@ -56,4 +61,21 @@ namespace Game
 
     }
 
+    bool PauseController::ShouldExit(Engine::EntityManager* entityManager_)
+    {
+        auto overlay = entityManager_->GetAllEntitiesWithComponent<Engine::PauseComponent>()[0];
+        auto inputComp = overlay->GetComponent<Engine::InputComponent>();
+        bool exit = Engine::InputManager::WasJustPressed(inputComp, "Quit");
+        return exit;
+    }
+
+    bool PauseController::ShouldReset(Engine::EntityManager* entityManager_)
+    {
+        auto overlay = entityManager_->GetAllEntitiesWithComponent<Engine::PauseComponent>()[0];
+        auto inputComp = overlay->GetComponent<Engine::InputComponent>();
+        bool reset = Engine::InputManager::WasJustPressed(inputComp, "Reset");
+        return reset;
+    }
+
 }
+

@@ -101,6 +101,8 @@ namespace Engine
         m_InputActions["PanCameraDown"] = 'Y';
         m_InputActions["PanCameraRight"] = 'Y';
         m_InputActions["Start"] = VK_RETURN;
+        m_InputActions["Quit"] = VK_ESCAPE;
+        m_InputActions["Reset"] = 'R';
     }
 
     bool InputManager::IsActionActive(InputComponent* inputComponent, EInputAction targetAction)

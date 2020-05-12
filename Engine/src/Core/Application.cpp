@@ -137,6 +137,7 @@ namespace Engine {
 
             previousFrameTime = frameTime;
         }
+        
 
         m_Running = false;
 
